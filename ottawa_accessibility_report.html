@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ottawa County Clerk of Courts – Accessibility Report</title>
+<style>
+  @page {
+    size: letter;
+    margin: 1in 0.9in 1in 0.9in;
+    @bottom-center {
+      content: "Page " counter(page) " of " counter(pages);
+      font-size: 9pt;
+      color: #666;
+    }
+  }
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5pt;
+    color: #1a1a1a;
+    line-height: 1.55;
+  }
+  h1 {
+    font-size: 18pt;
+    color: #1a3a5c;
+    margin-bottom: 2px;
+  }
+  h2 {
+    font-size: 12pt;
+    color: #1a3a5c;
+    border-bottom: 2px solid #1a3a5c;
+    padding-bottom: 3px;
+    margin-top: 24px;
+    margin-bottom: 8px;
+    page-break-after: avoid;
+  }
+  h3 {
+    font-size: 10.5pt;
+    color: #c8471b;
+    margin-top: 16px;
+    margin-bottom: 4px;
+    page-break-after: avoid;
+  }
+  .subtitle {
+    font-size: 11pt;
+    color: #444;
+    margin-top: 2px;
+    margin-bottom: 0;
+  }
+  .meta {
+    font-size: 9pt;
+    color: #666;
+    margin-top: 4px;
+    margin-bottom: 20px;
+  }
+  .divider {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 6px 0 16px 0;
+  }
+  ul {
+    margin: 4px 0 8px 0;
+    padding-left: 18px;
+  }
+  li {
+    margin-bottom: 3px;
+  }
+  .page-section {
+    margin-bottom: 10px;
+    page-break-inside: avoid;
+  }
+  .badge {
+    display: inline-block;
+    background: #1a3a5c;
+    color: #fff;
+    font-size: 8pt;
+    padding: 1px 7px;
+    border-radius: 10px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .remaining {
+    background: #c8471b;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 10pt;
+  }
+  th {
+    background: #1a3a5c;
+    color: #fff;
+    padding: 6px 10px;
+    text-align: left;
+    font-weight: bold;
+  }
+  td {
+    padding: 5px 10px;
+    border-bottom: 1px solid #ddd;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td {
+    background: #f4f7fb;
+  }
+  .status-done {
+    color: #2a7a2a;
+    font-weight: bold;
+  }
+  .status-pending {
+    color: #c8471b;
+    font-weight: bold;
+  }
+  .cover-block {
+    border-left: 5px solid #1a3a5c;
+    padding: 10px 16px;
+    background: #f4f7fb;
+    margin: 16px 0 24px 0;
+  }
+  code {
+    font-family: "Courier New", monospace;
+    font-size: 9pt;
+    background: #f0f0f0;
+    padding: 1px 4px;
+    border-radius: 3px;
+  }
+</style>
+</head>
+<body>
+
+<h1>Ottawa County Clerk of Courts</h1>
+<p class="subtitle">Website Accessibility Improvements Report</p>
+<p class="meta">Standard: WCAG 2.1 Level AA &nbsp;|&nbsp; Date: May 2025 &nbsp;|&nbsp; Prepared by: Digital Kingdom Interprises</p>
+<hr class="divider">
+
+<div class="cover-block">
+  <strong>Project Scope:</strong> Audit and remediation of accessibility barriers across the Ottawa County Clerk of Courts website
+  (<em>ottawacountyclerkofcourts.com</em>) to meet ADA compliance requirements under WCAG 2.1 Level AA.
+  Changes cover semantic HTML structure, ARIA attributes, keyboard navigation support, screen reader compatibility,
+  heading hierarchy, image alt text, form labeling, and link context.
+</div>
+
+<!-- SUMMARY TABLE -->
+<h2>Pages Summary</h2>
+<table>
+  <tr>
+    <th>File</th>
+    <th>Page / Component</th>
+    <th>Status</th>
+    <th>Fixes Applied</th>
+  </tr>
+  <tr>
+    <td><code>nav.php</code></td>
+    <td>Site-Wide Navigation</td>
+    <td class="status-done">Complete</td>
+    <td>13</td>
+  </tr>
+  <tr>
+    <td><code>foot.php</code></td>
+    <td>Site-Wide Footer</td>
+    <td class="status-done">Complete</td>
+    <td>6</td>
+  </tr>
+  <tr>
+    <td><code>index.php</code></td>
+    <td>Home Page</td>
+    <td class="status-done">Complete</td>
+    <td>7</td>
+  </tr>
+  <tr>
+    <td><code>titles.php</code></td>
+    <td>Title Office</td>
+    <td class="status-done">Complete</td>
+    <td>11</td>
+  </tr>
+  <tr>
+    <td><code>packets.php</code></td>
+    <td>Legal Packets</td>
+    <td class="status-done">Complete</td>
+    <td>10</td>
+  </tr>
+  <tr>
+    <td><code>fees.php</code></td>
+    <td>Fees</td>
+    <td class="status-pending">Pending</td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td><code>records.php</code></td>
+    <td>Records</td>
+    <td class="status-pending">Pending</td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td><code>contact.php</code></td>
+    <td>Contact</td>
+    <td class="status-pending">Pending</td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td><code>links.php</code></td>
+    <td>Links</td>
+    <td class="status-pending">Pending</td>
+    <td>—</td>
+  </tr>
+</table>
+
+<!-- NAV.PHP -->
+<h2>nav.php — Site-Wide Navigation <span class="badge">13 fixes</span></h2>
+<div class="page-section">
+<ul>
+  <li>Added <code>role="alert"</code> to the notice/announcement div for screen reader announcements</li>
+  <li>Added <code>aria-label="Site Header"</code> to the top utility navigation bar</li>
+  <li>Added <code>aria-label="Main Navigation"</code> to the primary nav element</li>
+  <li>Added <code>aria-label="Open navigation menu"</code> to the mobile hamburger button</li>
+  <li>Added <code>aria-hidden="true"</code> to the mobile menu icon (decorative)</li>
+  <li>Added <code>aria-haspopup="true"</code> and <code>aria-expanded="false"</code> to all dropdown triggers</li>
+  <li>Added <code>aria-hidden="true"</code> to all dropdown caret/arrow icons (decorative)</li>
+  <li>Added <code>aria-label="Pay Online (opens in new tab)"</code> to Pay Online links — desktop and mobile</li>
+  <li>Added <code>aria-label</code> with new tab warnings to all Common Pleas external links</li>
+  <li>Added <code>role="separator"</code> to visual divider list items</li>
+  <li>Added <code>role="navigation" aria-label="Mobile Navigation"</code> to the mobile sidenav</li>
+  <li>Added <code>aria-label="Clerk of Courts: Christopher Enoch"</code> to the name link</li>
+  <li>Confirmed distinct <code>aria-label</code> values on both nav elements to avoid duplicate landmark names</li>
+</ul>
+</div>
+
+<!-- FOOT.PHP -->
+<h2>foot.php — Site-Wide Footer <span class="badge">6 fixes</span></h2>
+<div class="page-section">
+<ul>
+  <li>Added <code>role="contentinfo"</code> to the footer element</li>
+  <li>Changed <code>&lt;h3&gt;</code> site name to <code>&lt;p&gt;</code> — footer does not require a heading</li>
+  <li>Wrapped mailing address in <code>&lt;address&gt;</code> semantic element</li>
+  <li>Changed plain phone number text to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label="Phone: 419-..."</code></li>
+  <li>Added <code>aria-label="Fax: 419-..."</code> to fax number</li>
+  <li>Added <code>aria-label="... (opens in new tab)"</code> to external footer link</li>
+</ul>
+</div>
+
+<!-- INDEX.PHP -->
+<h2>index.php — Home Page <span class="badge">7 fixes</span></h2>
+<div class="page-section">
+<ul>
+  <li>Updated page title: <code>Home | Ottawa County Clerk of Courts</code></li>
+  <li>Added skip navigation link: <code>&lt;a href="#main-content" class="skip-link"&gt;Skip to main content&lt;/a&gt;</code></li>
+  <li>Added <code>&lt;main id="main-content"&gt;</code> landmark wrapper around page content</li>
+  <li>Added <code>aria-hidden="true"</code> to empty decorative banner div</li>
+  <li>Changed <code>&lt;div role="navigation"&gt;</code> to proper semantic <code>&lt;nav&gt;</code> element</li>
+  <li>Added descriptive <code>alt</code> text to all service card images</li>
+  <li>Confirmed single H1 heading per page structure</li>
+</ul>
+</div>
+
+<!-- TITLES.PHP -->
+<h2>titles.php — Title Office <span class="badge">11 fixes</span></h2>
+<div class="page-section">
+<ul>
+  <li>Updated page title: <code>Titles | Ottawa County Clerk of Courts</code></li>
+  <li>Added skip navigation link</li>
+  <li>Added <code>&lt;main id="main-content"&gt;</code> landmark wrapper</li>
+  <li>Added <code>aria-hidden="true"</code> to decorative arrow icon</li>
+  <li>Changed service card headings from H4 to H3 (Titles, Passports, Watercraft Registrations) — fixed heading skip H1→H4</li>
+  <li>Removed invalid <code>&lt;p&gt;</code> wrappers around <code>&lt;ul&gt;</code> lists in all 3 service cards</li>
+  <li>Added phone tel link in Passports card: <code>&lt;a href="tel:4197346752" aria-label="Phone: 419-734-6752"&gt;</code></li>
+  <li>Added <code>role="separator"</code> to divider list items in the contact info card</li>
+  <li>Added <code>aria-label</code> with PDF and new tab warnings to all 9 BMV automobile form links</li>
+  <li>Added <code>aria-label</code> with PDF and new tab warnings to all 3 Watercraft PDF links</li>
+  <li>Added <code>aria-label</code> with new tab warnings to all external links (Ohio BMV, Ohio DNR, Ohio Tax)</li>
+</ul>
+</div>
+
+<!-- PACKETS.PHP -->
+<h2>packets.php — Legal Packets <span class="badge">10 fixes</span></h2>
+<div class="page-section">
+<ul>
+  <li>Updated page title: <code>Legal Packets | Ottawa County Clerk of Courts</code></li>
+  <li>Added skip navigation link</li>
+  <li>Added <code>&lt;main id="main-content"&gt;</code> landmark wrapper</li>
+  <li>Changed dynamically generated card headings from H4 to H2 — fixed heading skip H1→H4</li>
+  <li>Changed card-reveal panel title from H5 to <code>&lt;p&gt;</code> — avoids broken heading hierarchy inside expanded panels</li>
+  <li>Added <code>aria-hidden="true"</code> to <code>more_vert</code> Material icon (decorative)</li>
+  <li>Added <code>aria-hidden="true"</code> to <code>close</code> Material icon in card-reveal panel (decorative)</li>
+  <li>Removed invalid <code>&lt;p&gt;</code> wrapper around <code>&lt;ul&gt;</code> document list in card-reveal</li>
+  <li>Added dynamic <code>aria-label</code> with new tab warning to all external document links</li>
+  <li>Added dynamic <code>aria-label</code> with PDF and new tab warning to all PDF document links</li>
+</ul>
+</div>
+
+<!-- PENDING -->
+<h2>Pages Remaining <span class="badge remaining">4 pending</span></h2>
+<table>
+  <tr>
+    <th>File</th>
+    <th>Page</th>
+  </tr>
+  <tr><td><code>fees.php</code></td><td>Fees</td></tr>
+  <tr><td><code>records.php</code></td><td>Records</td></tr>
+  <tr><td><code>contact.php</code></td><td>Contact</td></tr>
+  <tr><td><code>links.php</code></td><td>Links</td></tr>
+</table>
+
+<br>
+<hr class="divider">
+<p style="font-size:9pt;color:#666;text-align:center;">
+  Ottawa County Clerk of Courts &nbsp;|&nbsp; WCAG 2.1 Level AA Accessibility Review &nbsp;|&nbsp; Digital Kingdom Interprises
+</p>
+
+</body>
+</html>
