@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sandusky County Probate Court – Accessibility Report</title>
+<style>
+  @page {
+    size: letter;
+    margin: 1in 0.9in 1in 0.9in;
+    @bottom-center {
+      content: "Page " counter(page) " of " counter(pages);
+      font-size: 9pt;
+      color: #666;
+    }
+  }
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5pt;
+    color: #1a1a1a;
+    line-height: 1.55;
+  }
+  h1 {
+    font-size: 18pt;
+    color: #1a3a5c;
+    margin-bottom: 2px;
+  }
+  h2 {
+    font-size: 12pt;
+    color: #1a3a5c;
+    border-bottom: 2px solid #1a3a5c;
+    padding-bottom: 3px;
+    margin-top: 24px;
+    margin-bottom: 8px;
+    page-break-after: avoid;
+  }
+  .subtitle {
+    font-size: 11pt;
+    color: #444;
+    margin-top: 2px;
+    margin-bottom: 0;
+  }
+  .meta {
+    font-size: 9pt;
+    color: #666;
+    margin-top: 4px;
+    margin-bottom: 20px;
+  }
+  .divider {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 6px 0 16px 0;
+  }
+  ul {
+    margin: 4px 0 8px 0;
+    padding-left: 18px;
+  }
+  li {
+    margin-bottom: 3px;
+  }
+  .page-section {
+    margin-bottom: 10px;
+    page-break-inside: avoid;
+  }
+  .badge {
+    display: inline-block;
+    background: #1a3a5c;
+    color: #fff;
+    font-size: 8pt;
+    padding: 1px 7px;
+    border-radius: 10px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 10pt;
+  }
+  th {
+    background: #1a3a5c;
+    color: #fff;
+    padding: 6px 10px;
+    text-align: left;
+    font-weight: bold;
+  }
+  td {
+    padding: 5px 10px;
+    border-bottom: 1px solid #ddd;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td {
+    background: #f4f7fb;
+  }
+  .status-done {
+    color: #2a7a2a;
+    font-weight: bold;
+  }
+  .cover-block {
+    border-left: 5px solid #1a3a5c;
+    padding: 10px 16px;
+    background: #f4f7fb;
+    margin: 16px 0 24px 0;
+  }
+  code {
+    font-family: "Courier New", monospace;
+    font-size: 9pt;
+    background: #f0f0f0;
+    padding: 1px 4px;
+    border-radius: 3px;
+  }
+  .total-row td {
+    background: #e8f0fb;
+    font-weight: bold;
+    border-top: 2px solid #1a3a5c;
+  }
+</style>
+</head>
+<body>
+
+<h1>Sandusky County Probate Court</h1>
+<p class="subtitle">Website Accessibility Improvements Report — Final</p>
+<p class="meta">Standard: WCAG 2.1 Level AA &nbsp;|&nbsp; Date: May 2025 &nbsp;|&nbsp; Prepared by: Digital Kingdom Interprises</p>
+<hr class="divider">
+
+<div class="cover-block">
+  <strong>Project Scope:</strong> Audit and remediation of accessibility barriers across the Sandusky County Probate Court website
+  (<em>sanduskycountyprobatecourt.com</em>) to meet ADA compliance requirements under WCAG 2.1 Level AA.
+  All 16 files — including shared infrastructure, navigation, and all content pages — have been reviewed and corrected.
+  Changes cover semantic HTML structure, ARIA attributes, keyboard navigation support, screen reader compatibility,
+  heading hierarchy, image alt text, link context, form accessibility, table accessibility, and iframe identification.
+</div>
+
+<!-- SUMMARY TABLE -->
+<h2>Pages Summary</h2>
+<table>
+  <tr>
+    <th>File</th>
+    <th>Page / Component</th>
+    <th>Status</th>
+    <th>Fixes Applied</th>
+  </tr>
+  <tr>
+    <td><code>header.php</code></td>
+    <td>Shared Header / Page Titles</td>
+    <td class="status-done">Complete</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td><code>style.css</code></td>
+    <td>Global Stylesheet</td>
+    <td class="status-done">Complete</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td><code>index.php</code></td>
+    <td>Home Page</td>
+    <td class="status-done">Complete</td>
+    <td>9</td>
+  </tr>
+  <tr>
+    <td><code>birth.php</code></td>
+    <td>Birth and Death Records Search</td>
+    <td class="status-done">Complete</td>
+    <td>8</td>
+  </tr>
+  <tr>
+    <td><code>marriage.php</code></td>
+    <td>Marriage Record Search — Prior to 1994</td>
+    <td class="status-done">Complete</td>
+    <td>7</td>
+  </tr>
+  <tr>
+    <td><code>marriage2.php</code></td>
+    <td>Marriage Record Search — 1994 to Present</td>
+    <td class="status-done">Complete</td>
+    <td>3</td>
+  </tr>
+  <tr>
+    <td><code>records.php</code></td>
+    <td>Case Search</td>
+    <td class="status-done">Complete</td>
+    <td>6</td>
+  </tr>
+  <tr>
+    <td><code>estates.php</code></td>
+    <td>Estate Administration</td>
+    <td class="status-done">Complete</td>
+    <td>9</td>
+  </tr>
+  <tr>
+    <td><code>guardian.php</code></td>
+    <td>Guardianships</td>
+    <td class="status-done">Complete</td>
+    <td>8</td>
+  </tr>
+  <tr>
+    <td><code>adopt.php</code></td>
+    <td>Adoptions</td>
+    <td class="status-done">Complete</td>
+    <td>5</td>
+  </tr>
+  <tr>
+    <td><code>trusts.php</code></td>
+    <td>Trusts</td>
+    <td class="status-done">Complete</td>
+    <td>6</td>
+  </tr>
+  <tr>
+    <td><code>mental.php</code></td>
+    <td>Mental Health</td>
+    <td class="status-done">Complete</td>
+    <td>5</td>
+  </tr>
+  <tr>
+    <td><code>birthregcorrections.php</code></td>
+    <td>Birth Registration and Corrections</td>
+    <td class="status-done">Complete</td>
+    <td>10</td>
+  </tr>
+  <tr>
+    <td><code>marriagelicense.php</code></td>
+    <td>Marriage License</td>
+    <td class="status-done">Complete</td>
+    <td>5</td>
+  </tr>
+  <tr>
+    <td><code>disinterment.php</code></td>
+    <td>Disinterment</td>
+    <td class="status-done">Complete</td>
+    <td>2</td>
+  </tr>
+  <tr class="total-row">
+    <td colspan="3">Total Fixes Applied</td>
+    <td>85</td>
+  </tr>
+</table>
+
+<!-- HEADER.PHP -->
+<h2>header.php — Shared Header <span class="badge">1 fix</span></h2>
+<div class="page-section">
+<ul>
+  <li>Implemented dynamic page title using <code>$page_title</code> PHP variable: <code>&lt;?php echo isset($page_title) ? $page_title . ' | Sandusky County Probate Court' : 'Sandusky County Probate Court'; ?&gt;</code> — every page now has a unique, descriptive title</li>
+</ul>
+</div>
+
+<!-- STYLE.CSS -->
+<h2>style.css — Global Stylesheet <span class="badge">1 fix</span></h2>
+<div class="page-section">
+<ul>
+  <li>Added <code>.sr-only</code> visually-hidden CSS class (Materialize CSS does not include this built-in) to support screen-reader-only text throughout the site</li>
+</ul>
+</div>
+
+<!-- INDEX.PHP -->
+<h2>index.php — Home Page <span class="badge">9 fixes</span></h2>
+<div class="page-section">
+<ul>
+  <li>Set page title: <code>$page_title = "Home"</code></li>
+  <li>Added skip navigation link: <code>&lt;a href="#main-content" class="skip-link"&gt;Skip to main content&lt;/a&gt;</code></li>
+  <li>Added <code>&lt;main id="main-content"&gt;</code> landmark wrapper with visually-hidden <code>&lt;h1 class="sr-only"&gt;</code> for screen reader page identification</li>
+  <li>Removed invalid <code>&lt;div&gt;</code> nested inside <code>&lt;p&gt;</code> tag</li>
+  <li>Changed "Judge Brad Smith" heading from H3 to H2 — fixed skipped heading level</li>
+  <li>Changed "PROBATE COURT NEWS" heading from H1 to H2 — page must have only one H1</li>
+  <li>Changed thank-you message from H3 to <code>&lt;p&gt;</code> — not a structural heading</li>
+  <li>Changed news card title from <code>&lt;span class="dki-boldhead"&gt;</code> to <code>&lt;h3&gt;</code> — proper heading for card content</li>
+  <li>Set <code>alt=""</code> on all 10 service card images — images are decorative when the same link contains a heading with identical text, preventing duplicate screen reader announcements</li>
+</ul>
+</div>
+
+<!-- BIRTH.PHP -->
+<h2>birth.php — Birth and Death Records Search <span class="badge">8 fixes</span></h2>
+<div class="page-section">
+<ul>
+  <li>Set page title: <code>$page_title = "Birth and Death Records Search"</code></li>
+  <li>Added skip navigation link</li>
+  <li>Added <code>&lt;main id="main-content"&gt;</code> landmark wrapper</li>
+  <li>Fixed markdown syntax appearing as literal link text for <code>www.scpublichealth.com</code></li>
+  <li>Added <code>aria-label</code> with new tab warning to Sandusky County Board of Health website link</li>
+  <li>Added descriptive <code>aria-label</code> to non-descriptive "SEARCH HERE" link</li>
+  <li>Added descriptive <code>aria-label</code> to non-descriptive "here" link for Case Management System</li>
+  <li>Added descriptive <code>alt</code> text to both instructional screenshot images</li>
+</ul>
+</div>
+
+<!-- MARRIAGE.PHP (PRIOR 1994) -->
+<h2>marriage.php — Marriage Record Search Prior to 1994 <span class="badge">7 fixes</span></h2>
+<div class="page-section">
+<ul>
+  <li>Set page title: <code>$page_title = "Marriage Record Search Prior to 1994"</code></li>
+  <li>Added skip navigation link</li>
+  <li>Added <code>&lt;main id="main-content"&gt;</code> landmark wrapper</li>
+  <li>Removed invalid <code>&lt;p&gt;</code> wrappers around two <code>&lt;ul&gt;</code> elements</li>
+  <li>Added descriptive <code>aria-label</code> to all 4 "SEARCH HERE" links</li>
+  <li>Added descriptive <code>alt</code> text to all 4 instructional screenshot images</li>
+</ul>
+</div>
+
+<!-- MARRIAGE2.PHP -->
+<h2>marriage2.php — Marriage Record Search 1994 to Present <span class="badge">3 fixes</span></h2>
+<div class="page-section">
+<ul>
+  <li>Set page title: <code>$page_title = "Marriage Record Search 1994 to Present"</code></li>
+  <li>Added descriptive <code>aria-label</code> to "SEARCH HERE" external link</li>
+  <li>Rewrote non-descriptive "here" link with descriptive text and new tab <code>aria-label</code></li>
+</ul>
+</div>
+
+<!-- RECORDS.PHP -->
+<h2>records.php — Case Search <span class="badge">6 fixes</span></h2>
+<div class="page-section">
+<ul>
+  <li>Set page title: <code>$page_title = "Case Search"</code></li>
+  <li>Added skip navigation link</li>
+  <li>Added <code>&lt;main id="main-content"&gt;</code> landmark wrapper</li>
+  <li>Removed invalid <code>&lt;p&gt;</code> wrapper around <code>&lt;ul&gt;</code> element</li>
+  <li>Added descriptive <code>aria-label</code> to both "SEARCH HERE" external links</li>
+  <li>Added descriptive <code>alt</code> text to both instructional screenshot images</li>
+</ul>
+</div>
+
+<!-- ESTATES.PHP -->
+<h2>estates.php — Estate Administration <span class="badge">9 fixes</span></h2>
+<div class="page-section">
+<ul>
+  <li>Set page title: <code>$page_title = "Estate Administration"</code></li>
+  <li>Added skip navigation link</li>
+  <li>Added <code>&lt;main id="main-content"&gt;</code> landmark wrapper</li>
+  <li>Removed invalid <code>&lt;p&gt;</code> wrapper around <code>&lt;ul&gt;</code> element</li>
+  <li>Added descriptive <code>aria-label</code> with new tab warnings to all external and search links</li>
+  <li>Added <code>aria-label</code> with PDF and new tab warnings to all 25 estate form PDF links</li>
+  <li>Changed all 10 FAQ questions from <code>&lt;span class="dki-boldhead"&gt;</code> inside <code>&lt;p&gt;</code> to proper <code>&lt;h3&gt;</code> heading elements</li>
+  <li>Fixed malformed <code>&lt;/&lt;h3&gt;</code> closing tag</li>
+  <li>Fixed missing <code>&lt;p&gt;</code> opening tags on several FAQ answer paragraphs</li>
+</ul>
+</div>
+
+<!-- GUARDIAN.PHP -->
+<h2>guardian.php — Guardianships <span class="badge">8 fixes</span></h2>
+<div class="page-section">
+<ul>
+  <li>Set page title: <code>$page_title = "Guardianships"</code></li>
+  <li>Added skip navigation link</li>
+  <li>Added <code>&lt;main id="main-content"&gt;</code> landmark wrapper</li>
+  <li>Added <code>aria-label</code> with new tab warnings to all 4 external links</li>
+  <li>Added <code>aria-label</code> with PDF and new tab warnings to all 27 PDF form links across Administration, Emergency, and Successor sections</li>
+  <li>Changed all 9 FAQ questions from <code>&lt;span class="dki-boldhead"&gt;</code> to proper <code>&lt;h3&gt;</code> heading elements</li>
+  <li>Fixed duplicate <code>aria-label</code> attributes on 2 form links (HTML only uses the first occurrence)</li>
+  <li>Fixed missing <code>&lt;p&gt;</code> opening tag on the last FAQ answer paragraph</li>
+</ul>
+</div>
+
+<!-- ADOPT.PHP -->
+<h2>adopt.php — Adoptions <span class="badge">5 fixes</span></h2>
+<div class="page-section">
+<ul>
+  <li>Set page title: <code>$page_title = "Adoption"</code></li>
+  <li>Added <code>&lt;main id="main-content"&gt;</code> landmark wrapper (skip link was already present)</li>
+  <li>Fixed malformed <code>&lt;/&lt;h3&gt;</code> closing tag on "WHAT IS AN OPEN ADOPTION?" heading</li>
+  <li>Added <code>aria-label</code> with new tab warnings to all 5 external links</li>
+  <li>Added <code>aria-label</code> with PDF and new tab warnings to all 9 adoption form PDF links</li>
+</ul>
+</div>
+
+<!-- TRUSTS.PHP -->
+<h2>trusts.php — Trusts <span class="badge">6 fixes</span></h2>
+<div class="page-section">
+<ul>
+  <li>Set page title: <code>$page_title = "Trusts"</code></li>
+  <li>Added skip navigation link</li>
+  <li>Removed invalid <code>&lt;p&gt;</code> wrapper around <code>&lt;ul&gt;</code> in Types of Trusts section</li>
+  <li>Added <code>aria-label</code> with new tab warnings to both Sandusky County Title Office map links</li>
+  <li>Added descriptive <code>aria-label</code> to vehicle "SEARCH HERE" link: <em>"Search vehicle title information on Sandusky County website (opens in new tab)"</em></li>
+  <li>Added descriptive <code>aria-label</code> to watercraft "SEARCH HERE" link: <em>"Search watercraft title information on Sandusky County website (opens in new tab)"</em></li>
+  <li>Added <code>aria-label</code> with PDF and new tab warnings to all 8 trust form PDF links</li>
+</ul>
+</div>
+
+<!-- MENTAL.PHP -->
+<h2>mental.php — Mental Health <span class="badge">5 fixes</span></h2>
+<div class="page-section">
+<ul>
+  <li>Set page title: <code>$page_title = "Mental Health"</code></li>
+  <li>Added descriptive <code>aria-label</code> with PDF and new tab warning to "SEARCH HERE" Declaration form link</li>
+  <li>Added <code>aria-label</code> with new tab warnings to all 3 Mental Health Resources external links (NAMI National, NAMI Seneca/Sandusky/Wyandot, Firelands Counseling)</li>
+  <li>Added <code>aria-label</code> with PDF and new tab warning to Ohio Declaration for Mental Health Treatment form link in Forms section</li>
+</ul>
+</div>
+
+<!-- BIRTHREGCORRECTIONS.PHP -->
+<h2>birthregcorrections.php — Birth Registration and Corrections <span class="badge">10 fixes</span></h2>
+<div class="page-section">
+<ul>
+  <li>Set page title: <code>$page_title = "Birth Registration and Corrections"</code> (corrected from incorrect "Mental Health" copy)</li>
+  <li>Fixed markdown syntax appearing as literal text in 3 external website links: <code>www.scpublichealth.com</code>, <code>www.odh.ohio.gov</code>, and <code>www.oh-paternity.com</code></li>
+  <li>Added descriptive <code>aria-label</code> to Case Management System "here" link</li>
+  <li>Added descriptive <code>aria-label</code> to internal "SEARCH HERE" court costs link</li>
+  <li>Added <code>aria-label="Phone: 419-..."</code> to all 5 phone number <code>tel:</code> links on the page</li>
+  <li>Added <code>aria-label</code> with PDF and new tab warning to inline HEA 2745 and HEA 2782 links in Delayed Registration procedure</li>
+  <li>Added <code>aria-label</code> with PDF and new tab warning to inline HEA 2783 link in Correcting Birth Records procedure</li>
+  <li>Added <code>aria-label</code> with PDF and new tab warning to both "Evidence" PDF list links</li>
+  <li>Added <code>aria-label</code> with PDF and new tab warnings to all 3 Forms section PDF links</li>
+  <li>Changed all 3 FAQ questions from <code>&lt;span class="dki-boldhead"&gt;</code> inside <code>&lt;p&gt;</code> to proper <code>&lt;h3&gt;</code> heading elements</li>
+</ul>
+</div>
+
+<!-- MARRIAGELICENSE.PHP -->
+<h2>marriagelicense.php — Marriage License <span class="badge">5 fixes</span></h2>
+<div class="page-section">
+<ul>
+  <li>Set page title: <code>$page_title = "Marriage License"</code></li>
+  <li>Added <code>aria-label="100 N. Park Ave., Fremont, OH 43420 (opens in new tab)"</code> to courthouse map link</li>
+  <li>Added <code>aria-label="Licensed Ministers on Ohio Secretary of State website (opens in new tab)"</code> to Licensed Ministers link</li>
+  <li>Added <code>aria-hidden="true"</code> to decorative Material icon inside the Apply Online submit button</li>
+  <li>Changed invalid <code>&lt;p&gt;</code> wrapper around <code>&lt;form&gt;</code> element to <code>&lt;div&gt;</code></li>
+</ul>
+</div>
+
+<!-- DISINTERMENT.PHP -->
+<h2>disinterment.php — Disinterment <span class="badge">2 fixes</span></h2>
+<div class="page-section">
+<ul>
+  <li>Set page title: <code>$page_title = "Disinterment"</code> (corrected from incorrect "Death License" copy)</li>
+  <li>Added descriptive <code>aria-label</code> with new tab warning to "SEARCH HERE" Ohio Supreme Court forms link</li>
+</ul>
+</div>
+
+<!-- COMMON FIXES -->
+<h2>Common Fixes Applied Across All Pages</h2>
+<div class="page-section">
+<ul>
+  <li><strong>Skip link:</strong> <code>&lt;a href="#main-content" class="skip-link"&gt;Skip to main content&lt;/a&gt;</code> added to every page for keyboard navigation</li>
+  <li><strong>Main landmark:</strong> <code>&lt;main id="main-content"&gt;</code> added to every page so the skip link target is valid</li>
+  <li><strong>Page titles:</strong> Every page given a unique, descriptive title in the format <em>Page Name | Sandusky County Probate Court</em> via dynamic PHP variable</li>
+  <li><strong>Heading hierarchy:</strong> Each page verified to have one H1, with subsections using H2 and H3 in proper order — no skipped levels</li>
+  <li><strong>FAQ headings:</strong> All FAQ questions changed from <code>&lt;span class="dki-boldhead"&gt;</code> inside <code>&lt;p&gt;</code> to semantic <code>&lt;h3&gt;</code> elements throughout estates.php, guardian.php, and birthregcorrections.php</li>
+  <li><strong>External links:</strong> All links opening in a new tab include an <code>aria-label</code> warning of "(opens in new tab)"</li>
+  <li><strong>PDF links:</strong> All PDF links include "PDF" and "(opens in new tab)" in their <code>aria-label</code></li>
+  <li><strong>Non-descriptive links:</strong> All "SEARCH HERE" and "here" links given descriptive <code>aria-label</code> values explaining their destination and purpose</li>
+  <li><strong>Phone links:</strong> All phone numbers converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label="Phone: 419-..."</code></li>
+  <li><strong>Invalid HTML:</strong> <code>&lt;ul&gt;</code> elements removed from inside <code>&lt;p&gt;</code> tags throughout; <code>&lt;form&gt;</code> element removed from inside <code>&lt;p&gt;</code> tag</li>
+  <li><strong>Malformed tags:</strong> <code>&lt;/&lt;h3&gt;</code> closing tag errors corrected in estates.php and adopt.php</li>
+  <li><strong>Decorative icons:</strong> Material Icons used for decoration marked with <code>aria-hidden="true"</code></li>
+</ul>
+</div>
+
+<br>
+<hr class="divider">
+<p style="font-size:9pt;color:#666;text-align:center;">
+  Sandusky County Probate Court &nbsp;|&nbsp; WCAG 2.1 Level AA Accessibility Review — Final Report &nbsp;|&nbsp; Digital Kingdom Interprises
+</p>
+
+</body>
+</html>
