@@ -126,9 +126,9 @@
 <div class="cover-block">
   <strong>Project Scope:</strong> Audit and remediation of accessibility barriers across the Sandusky County Probate Court website
   (<em>sanduskycountyprobatecourt.com</em>) to meet ADA compliance requirements under WCAG 2.1 Level AA.
-  All 16 files — including shared infrastructure, navigation, and all content pages — have been reviewed and corrected.
+  All 20 files — including shared infrastructure and all content pages — have been reviewed and corrected.
   Changes cover semantic HTML structure, ARIA attributes, keyboard navigation support, screen reader compatibility,
-  heading hierarchy, image alt text, link context, form accessibility, table accessibility, and iframe identification.
+  heading hierarchy, image alt text, link context, form accessibility, table accessibility, and phone/address markup.
 </div>
 
 <!-- SUMMARY TABLE -->
@@ -186,7 +186,7 @@
     <td><code>estates.php</code></td>
     <td>Estate Administration</td>
     <td class="status-done">Complete</td>
-    <td>9</td>
+    <td>10</td>
   </tr>
   <tr>
     <td><code>guardian.php</code></td>
@@ -230,9 +230,39 @@
     <td class="status-done">Complete</td>
     <td>2</td>
   </tr>
+  <tr>
+    <td><code>namechange.php</code></td>
+    <td>Name Change</td>
+    <td class="status-done">Complete</td>
+    <td>7</td>
+  </tr>
+  <tr>
+    <td><code>otherlinks.php</code></td>
+    <td>Other Links</td>
+    <td class="status-done">Complete</td>
+    <td>3</td>
+  </tr>
+  <tr>
+    <td><code>contact.php</code></td>
+    <td>Contact</td>
+    <td class="status-done">Complete</td>
+    <td>6</td>
+  </tr>
+  <tr>
+    <td><code>court.php</code></td>
+    <td>Court / Judge / Court Costs</td>
+    <td class="status-done">Complete</td>
+    <td>10</td>
+  </tr>
+  <tr>
+    <td><code>localforms.php</code></td>
+    <td>Local Forms</td>
+    <td class="status-done">Complete</td>
+    <td>5</td>
+  </tr>
   <tr class="total-row">
     <td colspan="3">Total Fixes Applied</td>
-    <td>85</td>
+    <td>117</td>
   </tr>
 </table>
 
@@ -320,7 +350,7 @@
 </div>
 
 <!-- ESTATES.PHP -->
-<h2>estates.php — Estate Administration <span class="badge">9 fixes</span></h2>
+<h2>estates.php — Estate Administration <span class="badge">10 fixes</span></h2>
 <div class="page-section">
 <ul>
   <li>Set page title: <code>$page_title = "Estate Administration"</code></li>
@@ -332,6 +362,7 @@
   <li>Changed all 10 FAQ questions from <code>&lt;span class="dki-boldhead"&gt;</code> inside <code>&lt;p&gt;</code> to proper <code>&lt;h3&gt;</code> heading elements</li>
   <li>Fixed malformed <code>&lt;/&lt;h3&gt;</code> closing tag</li>
   <li>Fixed missing <code>&lt;p&gt;</code> opening tags on several FAQ answer paragraphs</li>
+  <li>Converted plain text phone number to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label="Phone: 419-334-6211"</code></li>
 </ul>
 </div>
 
@@ -425,6 +456,72 @@
 </ul>
 </div>
 
+<!-- NAMECHANGE.PHP -->
+<h2>namechange.php — Name Change <span class="badge">7 fixes</span></h2>
+<div class="page-section">
+<ul>
+  <li>Set page title: <code>$page_title = "Name Change"</code> (corrected from incorrect "Disinterment" copy)</li>
+  <li>Fixed malformed <code>&lt;stong&gt;</code> tag (missing "r") in Minor Name Change section</li>
+  <li>Added descriptive <code>aria-label</code> to all 4 internal "SEARCH HERE" court cost links — correctly distinguishing Name Change filing cost vs. certified copy cost in both Adult and Minor sections</li>
+  <li>Added <code>aria-label</code> with PDF and new tab warnings to all 3 inline Adult section form links</li>
+  <li>Added <code>aria-label</code> with PDF and new tab warnings to all 4 inline Minor section form links</li>
+  <li>Added <code>aria-label</code> with PDF and new tab warnings to all 6 Forms section PDF links</li>
+  <li>Added <code>aria-label="Phone: 614-466-2531"</code> to both phone <code>tel:</code> links</li>
+</ul>
+</div>
+
+<!-- OTHERLINKS.PHP -->
+<h2>otherlinks.php — Other Links <span class="badge">3 fixes</span></h2>
+<div class="page-section">
+<ul>
+  <li>Set page title: <code>$page_title = "Other Links"</code></li>
+  <li>Added skip navigation link and <code>&lt;main id="main-content"&gt;</code> landmark wrapper</li>
+  <li>Added <code>aria-label="[link name] (opens in new tab)"</code> to all 20 external links; also removed a trailing space from the <code>www.scpublichealth.com</code> URL</li>
+</ul>
+</div>
+
+<!-- CONTACT.PHP -->
+<h2>contact.php — Contact <span class="badge">6 fixes</span></h2>
+<div class="page-section">
+<ul>
+  <li>Set page title: <code>$page_title = "Contact"</code></li>
+  <li>Added skip navigation link and <code>&lt;main id="main-content"&gt;</code> landmark wrapper</li>
+  <li>Wrapped contact address block in semantic <code>&lt;address&gt;</code> element</li>
+  <li>Added <code>aria-label="100 N. Park Ave., Fremont, OH 43420 (opens in new tab)"</code> to courthouse map link</li>
+  <li>Converted plain text phone number to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label="Phone: 419-334-6211"</code></li>
+  <li>Added <code>aria-label="Fax: 419-334-6210"</code> to fax number for screen reader clarity</li>
+</ul>
+</div>
+
+<!-- COURT.PHP -->
+<h2>court.php — Court / Judge / Court Costs <span class="badge">10 fixes</span></h2>
+<div class="page-section">
+<ul>
+  <li>Set page title: <code>$page_title = "Court"</code></li>
+  <li>Added skip navigation link and <code>&lt;main id="main-content"&gt;</code> landmark wrapper</li>
+  <li>Added <code>alt="Judge Brad Smith"</code> to the Judge's photo — image was missing alt text entirely</li>
+  <li>Added <code>aria-label="100 N. Park Ave., Fremont, OH 43420 (opens in new tab)"</code> to courthouse map link</li>
+  <li>Converted plain text phone number <code>419-334-6211</code> to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></li>
+  <li>Removed invalid <code>&lt;p&gt;</code> wrapper around the Legal Holidays <code>&lt;div&gt;</code> layout block</li>
+  <li>Removed invalid <code>&lt;p&gt;</code> wrappers around both <code>&lt;table&gt;</code> elements</li>
+  <li>Added <code>&lt;caption class="sr-only"&gt;</code>, <code>&lt;thead&gt;</code>, and <code>&lt;th scope="col"&gt;</code> column headers to Court Costs table</li>
+  <li>Added <code>scope="col"</code> to all column headers in the Unclaimed Funds table</li>
+  <li>Added <code>aria-label="Phone: 419-334-6217"</code> to the Amber Broshious contact phone link</li>
+</ul>
+</div>
+
+<!-- LOCALFORMS.PHP -->
+<h2>localforms.php — Local Forms <span class="badge">5 fixes</span></h2>
+<div class="page-section">
+<ul>
+  <li>Set page title: <code>$page_title = "Local Forms"</code></li>
+  <li>Added skip navigation link and <code>&lt;main id="main-content"&gt;</code> landmark wrapper</li>
+  <li>Added <code>aria-hidden="true"</code> to all 10 decorative Material Icons inside collapsible section headers</li>
+  <li>Changed 3 subheadings from H3 to H2 — fixed heading skip H1→H3: Lost/Damaged Wills, Adult Name Change, Minor Name Change</li>
+  <li>Added <code>aria-label="[form name] PDF (opens in new tab)"</code> to all local form PDF links across all 7 collapsible sections (Adoption, Birth Registration, Estate, Guardianship, Mental Health, Name Change, Trust) and all standalone links</li>
+</ul>
+</div>
+
 <!-- COMMON FIXES -->
 <h2>Common Fixes Applied Across All Pages</h2>
 <div class="page-section">
@@ -437,10 +534,12 @@
   <li><strong>External links:</strong> All links opening in a new tab include an <code>aria-label</code> warning of "(opens in new tab)"</li>
   <li><strong>PDF links:</strong> All PDF links include "PDF" and "(opens in new tab)" in their <code>aria-label</code></li>
   <li><strong>Non-descriptive links:</strong> All "SEARCH HERE" and "here" links given descriptive <code>aria-label</code> values explaining their destination and purpose</li>
-  <li><strong>Phone links:</strong> All phone numbers converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label="Phone: 419-..."</code></li>
-  <li><strong>Invalid HTML:</strong> <code>&lt;ul&gt;</code> elements removed from inside <code>&lt;p&gt;</code> tags throughout; <code>&lt;form&gt;</code> element removed from inside <code>&lt;p&gt;</code> tag</li>
-  <li><strong>Malformed tags:</strong> <code>&lt;/&lt;h3&gt;</code> closing tag errors corrected in estates.php and adopt.php</li>
-  <li><strong>Decorative icons:</strong> Material Icons used for decoration marked with <code>aria-hidden="true"</code></li>
+  <li><strong>Phone links:</strong> All phone numbers converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label="Phone: ..."</code></li>
+  <li><strong>Invalid HTML:</strong> <code>&lt;ul&gt;</code> and <code>&lt;table&gt;</code> elements removed from inside <code>&lt;p&gt;</code> tags throughout; <code>&lt;form&gt;</code> element removed from inside <code>&lt;p&gt;</code> tag</li>
+  <li><strong>Malformed tags:</strong> <code>&lt;/&lt;h3&gt;</code> and <code>&lt;stong&gt;</code> tag errors corrected in estates.php, adopt.php, and namechange.php</li>
+  <li><strong>Decorative icons:</strong> All Material Icons used for decoration or layout marked with <code>aria-hidden="true"</code></li>
+  <li><strong>Table accessibility:</strong> Data tables given <code>&lt;caption&gt;</code> elements and <code>&lt;th scope="col"&gt;</code> column headers</li>
+  <li><strong>Address markup:</strong> Contact address blocks wrapped in semantic <code>&lt;address&gt;</code> elements</li>
 </ul>
 </div>
 
