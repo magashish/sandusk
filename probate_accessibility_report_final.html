@@ -19,100 +19,39 @@
     color: #1a1a1a;
     line-height: 1.55;
   }
-  h1 {
-    font-size: 18pt;
-    color: #1a3a5c;
-    margin-bottom: 2px;
-  }
+  h1 { font-size: 18pt; color: #1a3a5c; margin-bottom: 2px; }
   h2 {
-    font-size: 12pt;
-    color: #1a3a5c;
+    font-size: 12pt; color: #1a3a5c;
     border-bottom: 2px solid #1a3a5c;
-    padding-bottom: 3px;
-    margin-top: 24px;
-    margin-bottom: 8px;
+    padding-bottom: 3px; margin-top: 24px; margin-bottom: 8px;
     page-break-after: avoid;
   }
-  .subtitle {
-    font-size: 11pt;
-    color: #444;
-    margin-top: 2px;
-    margin-bottom: 0;
-  }
-  .meta {
-    font-size: 9pt;
-    color: #666;
-    margin-top: 4px;
-    margin-bottom: 20px;
-  }
-  .divider {
-    border: none;
-    border-top: 1px solid #ccc;
-    margin: 6px 0 16px 0;
-  }
-  ul {
-    margin: 4px 0 8px 0;
-    padding-left: 18px;
-  }
-  li {
-    margin-bottom: 3px;
-  }
-  .page-section {
-    margin-bottom: 10px;
-    page-break-inside: avoid;
-  }
+  .subtitle { font-size: 11pt; color: #444; margin-top: 2px; margin-bottom: 0; }
+  .meta { font-size: 9pt; color: #666; margin-top: 4px; margin-bottom: 20px; }
+  .divider { border: none; border-top: 1px solid #ccc; margin: 6px 0 16px 0; }
+  ul { margin: 4px 0 8px 0; padding-left: 18px; }
+  li { margin-bottom: 3px; }
+  .page-section { margin-bottom: 10px; page-break-inside: avoid; }
   .badge {
-    display: inline-block;
-    background: #1a3a5c;
-    color: #fff;
-    font-size: 8pt;
-    padding: 1px 7px;
-    border-radius: 10px;
-    margin-left: 6px;
-    vertical-align: middle;
+    display: inline-block; background: #1a3a5c; color: #fff;
+    font-size: 8pt; padding: 1px 7px; border-radius: 10px;
+    margin-left: 6px; vertical-align: middle;
   }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-    font-size: 10pt;
-  }
-  th {
-    background: #1a3a5c;
-    color: #fff;
-    padding: 6px 10px;
-    text-align: left;
-    font-weight: bold;
-  }
-  td {
-    padding: 5px 10px;
-    border-bottom: 1px solid #ddd;
-    vertical-align: top;
-  }
-  tr:nth-child(even) td {
-    background: #f4f7fb;
-  }
-  .status-done {
-    color: #2a7a2a;
-    font-weight: bold;
-  }
+  table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 10pt; }
+  th { background: #1a3a5c; color: #fff; padding: 6px 10px; text-align: left; font-weight: bold; }
+  td { padding: 5px 10px; border-bottom: 1px solid #ddd; vertical-align: top; }
+  tr:nth-child(even) td { background: #f4f7fb; }
+  .status-done { color: #2a7a2a; font-weight: bold; }
   .cover-block {
-    border-left: 5px solid #1a3a5c;
-    padding: 10px 16px;
-    background: #f4f7fb;
-    margin: 16px 0 24px 0;
+    border-left: 5px solid #1a3a5c; padding: 10px 16px;
+    background: #f4f7fb; margin: 16px 0 24px 0;
   }
   code {
-    font-family: "Courier New", monospace;
-    font-size: 9pt;
-    background: #f0f0f0;
-    padding: 1px 4px;
-    border-radius: 3px;
+    font-family: "Courier New", monospace; font-size: 9pt;
+    background: #f0f0f0; padding: 1px 4px; border-radius: 3px;
   }
   .total-row td {
-    background: #e8f0fb;
-    font-weight: bold;
-    border-top: 2px solid #1a3a5c;
+    background: #e8f0fb; font-weight: bold; border-top: 2px solid #1a3a5c;
   }
 </style>
 </head>
@@ -126,12 +65,11 @@
 <div class="cover-block">
   <strong>Project Scope:</strong> Audit and remediation of accessibility barriers across the Sandusky County Probate Court website
   (<em>sanduskycountyprobatecourt.com</em>) to meet ADA compliance requirements under WCAG 2.1 Level AA.
-  All 13 files — including shared infrastructure and all content pages — have been reviewed and corrected.
+  All 19 files — including shared infrastructure and all content pages — have been reviewed and corrected.
   Changes cover semantic HTML structure, ARIA attributes, keyboard navigation support, screen reader compatibility,
   heading hierarchy, image alt text, link context, form accessibility, table accessibility, and phone/address markup.
 </div>
 
-<!-- SUMMARY TABLE -->
 <h2>Pages Summary</h2>
 <table>
   <tr>
@@ -160,15 +98,21 @@
   </tr>
   <tr>
     <td><code>birth.php</code></td>
-    <td>Birth and Death Records Search</td>
+    <td>Birth Registration and Corrections</td>
     <td class="status-done">Complete</td>
-    <td>8</td>
+    <td>10</td>
   </tr>
   <tr>
-    <td><code>marriage.php</code></td>
+    <td><code>marriage-prior-rec.php</code></td>
     <td>Marriage Record Search — Prior to 1994</td>
     <td class="status-done">Complete</td>
     <td>7</td>
+  </tr>
+  <tr>
+    <td><code>marriage-present-rec.php</code></td>
+    <td>Marriage Record Search — 1994 to Present</td>
+    <td class="status-done">Complete</td>
+    <td>3</td>
   </tr>
   <tr>
     <td><code>records.php</code></td>
@@ -207,6 +151,30 @@
     <td>5</td>
   </tr>
   <tr>
+    <td><code>marriage.php</code></td>
+    <td>Marriage License</td>
+    <td class="status-done">Complete</td>
+    <td>5</td>
+  </tr>
+  <tr>
+    <td><code>Death.php</code></td>
+    <td>Disinterment</td>
+    <td class="status-done">Complete</td>
+    <td>2</td>
+  </tr>
+  <tr>
+    <td><code>name.php</code></td>
+    <td>Name Change</td>
+    <td class="status-done">Complete</td>
+    <td>7</td>
+  </tr>
+  <tr>
+    <td><code>community.php</code></td>
+    <td>Other Links</td>
+    <td class="status-done">Complete</td>
+    <td>3</td>
+  </tr>
+  <tr>
     <td><code>contact.php</code></td>
     <td>Contact</td>
     <td class="status-done">Complete</td>
@@ -218,9 +186,15 @@
     <td class="status-done">Complete</td>
     <td>10</td>
   </tr>
+  <tr>
+    <td><code>forms.php</code></td>
+    <td>Local Forms</td>
+    <td class="status-done">Complete</td>
+    <td>5</td>
+  </tr>
   <tr class="total-row">
     <td colspan="3">Total Fixes Applied</td>
-    <td>82</td>
+    <td>109</td>
   </tr>
 </table>
 
@@ -257,22 +231,24 @@
 </div>
 
 <!-- BIRTH.PHP -->
-<h2>birth.php — Birth and Death Records Search <span class="badge">8 fixes</span></h2>
+<h2>birth.php — Birth Registration and Corrections <span class="badge">10 fixes</span></h2>
 <div class="page-section">
 <ul>
-  <li>Set page title: <code>$page_title = "Birth and Death Records Search"</code></li>
+  <li>Set page title: <code>$page_title = "Birth Registration and Corrections"</code></li>
   <li>Added skip navigation link</li>
   <li>Added <code>&lt;main id="main-content"&gt;</code> landmark wrapper</li>
-  <li>Fixed markdown syntax appearing as literal link text for <code>www.scpublichealth.com</code></li>
-  <li>Added <code>aria-label</code> with new tab warning to Sandusky County Board of Health website link</li>
-  <li>Added descriptive <code>aria-label</code> to non-descriptive "SEARCH HERE" link</li>
-  <li>Added descriptive <code>aria-label</code> to non-descriptive "here" link for Case Management System</li>
-  <li>Added descriptive <code>alt</code> text to both instructional screenshot images</li>
+  <li>Fixed markdown syntax appearing as literal text in 3 external website links: <code>www.scpublichealth.com</code>, <code>www.odh.ohio.gov</code>, and <code>www.oh-paternity.com</code></li>
+  <li>Added descriptive <code>aria-label</code> to Case Management System "here" link</li>
+  <li>Added descriptive <code>aria-label</code> to internal "SEARCH HERE" court costs link</li>
+  <li>Added <code>aria-label="Phone: 419-..."</code> to all phone number <code>tel:</code> links on the page</li>
+  <li>Added <code>aria-label</code> with PDF and new tab warnings to all inline HEA form links in both procedure sections</li>
+  <li>Added <code>aria-label</code> with PDF and new tab warnings to all Forms section PDF links</li>
+  <li>Changed all 3 FAQ questions from <code>&lt;span class="dki-boldhead"&gt;</code> inside <code>&lt;p&gt;</code> to proper <code>&lt;h3&gt;</code> heading elements</li>
 </ul>
 </div>
 
-<!-- MARRIAGE.PHP (PRIOR 1994) -->
-<h2>marriage.php — Marriage Record Search Prior to 1994 <span class="badge">7 fixes</span></h2>
+<!-- MARRIAGE-PRIOR-REC.PHP -->
+<h2>marriage-prior-rec.php — Marriage Record Search Prior to 1994 <span class="badge">7 fixes</span></h2>
 <div class="page-section">
 <ul>
   <li>Set page title: <code>$page_title = "Marriage Record Search Prior to 1994"</code></li>
@@ -281,6 +257,16 @@
   <li>Removed invalid <code>&lt;p&gt;</code> wrappers around two <code>&lt;ul&gt;</code> elements</li>
   <li>Added descriptive <code>aria-label</code> to all 4 "SEARCH HERE" links</li>
   <li>Added descriptive <code>alt</code> text to all 4 instructional screenshot images</li>
+</ul>
+</div>
+
+<!-- MARRIAGE-PRESENT-REC.PHP -->
+<h2>marriage-present-rec.php — Marriage Record Search 1994 to Present <span class="badge">3 fixes</span></h2>
+<div class="page-section">
+<ul>
+  <li>Set page title: <code>$page_title = "Marriage Record Search 1994 to Present"</code></li>
+  <li>Added descriptive <code>aria-label</code> to "SEARCH HERE" external link</li>
+  <li>Rewrote non-descriptive "here" link with descriptive text and new tab <code>aria-label</code></li>
 </ul>
 </div>
 
@@ -366,6 +352,51 @@
 </ul>
 </div>
 
+<!-- MARRIAGE.PHP -->
+<h2>marriage.php — Marriage License <span class="badge">5 fixes</span></h2>
+<div class="page-section">
+<ul>
+  <li>Set page title: <code>$page_title = "Marriage License"</code></li>
+  <li>Added <code>aria-label="100 N. Park Ave., Fremont, OH 43420 (opens in new tab)"</code> to courthouse map link</li>
+  <li>Added <code>aria-label="Licensed Ministers on Ohio Secretary of State website (opens in new tab)"</code> to Licensed Ministers link</li>
+  <li>Added <code>aria-hidden="true"</code> to decorative Material icon inside the Apply Online submit button</li>
+  <li>Changed invalid <code>&lt;p&gt;</code> wrapper around <code>&lt;form&gt;</code> element to <code>&lt;div&gt;</code></li>
+</ul>
+</div>
+
+<!-- DEATH.PHP -->
+<h2>Death.php — Disinterment <span class="badge">2 fixes</span></h2>
+<div class="page-section">
+<ul>
+  <li>Set page title: <code>$page_title = "Disinterment"</code> (corrected from incorrect "Death License" copy)</li>
+  <li>Added descriptive <code>aria-label</code> with new tab warning to "SEARCH HERE" Ohio Supreme Court forms link</li>
+</ul>
+</div>
+
+<!-- NAME.PHP -->
+<h2>name.php — Name Change <span class="badge">7 fixes</span></h2>
+<div class="page-section">
+<ul>
+  <li>Set page title: <code>$page_title = "Name Change"</code> (corrected from incorrect "Disinterment" copy)</li>
+  <li>Fixed malformed <code>&lt;stong&gt;</code> tag (missing "r") in Minor Name Change section</li>
+  <li>Added descriptive <code>aria-label</code> to all 4 internal "SEARCH HERE" court cost links — correctly distinguishing Name Change filing cost vs. certified copy cost in both Adult and Minor sections</li>
+  <li>Added <code>aria-label</code> with PDF and new tab warnings to all 3 inline Adult section form links</li>
+  <li>Added <code>aria-label</code> with PDF and new tab warnings to all 4 inline Minor section form links</li>
+  <li>Added <code>aria-label</code> with PDF and new tab warnings to all 6 Forms section PDF links</li>
+  <li>Added <code>aria-label="Phone: 614-466-2531"</code> to both phone <code>tel:</code> links</li>
+</ul>
+</div>
+
+<!-- COMMUNITY.PHP -->
+<h2>community.php — Other Links <span class="badge">3 fixes</span></h2>
+<div class="page-section">
+<ul>
+  <li>Set page title: <code>$page_title = "Other Links"</code></li>
+  <li>Added skip navigation link and <code>&lt;main id="main-content"&gt;</code> landmark wrapper</li>
+  <li>Added <code>aria-label="[link name] (opens in new tab)"</code> to all 20 external links; also removed a trailing space from the <code>www.scpublichealth.com</code> URL</li>
+</ul>
+</div>
+
 <!-- CONTACT.PHP -->
 <h2>contact.php — Contact <span class="badge">6 fixes</span></h2>
 <div class="page-section">
@@ -396,6 +427,18 @@
 </ul>
 </div>
 
+<!-- FORMS.PHP -->
+<h2>forms.php — Local Forms <span class="badge">5 fixes</span></h2>
+<div class="page-section">
+<ul>
+  <li>Set page title: <code>$page_title = "Local Forms"</code></li>
+  <li>Added skip navigation link and <code>&lt;main id="main-content"&gt;</code> landmark wrapper</li>
+  <li>Added <code>aria-hidden="true"</code> to all 10 decorative Material Icons inside collapsible section headers</li>
+  <li>Changed 3 subheadings from H3 to H2 — fixed heading skip H1→H3: Lost/Damaged Wills, Adult Name Change, Minor Name Change</li>
+  <li>Added <code>aria-label="[form name] PDF (opens in new tab)"</code> to all local form PDF links across all 7 collapsible sections (Adoption, Birth Registration, Estate, Guardianship, Mental Health, Name Change, Trust) and all standalone links</li>
+</ul>
+</div>
+
 <!-- COMMON FIXES -->
 <h2>Common Fixes Applied Across All Pages</h2>
 <div class="page-section">
@@ -404,13 +447,13 @@
   <li><strong>Main landmark:</strong> <code>&lt;main id="main-content"&gt;</code> added to every page so the skip link target is valid</li>
   <li><strong>Page titles:</strong> Every page given a unique, descriptive title in the format <em>Page Name | Sandusky County Probate Court</em> via dynamic PHP variable</li>
   <li><strong>Heading hierarchy:</strong> Each page verified to have one H1, with subsections using H2 and H3 in proper order — no skipped levels</li>
-  <li><strong>FAQ headings:</strong> All FAQ questions changed from <code>&lt;span class="dki-boldhead"&gt;</code> inside <code>&lt;p&gt;</code> to semantic <code>&lt;h3&gt;</code> elements throughout estates.php and guardian.php</li>
+  <li><strong>FAQ headings:</strong> All FAQ questions changed from <code>&lt;span class="dki-boldhead"&gt;</code> inside <code>&lt;p&gt;</code> to semantic <code>&lt;h3&gt;</code> elements throughout estates.php, guardian.php, and birth.php</li>
   <li><strong>External links:</strong> All links opening in a new tab include an <code>aria-label</code> warning of "(opens in new tab)"</li>
   <li><strong>PDF links:</strong> All PDF links include "PDF" and "(opens in new tab)" in their <code>aria-label</code></li>
   <li><strong>Non-descriptive links:</strong> All "SEARCH HERE" and "here" links given descriptive <code>aria-label</code> values explaining their destination and purpose</li>
   <li><strong>Phone links:</strong> All phone numbers converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label="Phone: ..."</code></li>
   <li><strong>Invalid HTML:</strong> <code>&lt;ul&gt;</code> and <code>&lt;table&gt;</code> elements removed from inside <code>&lt;p&gt;</code> tags throughout; <code>&lt;form&gt;</code> element removed from inside <code>&lt;p&gt;</code> tag</li>
-  <li><strong>Malformed tags:</strong> <code>&lt;/&lt;h3&gt;</code> tag errors corrected in estates.php and adopt.php</li>
+  <li><strong>Malformed tags:</strong> <code>&lt;/&lt;h3&gt;</code> and <code>&lt;stong&gt;</code> tag errors corrected in estates.php, adopt.php, and name.php</li>
   <li><strong>Decorative icons:</strong> All Material Icons used for decoration or layout marked with <code>aria-hidden="true"</code></li>
   <li><strong>Table accessibility:</strong> Data tables given <code>&lt;caption&gt;</code> elements and <code>&lt;th scope="col"&gt;</code> column headers</li>
   <li><strong>Address markup:</strong> Contact address blocks wrapped in semantic <code>&lt;address&gt;</code> elements</li>
