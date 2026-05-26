@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sandusky County Juvenile Court – Accessibility Report</title>
+<style>
+  body { font-family: Arial, sans-serif; font-size: 14px; color: #222; margin: 0; padding: 0; }
+  header { background: #1a237e; color: #fff; padding: 32px 40px 24px; }
+  header h1 { margin: 0 0 6px; font-size: 24px; }
+  header p { margin: 0; font-size: 13px; opacity: .85; }
+  .summary-bar { background: #e8eaf6; padding: 18px 40px; display: flex; gap: 40px; flex-wrap: wrap; border-bottom: 2px solid #c5cae9; }
+  .summary-bar div { text-align: center; }
+  .summary-bar .num { font-size: 32px; font-weight: bold; color: #1a237e; }
+  .summary-bar .lbl { font-size: 12px; color: #555; margin-top: 2px; }
+  .intro { padding: 24px 40px 0; max-width: 900px; }
+  .intro p { line-height: 1.6; }
+  .file-section { margin: 28px 40px 0; border: 1px solid #ddd; border-radius: 6px; overflow: hidden; }
+  .file-header { background: #1a237e; color: #fff; padding: 10px 18px; font-size: 15px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+  .file-header .badge { background: #fff; color: #1a237e; border-radius: 12px; padding: 2px 10px; font-size: 12px; font-weight: bold; }
+  table { width: 100%; border-collapse: collapse; }
+  th { background: #e8eaf6; color: #1a237e; text-align: left; padding: 8px 14px; font-size: 13px; border-bottom: 2px solid #c5cae9; }
+  td { padding: 8px 14px; border-bottom: 1px solid #eee; font-size: 13px; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #fafafa; }
+  .tag { display: inline-block; border-radius: 3px; padding: 1px 7px; font-size: 11px; font-weight: bold; white-space: nowrap; }
+  .tag-critical { background: #ffebee; color: #c62828; }
+  .tag-major { background: #fff3e0; color: #e65100; }
+  .tag-minor { background: #e8f5e9; color: #2e7d32; }
+  code { background: #f5f5f5; padding: 1px 5px; border-radius: 3px; font-size: 12px; font-family: monospace; }
+  footer-note { display: block; padding: 24px 40px; color: #777; font-size: 12px; border-top: 1px solid #ddd; margin-top: 32px; }
+  .wcag { font-size: 11px; color: #888; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Sandusky County Juvenile Court — ADA / WCAG 2.1 Level AA Accessibility Report</h1>
+  <p>sanduskycountyjuvenilecourt.com &nbsp;|&nbsp; Audit Date: May 2026 &nbsp;|&nbsp; Prepared by Digital Kingdom Interprises</p>
+</header>
+
+<div class="summary-bar">
+  <div><div class="num">19</div><div class="lbl">Files Audited</div></div>
+  <div><div class="num">116</div><div class="lbl">Total Fixes</div></div>
+  <div><div class="num">WCAG 2.1</div><div class="lbl">Standard</div></div>
+  <div><div class="num">Level AA</div><div class="lbl">Conformance Target</div></div>
+</div>
+
+<div class="intro">
+  <p>This report documents all accessibility issues identified across the Sandusky County Juvenile Court website and the recommended fixes applied to each file. All changes conform to WCAG 2.1 Level AA and ADA Title II requirements. No visual design or layout changes were made. Issues are categorized as <strong>Critical</strong> (fails WCAG Success Criterion), <strong>Major</strong> (significant barrier for assistive technology users), or <strong>Minor</strong> (best practice improvement).</p>
+</div>
+
+<!-- ============================================================ -->
+<!-- style.css -->
+<!-- ============================================================ -->
+<div class="file-section">
+  <div class="file-header">style.css <span class="badge">1 fix</span></div>
+  <table>
+    <thead><tr><th>#</th><th>Issue</th><th>Fix</th><th>Severity</th><th class="wcag">WCAG</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>No <code>.sr-only</code> or <code>.skip-link</code> CSS classes defined. Materialize CSS does not include them, so skip links and visually-hidden elements are unstyled.</td><td>Added both classes to style.css:<br><code>.sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }</code><br><code>.skip-link { position:absolute; top:-40px; left:0; background:#1a237e; color:#fff; padding:8px; z-index:9999; }</code><br><code>.skip-link:focus { top:0; }</code></td><td><span class="tag tag-critical">Critical</span></td><td>2.4.1</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============================================================ -->
+<!-- header.php -->
+<!-- ============================================================ -->
+<div class="file-section">
+  <div class="file-header">header.php <span class="badge">2 fixes</span></div>
+  <table>
+    <thead><tr><th>#</th><th>Issue</th><th>Fix</th><th>Severity</th><th class="wcag">WCAG</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Static <code>&lt;title&gt;</code> on all pages — every page reads "Sandusky County Juvenile Court - Judge Brad Smith", giving screen reader users no way to distinguish pages.</td><td>Changed to dynamic title: <code>&lt;?php echo isset($page_title) ? $page_title . ' | Sandusky County Juvenile Court' : 'Sandusky County Juvenile Court'; ?&gt;</code>. Each page sets <code>$page_title</code> before the include.</td><td><span class="tag tag-critical">Critical</span></td><td>2.4.2</td></tr>
+      <tr><td>2</td><td>No skip navigation link — keyboard and screen reader users must tab through the entire navigation on every page to reach main content.</td><td>Added as first element inside <code>&lt;body&gt;</code>: <code>&lt;a href="#main-content" class="skip-link"&gt;Skip to main content&lt;/a&gt;</code></td><td><span class="tag tag-critical">Critical</span></td><td>2.4.1</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============================================================ -->
+<!-- footer.php -->
+<!-- ============================================================ -->
+<div class="file-section">
+  <div class="file-header">footer.php <span class="badge">8 fixes</span></div>
+  <table>
+    <thead><tr><th>#</th><th>Issue</th><th>Fix</th><th>Severity</th><th class="wcag">WCAG</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Parallax background image has <code>alt="Judge's Gavel"</code> — decorative image announces unnecessary text to screen readers.</td><td>Changed to <code>alt=""</code></td><td><span class="tag tag-major">Major</span></td><td>1.1.1</td></tr>
+      <tr><td>2</td><td><code>&lt;h2&gt;</code> used for the court name in the footer — injects an artificial heading into every page's document outline.</td><td>Changed to <code>&lt;p&gt;&lt;strong&gt;Sandusky County Juvenile and Probate Court&lt;/strong&gt;&lt;/p&gt;</code></td><td><span class="tag tag-major">Major</span></td><td>1.3.1</td></tr>
+      <tr><td>3</td><td>Address, phone, and fax information not wrapped in <code>&lt;address&gt;</code> — screen readers cannot identify it as contact information.</td><td>Wrapped the contact block in <code>&lt;address&gt;</code></td><td><span class="tag tag-minor">Minor</span></td><td>1.3.1</td></tr>
+      <tr><td>4</td><td>Two phone numbers are plain text — screen readers cannot activate them as phone links.</td><td>Changed to: <code>&lt;a href="tel:4193346200" aria-label="Phone Juvenile: 419-334-6200"&gt;</code> and <code>&lt;a href="tel:4193346211" aria-label="Phone Probate: 419-334-6211"&gt;</code></td><td><span class="tag tag-major">Major</span></td><td>2.4.4</td></tr>
+      <tr><td>5</td><td>Fax number is plain text — no screen reader cue that it is a fax rather than a phone number.</td><td>Wrapped in <code>&lt;span aria-label="Fax: 419-334-6210"&gt;</code></td><td><span class="tag tag-minor">Minor</span></td><td>1.3.1</td></tr>
+      <tr><td>6</td><td>Adobe Acrobat link image has no <code>alt</code> attribute — screen readers skip or read the filename.</td><td>Added <code>alt="Get Adobe Acrobat Reader"</code>; added <code>aria-label="Get Adobe Acrobat Reader (opens in new tab)"</code> to the link.</td><td><span class="tag tag-critical">Critical</span></td><td>1.1.1</td></tr>
+      <tr><td>7</td><td>Digital Kingdom Interprises link opens in new tab (<code>target="_blank"</code>) with no warning.</td><td>Added <code>aria-label="Digital Kingdom Interprises website (opens in new tab)"</code></td><td><span class="tag tag-major">Major</span></td><td>2.4.4</td></tr>
+      <tr><td>8</td><td>Footer navigation <code>&lt;ul&gt;</code> has no label — screen readers cannot distinguish it from the main navigation.</td><td>Added <code>aria-label="Footer navigation"</code> to the <code>&lt;ul&gt;</code></td><td><span class="tag tag-minor">Minor</span></td><td>1.3.1</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============================================================ -->
+<!-- menu.php -->
+<!-- ============================================================ -->
+<div class="file-section">
+  <div class="file-header">menu.php <span class="badge">5 fixes</span></div>
+  <table>
+    <thead><tr><th>#</th><th>Issue</th><th>Fix</th><th>Severity</th><th class="wcag">WCAG</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><code>&lt;nav&gt;</code> has no accessible label — with multiple nav landmarks on the page, screen readers cannot distinguish the main navigation from the footer navigation.</td><td>Added <code>aria-label="Main navigation"</code> to <code>&lt;nav&gt;</code></td><td><span class="tag tag-major">Major</span></td><td>1.3.1</td></tr>
+      <tr><td>2</td><td>Logo image <code>alt</code> text was all-caps "SANDUSKY COUNTY JUVENILE COURT" — screen readers may spell it out letter-by-letter.</td><td>Changed to <code>alt="Sandusky County Juvenile Court"</code></td><td><span class="tag tag-minor">Minor</span></td><td>1.1.1</td></tr>
+      <tr><td>3</td><td>Three dropdown trigger links (<code>OTHER INFORMATION</code>, <code>COURT</code>, <code>FAQ</code>) have no ARIA state — screen readers cannot announce that they control dropdown menus.</td><td>Added <code>aria-haspopup="true"</code> and <code>aria-expanded="false"</code> to each dropdown trigger.</td><td><span class="tag tag-critical">Critical</span></td><td>4.1.2</td></tr>
+      <tr><td>4</td><td>Mobile menu toggle button has no accessible label and no expanded state — screen readers read it as an unlabeled button.</td><td>Added <code>aria-label="Open navigation menu"</code> and <code>aria-expanded="false"</code> to the toggle link.</td><td><span class="tag tag-critical">Critical</span></td><td>4.1.2</td></tr>
+      <tr><td>5</td><td>Material Icons <code>&lt;i class="material-icons"&gt;menu&lt;/i&gt;</code> — icon text "menu" is announced by screen readers as content.</td><td>Added <code>aria-hidden="true"</code> to the icon element.</td><td><span class="tag tag-major">Major</span></td><td>1.1.1</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============================================================ -->
+<!-- index.php -->
+<!-- ============================================================ -->
+<div class="file-section">
+  <div class="file-header">index.php — Home <span class="badge">9 fixes</span></div>
+  <table>
+    <thead><tr><th>#</th><th>Issue</th><th>Fix</th><th>Severity</th><th class="wcag">WCAG</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>No dynamic page title set.</td><td>Added <code>&lt;?php $page_title = "Home"; ?&gt;</code> before include.</td><td><span class="tag tag-critical">Critical</span></td><td>2.4.2</td></tr>
+      <tr><td>2</td><td>No <code>&lt;main&gt;</code> landmark — screen reader users cannot navigate directly to the page content.</td><td>Wrapped all content in <code>&lt;main id="main-content"&gt;</code></td><td><span class="tag tag-critical">Critical</span></td><td>1.3.1</td></tr>
+      <tr><td>3</td><td>No <code>&lt;h1&gt;</code> on the page — the first visible heading is mid-page.</td><td>Added <code>&lt;h1 class="sr-only"&gt;Sandusky County Juvenile Court Home&lt;/h1&gt;</code> as first element inside <code>&lt;main&gt;</code>.</td><td><span class="tag tag-critical">Critical</span></td><td>1.3.1</td></tr>
+      <tr><td>4</td><td><code>&lt;div&gt;</code> (judge photo section) nested inside <code>&lt;p&gt;</code> — invalid HTML; browsers parse it unpredictably.</td><td>Changed outer <code>&lt;p&gt;</code> to <code>&lt;div&gt;</code>.</td><td><span class="tag tag-major">Major</span></td><td>4.1.1</td></tr>
+      <tr><td>5</td><td><code>&lt;h3&gt;Judge Brad Smith&lt;/h3&gt;</code> appears before any <code>&lt;h2&gt;</code> — skips heading level.</td><td>Changed to <code>&lt;h2&gt;</code>.</td><td><span class="tag tag-major">Major</span></td><td>1.3.1</td></tr>
+      <tr><td>6</td><td><code>&lt;h1&gt;JUVENILE COURT NEWS&lt;/h1&gt;</code> — duplicate H1; page already has the sr-only H1.</td><td>Changed to <code>&lt;h2&gt;</code>.</td><td><span class="tag tag-major">Major</span></td><td>1.3.1</td></tr>
+      <tr><td>7</td><td>Acknowledgment thank-you text wrapped in <code>&lt;h3&gt;</code> — it is a paragraph, not a section heading.</td><td>Changed to <code>&lt;p&gt;</code>.</td><td><span class="tag tag-minor">Minor</span></td><td>1.3.1</td></tr>
+      <tr><td>8</td><td>10 service card images have descriptive <code>alt</code> text identical to the card's <code>&lt;h3&gt;</code> heading inside the same <code>&lt;a&gt;</code> link — screen readers announce the text twice.</td><td>Changed all 10 card image <code>alt</code> attributes to <code>alt=""</code>.</td><td><span class="tag tag-major">Major</span></td><td>1.1.1</td></tr>
+      <tr><td>9</td><td>Two rows of service cards have no section heading — heading hierarchy jumps from H2 to H3 with no intermediate label for the cards section.</td><td>Added <code>&lt;h2 class="sr-only"&gt;Court Services&lt;/h2&gt;</code> before the card rows.</td><td><span class="tag tag-minor">Minor</span></td><td>1.3.1</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============================================================ -->
+<!-- traffic.php -->
+<!-- ============================================================ -->
+<div class="file-section">
+  <div class="file-header">traffic.php — Traffic <span class="badge">8 fixes</span></div>
+  <table>
+    <thead><tr><th>#</th><th>Issue</th><th>Fix</th><th>Severity</th><th class="wcag">WCAG</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>No dynamic page title.</td><td>Added <code>&lt;?php $page_title = "Traffic"; ?&gt;</code></td><td><span class="tag tag-critical">Critical</span></td><td>2.4.2</td></tr>
+      <tr><td>2</td><td>No <code>&lt;main id="main-content"&gt;</code> landmark.</td><td>Wrapped all content in <code>&lt;main id="main-content"&gt;</code></td><td><span class="tag tag-critical">Critical</span></td><td>1.3.1</td></tr>
+      <tr><td>3</td><td><code>&lt;ul&gt;</code> nested inside <code>&lt;p&gt;</code> — invalid HTML.</td><td>Closed <code>&lt;p&gt;</code> before the <code>&lt;ul&gt;</code>; removed the closing <code>&lt;/p&gt;</code> after it.</td><td><span class="tag tag-major">Major</span></td><td>4.1.1</td></tr>
+      <tr><td>4</td><td>5 FAQ questions use <code>&lt;span class="dki-boldhead"&gt;</code> inside <code>&lt;p&gt;</code> — not headings; screen readers cannot navigate to them.</td><td>Changed each to <code>&lt;h3&gt;</code> under the <code>&lt;h2 id="faq"&gt;</code>.</td><td><span class="tag tag-critical">Critical</span></td><td>1.3.1</td></tr>
+      <tr><td>5</td><td>10 PDF links open in new tab without warning.</td><td>Added <code>aria-label="[Name] PDF (opens in new tab)"</code> to all 10 links.</td><td><span class="tag tag-major">Major</span></td><td>2.4.4</td></tr>
+      <tr><td>6</td><td>2 links labeled "SEARCH HERE" — non-descriptive; screen readers announce "SEARCH HERE" with no context.</td><td>Added descriptive <code>aria-label="Search court costs for Out of State Traffic Bond"</code> to both.</td><td><span class="tag tag-critical">Critical</span></td><td>2.4.6</td></tr>
+      <tr><td>7</td><td>2 Google Maps links open in new tab without warning.</td><td>Added <code>aria-label="100 N. Park Ave., Fremont, OH 43420 on Google Maps (opens in new tab)"</code> to both.</td><td><span class="tag tag-major">Major</span></td><td>2.4.4</td></tr>
+      <tr><td>8</td><td>Phone number 419-334-6213 is a <code>tel:</code> link but has no <code>aria-label</code>.</td><td>Added <code>aria-label="Phone: 419-334-6213"</code>.</td><td><span class="tag tag-minor">Minor</span></td><td>2.4.6</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============================================================ -->
+<!-- delinquency.php -->
+<!-- ============================================================ -->
+<div class="file-section">
+  <div class="file-header">delinquency.php — Delinquency / Unruly <span class="badge">7 fixes</span></div>
+  <table>
+    <thead><tr><th>#</th><th>Issue</th><th>Fix</th><th>Severity</th><th class="wcag">WCAG</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>No dynamic page title.</td><td>Added <code>&lt;?php $page_title = "Delinquency / Unruly"; ?&gt;</code></td><td><span class="tag tag-critical">Critical</span></td><td>2.4.2</td></tr>
+      <tr><td>2</td><td>No <code>&lt;main id="main-content"&gt;</code> landmark.</td><td>Wrapped all content in <code>&lt;main id="main-content"&gt;</code></td><td><span class="tag tag-critical">Critical</span></td><td>1.3.1</td></tr>
+      <tr><td>3</td><td>9-item terminology <code>&lt;ul&gt;</code> nested inside <code>&lt;p&gt;</code> — invalid HTML.</td><td>Closed <code>&lt;p&gt;</code> before the list.</td><td><span class="tag tag-major">Major</span></td><td>4.1.1</td></tr>
+      <tr><td>4</td><td>8 FAQ questions use <code>&lt;span class="dki-boldhead"&gt;</code> — not headings.</td><td>Changed each to <code>&lt;h3&gt;</code>.</td><td><span class="tag tag-critical">Critical</span></td><td>1.3.1</td></tr>
+      <tr><td>5</td><td>7 PDF links in the forms section open in new tab without warning.</td><td>Added <code>aria-label="[Name] PDF (opens in new tab)"</code> to all 7.</td><td><span class="tag tag-major">Major</span></td><td>2.4.4</td></tr>
+      <tr><td>6</td><td>6 PDF links in the FAQ section open in new tab without warning.</td><td>Added <code>aria-label="[Name] PDF (opens in new tab)"</code> to all 6.</td><td><span class="tag tag-major">Major</span></td><td>2.4.4</td></tr>
+      <tr><td>7</td><td>5 external links (DYS Ohio, Sandusky Prosecutor, Ohio Revised Code, Maps) open in new tab without warning.</td><td>Added descriptive <code>aria-label="[Name] (opens in new tab)"</code> to all 5.</td><td><span class="tag tag-major">Major</span></td><td>2.4.4</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============================================================ -->
+<!-- custody.php -->
+<!-- ============================================================ -->
+<div class="file-section">
+  <div class="file-header">custody.php — Custody / Visitation <span class="badge">6 fixes</span></div>
+  <table>
+    <thead><tr><th>#</th><th>Issue</th><th>Fix</th><th>Severity</th><th class="wcag">WCAG</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>No dynamic page title.</td><td>Added <code>&lt;?php $page_title = "Custody / Visitation"; ?&gt;</code></td><td><span class="tag tag-critical">Critical</span></td><td>2.4.2</td></tr>
+      <tr><td>2</td><td>No <code>&lt;main id="main-content"&gt;</code> landmark.</td><td>Wrapped all content in <code>&lt;main id="main-content"&gt;</code></td><td><span class="tag tag-critical">Critical</span></td><td>1.3.1</td></tr>
+      <tr><td>3</td><td>12 FAQ questions use <code>&lt;span class="dki-boldhead"&gt;</code> — not headings.</td><td>Changed each to <code>&lt;h3&gt;</code>.</td><td><span class="tag tag-critical">Critical</span></td><td>1.3.1</td></tr>
+      <tr><td>4</td><td>12 PDF links in the forms section open in new tab without warning.</td><td>Added <code>aria-label="[Name] PDF (opens in new tab)"</code> to all 12.</td><td><span class="tag tag-major">Major</span></td><td>2.4.4</td></tr>
+      <tr><td>5</td><td>~12 PDF links in body text and FAQ section open in new tab without warning.</td><td>Added <code>aria-label="[Name] PDF (opens in new tab)"</code> to all.</td><td><span class="tag tag-major">Major</span></td><td>2.4.4</td></tr>
+      <tr><td>6</td><td>3 "SEARCH HERE" links — non-descriptive link text.</td><td>Added distinct descriptive <code>aria-label</code> to each: filing a Complaint, filing a Motion, filing a Motion for Contempt.</td><td><span class="tag tag-critical">Critical</span></td><td>2.4.6</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============================================================ -->
+<!-- support.php -->
+<!-- ============================================================ -->
+<div class="file-section">
+  <div class="file-header">support.php — Child Support <span class="badge">6 fixes</span></div>
+  <table>
+    <thead><tr><th>#</th><th>Issue</th><th>Fix</th><th>Severity</th><th class="wcag">WCAG</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>No dynamic page title.</td><td>Added <code>&lt;?php $page_title = "Child Support"; ?&gt;</code></td><td><span class="tag tag-critical">Critical</span></td><td>2.4.2</td></tr>
+      <tr><td>2</td><td>No <code>&lt;main id="main-content"&gt;</code> landmark.</td><td>Wrapped all content in <code>&lt;main id="main-content"&gt;</code></td><td><span class="tag tag-critical">Critical</span></td><td>1.3.1</td></tr>
+      <tr><td>3</td><td>7 FAQ questions use <code>&lt;span class="dki-boldhead"&gt;</code> — not headings.</td><td>Changed each to <code>&lt;h3&gt;</code>.</td><td><span class="tag tag-critical">Critical</span></td><td>1.3.1</td></tr>
+      <tr><td>4</td><td>11 PDF links (forms section + FAQ) open in new tab without warning.</td><td>Added <code>aria-label="[Name] PDF (opens in new tab)"</code> to all 11.</td><td><span class="tag tag-major">Major</span></td><td>2.4.4</td></tr>
+      <tr><td>5</td><td>4 external links (CSEA website x2, Maps x2) open in new tab without warning.</td><td>Added descriptive <code>aria-label="[Name] (opens in new tab)"</code> to all 4.</td><td><span class="tag tag-major">Major</span></td><td>2.4.4</td></tr>
+      <tr><td>6</td><td>Phone number 419-334-2909 appears twice as plain text.</td><td>Changed both to <code>&lt;a href="tel:4193342909" aria-label="Phone: 419-334-2909"&gt;</code>.</td><td><span class="tag tag-major">Major</span></td><td>2.4.4</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============================================================ -->
+<!-- adult.php -->
+<!-- ============================================================ -->
+<div class="file-section">
+  <div class="file-header">adult.php — Adult Contributing <span class="badge">4 fixes</span></div>
+  <table>
+    <thead><tr><th>#</th><th>Issue</th><th>Fix</th><th>Severity</th><th class="wcag">WCAG</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>No dynamic page title.</td><td>Added <code>&lt;?php $page_title = "Adult Contributing"; ?&gt;</code></td><td><span class="tag tag-critical">Critical</span></td><td>2.4.2</td></tr>
+      <tr><td>2</td><td>No <code>&lt;main id="main-content"&gt;</code> landmark.</td><td>Wrapped all content in <code>&lt;main id="main-content"&gt;</code></td><td><span class="tag tag-critical">Critical</span></td><td>1.3.1</td></tr>
+      <tr><td>3</td><td>2 external links (Sandusky Prosecutor, Ohio Revised Code) open in new tab without warning.</td><td>Added descriptive <code>aria-label="[Name] (opens in new tab)"</code> to both.</td><td><span class="tag tag-major">Major</span></td><td>2.4.4</td></tr>
+      <tr><td>4</td><td>"SEARCH HERE" link — non-descriptive link text.</td><td>Added <code>aria-label="Search court costs for Adult Contributing"</code>.</td><td><span class="tag tag-critical">Critical</span></td><td>2.4.6</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============================================================ -->
+<!-- children.php -->
+<!-- ============================================================ -->
+<div class="file-section">
+  <div class="file-header">children.php — Children Services <span class="badge">8 fixes</span></div>
+  <table>
+    <thead><tr><th>#</th><th>Issue</th><th>Fix</th><th>Severity</th><th class="wcag">WCAG</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>No dynamic page title.</td><td>Added <code>&lt;?php $page_title = "Children Services"; ?&gt;</code></td><td><span class="tag tag-critical">Critical</span></td><td>2.4.2</td></tr>
+      <tr><td>2</td><td>No <code>&lt;main id="main-content"&gt;</code> landmark.</td><td>Wrapped all content in <code>&lt;main id="main-content"&gt;</code></td><td><span class="tag tag-critical">Critical</span></td><td>1.3.1</td></tr>
+      <tr><td>3</td><td>12 FAQ questions use <code>&lt;span class="dki-boldhead"&gt;</code> — not headings.</td><td>Changed each to <code>&lt;h3&gt;</code>.</td><td><span class="tag tag-critical">Critical</span></td><td>1.3.1</td></tr>
+      <tr><td>4</td><td>5 PDF links in the forms section open in new tab without warning.</td><td>Added <code>aria-label="[Name] PDF (opens in new tab)"</code> to all 5.</td><td><span class="tag tag-major">Major</span></td><td>2.4.4</td></tr>
+      <tr><td>5</td><td>2 PDF links in the FAQ section open in new tab without warning.</td><td>Added <code>aria-label="[Name] PDF (opens in new tab)"</code> to both.</td><td><span class="tag tag-major">Major</span></td><td>2.4.4</td></tr>
+      <tr><td>6</td><td>4 external links (DJFS Children Services, Ohio Revised Code, Maps, CASA) open in new tab without warning.</td><td>Added descriptive <code>aria-label="[Name] (opens in new tab)"</code> to all 4.</td><td><span class="tag tag-major">Major</span></td><td>2.4.4</td></tr>
+      <tr><td>7</td><td>Phone 419-334-8708 appears 3 times as plain text.</td><td>Changed all 3 to <code>&lt;a href="tel:4193348708" aria-label="Phone: 419-334-8708"&gt;</code>.</td><td><span class="tag tag-major">Major</span></td><td>2.4.4</td></tr>
+      <tr><td>8</td><td>CASA website link contained literal Markdown syntax: <code>[www.casaofssw.org](https://www.casaofssw.org)</code> rendering as visible text in the browser.</td><td>Replaced entire anchor with clean link: <code>&lt;a href="http://www.casaofssw.org" ...&gt;www.casaofssw.org&lt;/a&gt;</code></td><td><span class="tag tag-critical">Critical</span></td><td>4.1.1</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============================================================ -->
+<!-- probation.php -->
+<!-- ============================================================ -->
+<div class="file-section">
+  <div class="file-header">probation.php — Probation <span class="badge">2 fixes</span></div>
+  <table>
+    <thead><tr><th>#</th><th>Issue</th><th>Fix</th><th>Severity</th><th class="wcag">WCAG</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>No dynamic page title.</td><td>Added <code>&lt;?php $page_title = "Probation"; ?&gt;</code></td><td><span class="tag tag-critical">Critical</span></td><td>2.4.2</td></tr>
+      <tr><td>2</td><td>No <code>&lt;main id="main-content"&gt;</code> landmark.</td><td>Wrapped all content in <code>&lt;main id="main-content"&gt;</code></td><td><span class="tag tag-critical">Critical</span></td><td>1.3.1</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============================================================ -->
+<!-- detention.php -->
+<!-- ============================================================ -->
+<div class="file-section">
+  <div class="file-header">detention.php — Juvenile Detention <span class="badge">5 fixes</span></div>
+  <table>
+    <thead><tr><th>#</th><th>Issue</th><th>Fix</th><th>Severity</th><th class="wcag">WCAG</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>No dynamic page title.</td><td>Added <code>&lt;?php $page_title = "Juvenile Detention"; ?&gt;</code></td><td><span class="tag tag-critical">Critical</span></td><td>2.4.2</td></tr>
+      <tr><td>2</td><td>No <code>&lt;main id="main-content"&gt;</code> landmark.</td><td>Wrapped all content in <code>&lt;main id="main-content"&gt;</code></td><td><span class="tag tag-critical">Critical</span></td><td>1.3.1</td></tr>
+      <tr><td>3</td><td>2 external links (Maps, Ohio Revised Code) open in new tab without warning.</td><td>Added descriptive <code>aria-label="[Name] (opens in new tab)"</code> to both.</td><td><span class="tag tag-major">Major</span></td><td>2.4.4</td></tr>
+      <tr><td>4</td><td>Phone 419-334-6498 is plain text; fax 419-334-6501 is plain text.</td><td>Phone changed to <code>&lt;a href="tel:4193346498" aria-label="Phone: 419-334-6498"&gt;</code>. Fax wrapped in <code>&lt;span aria-label="Fax: 419-334-6501"&gt;</code>.</td><td><span class="tag tag-major">Major</span></td><td>2.4.4</td></tr>
+      <tr><td>5</td><td>Visitation schedule table has no <code>&lt;caption&gt;</code>, no <code>&lt;thead&gt;</code>, and no column headers — screen readers cannot identify the table purpose or column meaning.</td><td>Added <code>&lt;caption class="sr-only"&gt;Visitation Schedule&lt;/caption&gt;</code>, <code>&lt;thead&gt;</code>, and <code>&lt;th scope="col"&gt;</code> for Day and Times columns.</td><td><span class="tag tag-critical">Critical</span></td><td>1.3.1</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============================================================ -->
+<!-- guardian.php -->
+<!-- ============================================================ -->
+<div class="file-section">
+  <div class="file-header">guardian.php — Guardian Ad Litem <span class="badge">4 fixes</span></div>
+  <table>
+    <thead><tr><th>#</th><th>Issue</th><th>Fix</th><th>Severity</th><th class="wcag">WCAG</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>No dynamic page title.</td><td>Added <code>&lt;?php $page_title = "Guardian Ad Litem"; ?&gt;</code></td><td><span class="tag tag-critical">Critical</span></td><td>2.4.2</td></tr>
+      <tr><td>2</td><td>No <code>&lt;main id="main-content"&gt;</code> landmark.</td><td>Wrapped all content in <code>&lt;main id="main-content"&gt;</code></td><td><span class="tag tag-critical">Critical</span></td><td>1.3.1</td></tr>
+      <tr><td>3</td><td>4 FAQ questions use <code>&lt;span class="dki-boldhead"&gt;</code> — not headings.</td><td>Changed each to <code>&lt;h3&gt;</code>.</td><td><span class="tag tag-critical">Critical</span></td><td>1.3.1</td></tr>
+      <tr><td>4</td><td>"SEARCH HERE" link — non-descriptive link text.</td><td>Added <code>aria-label="Search court costs for Guardian Ad Litem deposit"</code>.</td><td><span class="tag tag-critical">Critical</span></td><td>2.4.6</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============================================================ -->
+<!-- casa.php -->
+<!-- ============================================================ -->
+<div class="file-section">
+  <div class="file-header">casa.php — CASA <span class="badge">7 fixes</span></div>
+  <table>
+    <thead><tr><th>#</th><th>Issue</th><th>Fix</th><th>Severity</th><th class="wcag">WCAG</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>No dynamic page title.</td><td>Added <code>&lt;?php $page_title = "CASA"; ?&gt;</code></td><td><span class="tag tag-critical">Critical</span></td><td>2.4.2</td></tr>
+      <tr><td>2</td><td>No <code>&lt;main id="main-content"&gt;</code> landmark.</td><td>Wrapped all content in <code>&lt;main id="main-content"&gt;</code></td><td><span class="tag tag-critical">Critical</span></td><td>1.3.1</td></tr>
+      <tr><td>3</td><td>CASA of SSW external link opens in new tab without warning.</td><td>Added <code>aria-label="CASA of Seneca, Sandusky and Wyandot County website (opens in new tab)"</code>.</td><td><span class="tag tag-major">Major</span></td><td>2.4.4</td></tr>
+      <tr><td>4</td><td>Volunteer application link labeled "SEARCH HERE" — non-descriptive.</td><td>Changed link text to "click here" and added <code>aria-label="CASA Volunteer Application PDF (opens in new tab)"</code>.</td><td><span class="tag tag-critical">Critical</span></td><td>2.4.6</td></tr>
+      <tr><td>5</td><td>CASA contact table has no <code>&lt;caption&gt;</code>, no <code>&lt;thead&gt;</code>, and no column headers.</td><td>Added <code>&lt;caption class="sr-only"&gt;CASA Contact Information&lt;/caption&gt;</code>, <code>&lt;thead&gt;</code>, and <code>&lt;th scope="col"&gt;</code> for Office and Fax columns.</td><td><span class="tag tag-critical">Critical</span></td><td>1.3.1</td></tr>
+      <tr><td>6</td><td>3 CASA office phone numbers are plain text in table cells.</td><td>Changed all 3 to <code>&lt;a href="tel:..."&gt;</code> with descriptive <code>aria-label</code> identifying the office (Tiffin, Fremont, Upper Sandusky).</td><td><span class="tag tag-major">Major</span></td><td>2.4.4</td></tr>
+      <tr><td>7</td><td>3 CASA fax numbers are plain text — no screen reader cue that they are fax numbers.</td><td>Wrapped all 3 in <code>&lt;span aria-label="Fax: [number]"&gt;</code>.</td><td><span class="tag tag-minor">Minor</span></td><td>1.3.1</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============================================================ -->
+<!-- forms.php -->
+<!-- ============================================================ -->
+<div class="file-section">
+  <div class="file-header">forms.php — Local Forms <span class="badge">5 fixes</span></div>
+  <table>
+    <thead><tr><th>#</th><th>Issue</th><th>Fix</th><th>Severity</th><th class="wcag">WCAG</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>No dynamic page title.</td><td>Added <code>&lt;?php $page_title = "Local Forms"; ?&gt;</code></td><td><span class="tag tag-critical">Critical</span></td><td>2.4.2</td></tr>
+      <tr><td>2</td><td>No <code>&lt;main id="main-content"&gt;</code> landmark.</td><td>Wrapped all content in <code>&lt;main id="main-content"&gt;</code></td><td><span class="tag tag-critical">Critical</span></td><td>1.3.1</td></tr>
+      <tr><td>3</td><td>6 Material Icons inside collapsible headers rendered as visible text announced by screen readers.</td><td>Added <code>aria-hidden="true"</code> to all 6 <code>&lt;i class="material-icons"&gt;</code> elements.</td><td><span class="tag tag-major">Major</span></td><td>1.1.1</td></tr>
+      <tr><td>4</td><td>6 collapsible header <code>&lt;div&gt;</code>s function as toggle buttons but have no ARIA — keyboard users cannot operate them and screen readers cannot announce their state.</td><td>Added <code>role="button"</code>, <code>tabindex="0"</code>, <code>aria-expanded="false"</code>, and <code>aria-controls="[id]"</code> to each header; added matching <code>id</code> to each collapsible body.</td><td><span class="tag tag-critical">Critical</span></td><td>4.1.2</td></tr>
+      <tr><td>5</td><td>36 PDF links across all 6 collapsible sections open in new tab without warning.</td><td>Added <code>aria-label="[Name] PDF (opens in new tab)"</code> to all 36 links.</td><td><span class="tag tag-major">Major</span></td><td>2.4.4</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============================================================ -->
+<!-- community.php -->
+<!-- ============================================================ -->
+<div class="file-section">
+  <div class="file-header">community.php — Other Links <span class="badge">4 fixes</span></div>
+  <table>
+    <thead><tr><th>#</th><th>Issue</th><th>Fix</th><th>Severity</th><th class="wcag">WCAG</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>No dynamic page title.</td><td>Added <code>&lt;?php $page_title = "Other Links"; ?&gt;</code></td><td><span class="tag tag-critical">Critical</span></td><td>2.4.2</td></tr>
+      <tr><td>2</td><td>No <code>&lt;main id="main-content"&gt;</code> landmark.</td><td>Wrapped all content in <code>&lt;main id="main-content"&gt;</code></td><td><span class="tag tag-critical">Critical</span></td><td>1.3.1</td></tr>
+      <tr><td>3</td><td>18 external links open in new tab without warning.</td><td>Added descriptive <code>aria-label="[Name] (opens in new tab)"</code> to all 18 links.</td><td><span class="tag tag-major">Major</span></td><td>2.4.4</td></tr>
+      <tr><td>4</td><td>Sandusky County Health Department URL contained a trailing space: <code>https://www.scpublichealth.com/ </code> — causes a broken link.</td><td>Removed the trailing space from the <code>href</code> value.</td><td><span class="tag tag-major">Major</span></td><td>4.1.1</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============================================================ -->
+<!-- contact.php -->
+<!-- ============================================================ -->
+<div class="file-section">
+  <div class="file-header">contact.php — Contact <span class="badge">5 fixes</span></div>
+  <table>
+    <thead><tr><th>#</th><th>Issue</th><th>Fix</th><th>Severity</th><th class="wcag">WCAG</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>No dynamic page title.</td><td>Added <code>&lt;?php $page_title = "Contact"; ?&gt;</code></td><td><span class="tag tag-critical">Critical</span></td><td>2.4.2</td></tr>
+      <tr><td>2</td><td>No <code>&lt;main id="main-content"&gt;</code> landmark.</td><td>Wrapped all content in <code>&lt;main id="main-content"&gt;</code></td><td><span class="tag tag-critical">Critical</span></td><td>1.3.1</td></tr>
+      <tr><td>3</td><td>Contact information not wrapped in <code>&lt;address&gt;</code> — screen readers cannot identify it as contact information.</td><td>Wrapped the name, phone, fax, and email in <code>&lt;address&gt;</code>.</td><td><span class="tag tag-minor">Minor</span></td><td>1.3.1</td></tr>
+      <tr><td>4</td><td>Phone 419-334-6200 is plain text.</td><td>Changed to <code>&lt;a href="tel:4193346200" aria-label="Phone: 419-334-6200"&gt;</code>.</td><td><span class="tag tag-major">Major</span></td><td>2.4.4</td></tr>
+      <tr><td>5</td><td>Fax 419-334-6210 is plain text — no screen reader cue it is a fax.</td><td>Wrapped in <code>&lt;span aria-label="Fax: 419-334-6210"&gt;</code>.</td><td><span class="tag tag-minor">Minor</span></td><td>1.3.1</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============================================================ -->
+<!-- court.php -->
+<!-- ============================================================ -->
+<div class="file-section">
+  <div class="file-header">court.php — Court <span class="badge">12 fixes</span></div>
+  <table>
+    <thead><tr><th>#</th><th>Issue</th><th>Fix</th><th>Severity</th><th class="wcag">WCAG</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>No dynamic page title.</td><td>Added <code>&lt;?php $page_title = "Court"; ?&gt;</code></td><td><span class="tag tag-critical">Critical</span></td><td>2.4.2</td></tr>
+      <tr><td>2</td><td>No <code>&lt;main id="main-content"&gt;</code> landmark.</td><td>Wrapped all content in <code>&lt;main id="main-content"&gt;</code></td><td><span class="tag tag-critical">Critical</span></td><td>1.3.1</td></tr>
+      <tr><td>3</td><td>Judge Smith photo has no <code>alt</code> attribute — screen readers skip or read the filename.</td><td>Added <code>alt="Judge Brad Smith"</code>.</td><td><span class="tag tag-critical">Critical</span></td><td>1.1.1</td></tr>
+      <tr><td>4</td><td><code>&lt;div class="row"&gt;</code> (legal holidays) nested inside <code>&lt;p&gt;</code> — invalid HTML.</td><td>Changed outer <code>&lt;p&gt;</code> to <code>&lt;div&gt;</code>.</td><td><span class="tag tag-major">Major</span></td><td>4.1.1</td></tr>
+      <tr><td>5</td><td>Court costs <code>&lt;table&gt;</code> nested inside <code>&lt;p&gt;</code> — invalid HTML.</td><td>Removed <code>&lt;p&gt;</code> wrapper around the table.</td><td><span class="tag tag-major">Major</span></td><td>4.1.1</td></tr>
+      <tr><td>6</td><td>Court costs table has no <code>&lt;caption&gt;</code> and no column headers — screen readers cannot identify the table's purpose or column meaning.</td><td>Added <code>&lt;caption class="sr-only"&gt;Juvenile Division Court Cost Advance Deposits&lt;/caption&gt;</code>, <code>&lt;thead&gt;</code>, and <code>&lt;th scope="col"&gt;</code> for Filing Type and Amount.</td><td><span class="tag tag-critical">Critical</span></td><td>1.3.1</td></tr>
+      <tr><td>7</td><td>Unclaimed funds <code>&lt;table&gt;</code> nested inside <code>&lt;p&gt;</code> — invalid HTML.</td><td>Removed <code>&lt;p&gt;</code> wrapper around the table.</td><td><span class="tag tag-major">Major</span></td><td>4.1.1</td></tr>
+      <tr><td>8</td><td>Unclaimed funds table <code>&lt;th&gt;</code> elements missing <code>scope="col"</code>.</td><td>Added <code>scope="col"</code> to all 4 column headers; added <code>&lt;caption class="sr-only"&gt;Unclaimed Funds&lt;/caption&gt;</code>.</td><td><span class="tag tag-major">Major</span></td><td>1.3.1</td></tr>
+      <tr><td>9</td><td>Duplicate <code>&lt;h2&gt;UNCLAIMED FUNDS&lt;/h2&gt;</code> — a second identical heading appeared after the introductory paragraphs.</td><td>Removed the duplicate heading.</td><td><span class="tag tag-minor">Minor</span></td><td>1.3.1</td></tr>
+      <tr><td>10</td><td>Google Maps link opens in new tab without warning.</td><td>Added <code>aria-label="100 N. Park Ave., Fremont, OH 43420 on Google Maps (opens in new tab)"</code>.</td><td><span class="tag tag-major">Major</span></td><td>2.4.4</td></tr>
+      <tr><td>11</td><td>Phone 419-334-6200 is plain text in the Court Hours section.</td><td>Changed to <code>&lt;a href="tel:4193346200" aria-label="Phone: 419-334-6200"&gt;</code>.</td><td><span class="tag tag-major">Major</span></td><td>2.4.4</td></tr>
+      <tr><td>12</td><td>8 Annual Report PDF links open in new tab without warning.</td><td>Added <code>aria-label="[Year] Annual Report PDF (opens in new tab)"</code> to all 8 links (2017–2024).</td><td><span class="tag tag-major">Major</span></td><td>2.4.4</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<footer-note>
+  This report was prepared as part of an ADA / WCAG 2.1 Level AA accessibility compliance review of sanduskycountyjuvenilecourt.com. All recommendations are based on WCAG 2.1 Success Criteria. No visual or layout changes were made. Fixes were applied to 19 files totaling 116 individual accessibility improvements.
+</footer-note>
+
+</body>
+</html>
