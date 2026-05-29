@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accessibility Audit Report – Sandusky County Court</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; color: #1a1a2e; background: #fff; }
+
+  /* Cover */
+  .cover { page-break-after: always; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: linear-gradient(145deg, #0d2b6b 0%, #1a4a9e 60%, #c8102e 100%); color: #fff; text-align: center; padding: 60px 40px; }
+  .cover .badge { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.4); border-radius: 30px; padding: 6px 20px; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 32px; }
+  .cover h1 { font-size: 38px; font-weight: 800; line-height: 1.2; margin-bottom: 12px; }
+  .cover h2 { font-size: 20px; font-weight: 400; opacity: 0.85; margin-bottom: 40px; }
+  .cover .meta-block { background: rgba(255,255,255,0.12); border-radius: 12px; padding: 24px 40px; display: inline-block; text-align: left; }
+  .cover .meta-block div { margin-bottom: 8px; font-size: 13px; }
+  .cover .meta-block span { opacity: 0.7; margin-right: 8px; }
+  .cover .stat-row { display: flex; gap: 40px; margin-top: 32px; }
+  .cover .stat { text-align: center; }
+  .cover .stat .num { font-size: 48px; font-weight: 800; line-height: 1; }
+  .cover .stat .lbl { font-size: 11px; opacity: 0.75; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+
+  /* TOC */
+  .toc { page-break-after: always; padding: 48px 56px; }
+  .toc h2 { font-size: 22px; font-weight: 700; color: #0d2b6b; border-bottom: 3px solid #c8102e; padding-bottom: 10px; margin-bottom: 24px; }
+  .toc ol { list-style: none; counter-reset: toc-counter; }
+  .toc ol li { counter-increment: toc-counter; padding: 8px 0; border-bottom: 1px dotted #ddd; display: flex; align-items: center; }
+  .toc ol li::before { content: counter(toc-counter) "."; font-weight: 700; color: #c8102e; width: 28px; flex-shrink: 0; }
+  .toc ol li span { flex: 1; }
+  .toc ol li em { color: #0d2b6b; font-style: normal; font-size: 12px; }
+
+  /* Section */
+  .section { padding: 48px 56px; page-break-inside: avoid; }
+  .section.break { page-break-before: always; }
+  h2.section-title { font-size: 22px; font-weight: 700; color: #0d2b6b; border-bottom: 3px solid #c8102e; padding-bottom: 10px; margin-bottom: 24px; }
+  h3.subsection { font-size: 15px; font-weight: 700; color: #0d2b6b; margin: 28px 0 10px; }
+  p { line-height: 1.7; margin-bottom: 10px; }
+
+  /* Summary cards */
+  .summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
+  .summary-card { background: #f4f7ff; border-left: 4px solid #0d2b6b; border-radius: 6px; padding: 16px; }
+  .summary-card .num { font-size: 32px; font-weight: 800; color: #0d2b6b; }
+  .summary-card .lbl { font-size: 11px; color: #555; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; margin-bottom: 24px; font-size: 12px; }
+  thead th { background: #0d2b6b; color: #fff; padding: 10px 12px; text-align: left; font-weight: 600; }
+  tbody tr:nth-child(even) { background: #f4f7ff; }
+  tbody tr:nth-child(odd) { background: #fff; }
+  td { padding: 9px 12px; border-bottom: 1px solid #e0e6f0; vertical-align: top; line-height: 1.5; }
+  td code { background: #eef2ff; padding: 2px 5px; border-radius: 3px; font-family: 'Courier New', monospace; font-size: 11px; }
+
+  /* File header */
+  .file-header { background: linear-gradient(90deg, #0d2b6b, #1a4a9e); color: #fff; padding: 14px 20px; border-radius: 8px 8px 0 0; margin-top: 36px; display: flex; justify-content: space-between; align-items: center; page-break-after: avoid; }
+  .file-header h3 { font-size: 15px; font-weight: 700; margin: 0; font-family: 'Courier New', monospace; }
+  .file-header .fix-count { background: #c8102e; color: #fff; border-radius: 20px; padding: 3px 12px; font-size: 11px; font-weight: 700; }
+  .file-table { margin-top: 0; border-radius: 0 0 8px 8px; overflow: hidden; margin-bottom: 32px; }
+  .file-table thead th { background: #1a3a7a; }
+
+  /* Severity badges */
+  .sev { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .sev-critical { background: #fde8e8; color: #c00; }
+  .sev-major    { background: #fff3cd; color: #856404; }
+  .sev-minor    { background: #e8f5e9; color: #2e7d32; }
+
+  /* WCAG badges */
+  .wcag { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: 600; background: #eef2ff; color: #0d2b6b; margin: 1px; }
+
+  /* Category legend */
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 50%; }
+
+  /* Chart bar */
+  .bar-chart { margin: 16px 0 28px; }
+  .bar-row { display: flex; align-items: center; margin-bottom: 8px; }
+  .bar-label { width: 200px; font-size: 11px; color: #333; flex-shrink: 0; font-family: 'Courier New', monospace; }
+  .bar-wrap { flex: 1; background: #eef0f5; border-radius: 4px; height: 18px; }
+  .bar-fill { height: 18px; background: linear-gradient(90deg, #0d2b6b, #1a4a9e); border-radius: 4px; display: flex; align-items: center; padding-right: 6px; justify-content: flex-end; }
+  .bar-fill span { font-size: 10px; color: #fff; font-weight: 700; }
+
+  /* Footer */
+  .report-footer { background: #0d2b6b; color: rgba(255,255,255,0.7); text-align: center; padding: 20px; font-size: 11px; margin-top: 40px; }
+  .report-footer strong { color: #fff; }
+
+  /* Print */
+  @media print {
+    .cover { min-height: 100vh; }
+    .section.break { page-break-before: always; }
+    .file-header { page-break-after: avoid; }
+    .file-table { page-break-inside: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════ COVER ═══ -->
+<div class="cover">
+  <div class="badge">Accessibility Audit Report</div>
+  <h1>Sandusky County Court</h1>
+  <h2>sanduskycountycourt.gov &nbsp;·&nbsp; WCAG 2.1 Level AA / ADA Title II</h2>
+  <div class="meta-block">
+    <div><span>Audit Date:</span> May 2025</div>
+    <div><span>Framework:</span> Bootstrap 5</div>
+    <div><span>Standard:</span> WCAG 2.1 Level AA</div>
+    <div><span>Regulation:</span> ADA Title II</div>
+    <div><span>Files Audited:</span> 14 PHP templates</div>
+  </div>
+  <div class="stat-row">
+    <div class="stat"><div class="num">14</div><div class="lbl">Files Audited</div></div>
+    <div class="stat"><div class="num">116</div><div class="lbl">Fixes Applied</div></div>
+    <div class="stat"><div class="num">AA</div><div class="lbl">WCAG Target</div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ TABLE OF CONTENTS ═══ -->
+<div class="toc">
+  <h2>Table of Contents</h2>
+  <ol>
+    <li><span>Executive Summary</span><em>Page 2</em></li>
+    <li><span>Fix Count by File</span><em>Page 2</em></li>
+    <li><span>Shared Templates: head.php, nav.php, foot.php</span><em>Page 3</em></li>
+    <li><span>index.php</span><em>Page 4</em></li>
+    <li><span>local-rules.php</span><em>Page 4</em></li>
+    <li><span>court-appointed-counsel.php</span><em>Page 5</em></li>
+    <li><span>audio-request.php</span><em>Page 5</em></li>
+    <li><span>forms.php</span><em>Page 6</em></li>
+    <li><span>jury-duty.php</span><em>Page 6</em></li>
+    <li><span>probation.php</span><em>Page 7</em></li>
+    <li><span>judge.php</span><em>Page 7</em></li>
+    <li><span>hope-court.php</span><em>Page 8</em></li>
+    <li><span>staff.php</span><em>Page 8</em></li>
+    <li><span>contact.php</span><em>Page 9</em></li>
+    <li><span>Skip Link CSS Fix</span><em>Page 9</em></li>
+    <li><span>WCAG Criteria Reference</span><em>Page 10</em></li>
+  </ol>
+</div>
+
+<!-- ═══════════════════════════════════════════ EXECUTIVE SUMMARY ═══ -->
+<div class="section">
+  <h2 class="section-title">1. Executive Summary</h2>
+
+  <div class="summary-grid">
+    <div class="summary-card"><div class="num">14</div><div class="lbl">Files Audited</div></div>
+    <div class="summary-card"><div class="num">116</div><div class="lbl">Total Fixes</div></div>
+    <div class="summary-card"><div class="num">3</div><div class="lbl">Shared Templates Fixed</div></div>
+    <div class="summary-card"><div class="num">AA</div><div class="lbl">WCAG Level Target</div></div>
+  </div>
+
+  <p>
+    This report documents the WCAG 2.1 Level AA / ADA Title II accessibility audit performed on the
+    <strong>Sandusky County Court</strong> website (sanduskycountycourt.gov). The site is built on
+    <strong>Bootstrap 5</strong>, a modern CSS framework that provides a solid structural foundation
+    but requires additional ARIA instrumentation for full screen-reader compatibility.
+  </p>
+  <p>
+    The audit covered all 14 PHP templates including three shared includes (head.php, nav.php, foot.php)
+    that propagate fixes to every page. A total of <strong>116 accessibility fixes</strong> were identified
+    and corrected, spanning heading hierarchy, keyboard navigation, ARIA labeling, form accessibility,
+    motion sensitivity, and secure output encoding.
+  </p>
+  <p>
+    The most impactful single change is the <strong>skip navigation link</strong> added to nav.php,
+    which — combined with <code>id="main-content"</code> added to every page's <code>&lt;main&gt;</code>
+    element — enables keyboard and screen-reader users to bypass the navigation bar on every page of
+    the site. The skip link is visually hidden until focused, requiring a small CSS addition documented
+    at the end of this report.
+  </p>
+
+  <h3 class="subsection">Key Issue Categories</h3>
+  <table>
+    <thead><tr><th>Category</th><th>Description</th><th>Pages Affected</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Heading Hierarchy</strong></td><td>Bootstrap defaults to <code>&lt;h2&gt;</code> accordion headers and <code>&lt;h5&gt;</code> card titles regardless of page context, causing skipped levels. All headings corrected to H1→H2→H3→H4.</td><td>11 of 14</td></tr>
+      <tr><td><strong>Skip Navigation</strong></td><td>No skip link existed; added to nav.php. Every page's <code>&lt;main&gt;</code> was missing <code>id="main-content"</code>.</td><td>All pages</td></tr>
+      <tr><td><strong>ARIA Labels</strong></td><td>Navigation landmarks, accordion buttons, modal dialogs, phone links, external links, iframe embeds, and generic buttons all lacked descriptive labels.</td><td>11 of 14</td></tr>
+      <tr><td><strong>Dynamic Page Titles</strong></td><td>head.php lacked a dynamic <code>&lt;title&gt;</code> pattern; several pages had hardcoded duplicate titles or used the wrong <code>$page_description</code> variable name.</td><td>8 of 14</td></tr>
+      <tr><td><strong>Form Accessibility</strong></td><td>audio-request.php form lacked <code>autocomplete</code>, <code>aria-required</code>, a required-field legend, and used <code>type="text"</code> for a date field.</td><td>1 of 14</td></tr>
+      <tr><td><strong>Decorative Images</strong></td><td>Stock photos carried descriptive alt text that would be announced redundantly by screen readers.</td><td>6 of 14</td></tr>
+      <tr><td><strong>Motion Sensitivity</strong></td><td>foot.php's flip-scroll animation had no <code>prefers-reduced-motion</code> guard, risking harm for users with vestibular disorders.</td><td>foot.php</td></tr>
+      <tr><td><strong>Output Encoding</strong></td><td>PHP-echoed values (navigation links, form card data, staff data) lacked <code>htmlspecialchars()</code>, creating XSS risk and malformed HTML.</td><td>3 of 14</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="subsection">Fix Count by File</h3>
+  <div class="bar-chart">
+    <div class="bar-row"><div class="bar-label">probation.php</div><div class="bar-wrap"><div class="bar-fill" style="width:100%"><span>17</span></div></div></div>
+    <div class="bar-row"><div class="bar-label">index.php</div><div class="bar-wrap"><div class="bar-fill" style="width:88%"><span>15</span></div></div></div>
+    <div class="bar-row"><div class="bar-label">court-appointed-counsel.php</div><div class="bar-wrap"><div class="bar-fill" style="width:71%"><span>12</span></div></div></div>
+    <div class="bar-row"><div class="bar-label">staff.php</div><div class="bar-wrap"><div class="bar-fill" style="width:59%"><span>10</span></div></div></div>
+    <div class="bar-row"><div class="bar-label">audio-request.php</div><div class="bar-wrap"><div class="bar-fill" style="width:59%"><span>10</span></div></div></div>
+    <div class="bar-row"><div class="bar-label">nav.php</div><div class="bar-wrap"><div class="bar-fill" style="width:53%"><span>9</span></div></div></div>
+    <div class="bar-row"><div class="bar-label">forms.php</div><div class="bar-wrap"><div class="bar-fill" style="width:47%"><span>8</span></div></div></div>
+    <div class="bar-row"><div class="bar-label">contact.php</div><div class="bar-wrap"><div class="bar-fill" style="width:47%"><span>8</span></div></div></div>
+    <div class="bar-row"><div class="bar-label">jury-duty.php</div><div class="bar-wrap"><div class="bar-fill" style="width:41%"><span>7</span></div></div></div>
+    <div class="bar-row"><div class="bar-label">local-rules.php</div><div class="bar-wrap"><div class="bar-fill" style="width:35%"><span>6</span></div></div></div>
+    <div class="bar-row"><div class="bar-label">head.php</div><div class="bar-wrap"><div class="bar-fill" style="width:24%"><span>4</span></div></div></div>
+    <div class="bar-row"><div class="bar-label">judge.php</div><div class="bar-wrap"><div class="bar-fill" style="width:24%"><span>4</span></div></div></div>
+    <div class="bar-row"><div class="bar-label">hope-court.php</div><div class="bar-wrap"><div class="bar-fill" style="width:24%"><span>4</span></div></div></div>
+    <div class="bar-row"><div class="bar-label">foot.php</div><div class="bar-wrap"><div class="bar-fill" style="width:12%"><span>2</span></div></div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ SHARED TEMPLATES ═══ -->
+<div class="section break">
+  <h2 class="section-title">2. Shared Templates</h2>
+  <p>These three files are included on every page. Fixes here have site-wide effect.</p>
+
+  <div class="file-header">
+    <h3>head.php</h3>
+    <span class="fix-count">4 fixes</span>
+  </div>
+  <table class="file-table">
+    <thead><tr><th>#</th><th>Issue</th><th>Fix</th><th>WCAG</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Static hardcoded <code>&lt;title&gt;</code> — all pages shared the same title</td><td>Replaced with <code>&lt;?= $page_title ?? 'Sandusky County Court' ?&gt;</code></td><td><span class="wcag">2.4.2</span></td></tr>
+      <tr><td>2</td><td>Duplicate static <code>&lt;title&gt;</code> tag also present</td><td>Removed second static title</td><td><span class="wcag">2.4.2</span></td></tr>
+      <tr><td>3</td><td><code>rel="shortcut icon"</code> — deprecated, non-standard</td><td>Changed to <code>rel="icon"</code></td><td>Best practice</td></tr>
+      <tr><td>4</td><td>Missing <code>$page_description</code> fallback</td><td>Added null-coalescing fallback for meta description</td><td>Best practice</td></tr>
+    </tbody>
+  </table>
+
+  <div class="file-header">
+    <h3>nav.php</h3>
+    <span class="fix-count">9 fixes</span>
+  </div>
+  <table class="file-table">
+    <thead><tr><th>#</th><th>Issue</th><th>Fix</th><th>WCAG</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>No skip navigation link — keyboard users must tab through entire nav on every page</td><td>Added <code>&lt;a href="#main-content" class="skip-link"&gt;Skip to main content&lt;/a&gt;</code> as first element</td><td><span class="wcag">2.4.1</span></td></tr>
+      <tr><td>2</td><td>Holiday alert <code>&lt;div&gt;</code> has no live region role</td><td>Added <code>role="status"</code></td><td><span class="wcag">4.1.3</span></td></tr>
+      <tr><td>3</td><td>Mobile menu toggle button has no accessible label</td><td>Added <code>aria-label="Open navigation menu"</code></td><td><span class="wcag">4.1.2</span></td></tr>
+      <tr><td>4</td><td>Mobile toggle icon not hidden from AT</td><td>Added <code>aria-hidden="true"</code> to <code>&lt;i&gt;</code> icon</td><td><span class="wcag">1.1.1</span></td></tr>
+      <tr><td>5</td><td>Desktop <code>&lt;nav&gt;</code> has no label — indistinguishable from other nav landmarks</td><td>Added <code>aria-label="Main navigation"</code></td><td><span class="wcag">4.1.2</span></td></tr>
+      <tr><td>6</td><td>Offcanvas mobile <code>&lt;ul&gt;</code> has no label</td><td>Added <code>aria-label="Mobile navigation"</code></td><td><span class="wcag">4.1.2</span></td></tr>
+      <tr><td>7</td><td>Active page not indicated to screen readers in either nav</td><td>Added <code>aria-current="page"</code> to active link in PHP loop for both desktop and mobile navs</td><td><span class="wcag">4.1.2</span></td></tr>
+      <tr><td>8</td><td>"County County" typo in 3 locations</td><td>Corrected to "Sandusky County Court" in all 3 locations</td><td>Best practice</td></tr>
+      <tr><td>9</td><td>PHP-echoed href values not escaped</td><td>Added <code>htmlspecialchars()</code> to all PHP-generated link values</td><td><span class="wcag">4.1.1</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="file-header">
+    <h3>foot.php</h3>
+    <span class="fix-count">2 fixes</span>
+  </div>
+  <table class="file-table">
+    <thead><tr><th>#</th><th>Issue</th><th>Fix</th><th>WCAG</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Flip-scroll card animation runs unconditionally — can trigger vestibular disorders</td><td>Added <code>prefers-reduced-motion</code> check in JavaScript: if reduced motion preferred, animation skipped entirely</td><td><span class="wcag">2.3.3</span></td></tr>
+      <tr><td>2</td><td>No CSS safety net for reduced-motion</td><td>Added <code>@media (prefers-reduced-motion: reduce)</code> block disabling all transitions and locking flip cards static</td><td><span class="wcag">2.3.3</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══════════════════════════════════════════════ INDEX.PHP ═══ -->
+<div class="section break">
+  <h2 class="section-title">3. Page-by-Page Findings</h2>
+
+  <div class="file-header">
+    <h3>index.php</h3>
+    <span class="fix-count">15 fixes</span>
+  </div>
+  <table class="file-table">
+    <thead><tr><th>#</th><th>Issue</th><th>Fix</th><th>WCAG</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Hardcoded <code>&lt;title&gt;</code> tag after head.php include creates duplicate title</td><td>Removed hardcoded title; head.php dynamic title used</td><td><span class="wcag">2.4.2</span></td></tr>
+      <tr><td>2</td><td><code>&lt;main&gt;</code> missing <code>id="main-content"</code> — skip link target broken</td><td>Added <code>id="main-content"</code></td><td><span class="wcag">2.4.1</span></td></tr>
+      <tr><td>3</td><td>H1 text reads "Sandusky County County Court" — double word</td><td>Corrected to "Sandusky County Court"</td><td>Best practice</td></tr>
+      <tr><td>4</td><td>Phone number <code>&lt;a href="tel:..."&gt;</code> has no accessible label — extension announced ambiguously</td><td>Added <code>aria-label="Phone: 419-547-3262 extension 3"</code></td><td><span class="wcag">2.4.6</span></td></tr>
+      <tr><td>5–14</td><td>10 Bootstrap Icons (<code>&lt;i class="bi bi-*"&gt;</code>) not hidden from assistive technology — announced as unlabeled images</td><td>Added <code>aria-hidden="true"</code> to all 10 decorative icons</td><td><span class="wcag">1.1.1</span></td></tr>
+      <tr><td>15</td><td>8 department card headings use <code>&lt;h5&gt;</code> under page <code>&lt;h2&gt;</code> — skips levels</td><td>Changed to <code>&lt;h3&gt;</code></td><td><span class="wcag">1.3.1</span></td></tr>
+      <tr><td>—</td><td>Featured document "View" / "Download" buttons have no document context</td><td>Added descriptive <code>aria-label</code> including document name and action</td><td><span class="wcag">2.4.6</span></td></tr>
+      <tr><td>—</td><td>3 FAQ accordion headers use <code>&lt;h2 class="accordion-header"&gt;</code> under FAQ section <code>&lt;h2&gt;</code></td><td>Changed to <code>&lt;h3 class="accordion-header"&gt;</code></td><td><span class="wcag">1.3.1</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="file-header">
+    <h3>local-rules.php</h3>
+    <span class="fix-count">6 fixes</span>
+  </div>
+  <table class="file-table">
+    <thead><tr><th>#</th><th>Issue</th><th>Fix</th><th>WCAG</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Hardcoded duplicate <code>&lt;title&gt;</code> after head.php include</td><td>Removed hardcoded title</td><td><span class="wcag">2.4.2</span></td></tr>
+      <tr><td>2</td><td><code>&lt;main&gt;</code> missing <code>id="main-content"</code></td><td>Added <code>id="main-content"</code></td><td><span class="wcag">2.4.1</span></td></tr>
+      <tr><td>3</td><td>PDF link opens in new tab with no warning</td><td>Added <code>aria-label="Download Local Rules PDF (opens in new tab)"</code></td><td><span class="wcag">2.4.4</span></td></tr>
+      <tr><td>4–6</td><td>3 accordion headers use <code>&lt;h2 class="accordion-header"&gt;</code> under section <code>&lt;h2&gt;</code></td><td>Changed all 3 to <code>&lt;h3 class="accordion-header"&gt;</code></td><td><span class="wcag">1.3.1</span></td></tr>
+      <tr><td>7</td><td>Stock image has <code>alt="Local Rules"</code> — decorative photo</td><td>Changed to <code>alt=""</code></td><td><span class="wcag">1.1.1</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══════════════════════════════════ COURT-APPOINTED-COUNSEL + AUDIO ═══ -->
+<div class="section break">
+
+  <div class="file-header">
+    <h3>court-appointed-counsel.php</h3>
+    <span class="fix-count">12 fixes</span>
+  </div>
+  <table class="file-table">
+    <thead><tr><th>#</th><th>Issue</th><th>Fix</th><th>WCAG</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><code>$page_meta</code> — wrong variable name; head.php reads <code>$page_description</code></td><td>Changed to <code>$page_description</code></td><td><span class="wcag">2.4.2</span></td></tr>
+      <tr><td>2</td><td><code>&lt;main&gt;</code> missing <code>id="main-content"</code></td><td>Added <code>id="main-content"</code></td><td><span class="wcag">2.4.1</span></td></tr>
+      <tr><td>3</td><td>PDF link opens in new tab with no warning</td><td>Added <code>aria-label="Download Financial Disclosure Form PDF (opens in new tab)"</code></td><td><span class="wcag">2.4.4</span></td></tr>
+      <tr><td>4</td><td>Phone link has no accessible label</td><td>Added <code>aria-label="Phone: 419-547-3262 extension 3"</code></td><td><span class="wcag">2.4.6</span></td></tr>
+      <tr><td>5</td><td>Stock image <code>alt</code> text describes decorative photo</td><td>Changed to <code>alt=""</code></td><td><span class="wcag">1.1.1</span></td></tr>
+      <tr><td>6–8</td><td>3 accordion headers: <code>&lt;h2 class="accordion-header"&gt;</code> under section <code>&lt;h2&gt;</code></td><td>Changed to <code>&lt;h3&gt;</code></td><td><span class="wcag">1.3.1</span></td></tr>
+      <tr><td>9–11</td><td>3 accordion buttons missing <code>aria-expanded</code> and <code>aria-controls</code></td><td>Added <code>aria-expanded="false"</code> and <code>aria-controls</code> to all 3</td><td><span class="wcag">4.1.2</span></td></tr>
+      <tr><td>12</td><td>3 accordion panels missing <code>aria-labelledby</code></td><td>Added <code>aria-labelledby</code> pointing to each panel's header id</td><td><span class="wcag">4.1.2</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="file-header">
+    <h3>audio-request.php</h3>
+    <span class="fix-count">10 fixes</span>
+  </div>
+  <table class="file-table">
+    <thead><tr><th>#</th><th>Issue</th><th>Fix</th><th>WCAG</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><code>$page_meta</code> — wrong variable name</td><td>Changed to <code>$page_description</code></td><td><span class="wcag">2.4.2</span></td></tr>
+      <tr><td>2</td><td><code>$page_title</code> format inconsistent</td><td>Standardised to <code>'Audio Request | Sandusky County Court'</code></td><td><span class="wcag">2.4.2</span></td></tr>
+      <tr><td>3</td><td><code>&lt;main&gt;</code> missing <code>id="main-content"</code></td><td>Added <code>id="main-content"</code></td><td><span class="wcag">2.4.1</span></td></tr>
+      <tr><td>4</td><td>Stock image alt text describes decorative photo</td><td>Changed to <code>alt=""</code></td><td><span class="wcag">1.1.1</span></td></tr>
+      <tr><td>5</td><td>Form has required fields but no legend explaining the <code>*</code> indicator</td><td>Added <code>&lt;p&gt;Fields marked with * are required.&lt;/p&gt;</code> before the form</td><td><span class="wcag">1.3.1</span></td></tr>
+      <tr><td>6–10</td><td>All form inputs missing <code>autocomplete</code> attributes and <code>aria-required="true"</code>; date field uses <code>type="text"</code></td><td>Added <code>autocomplete</code> to all fields (name, tel, email, street-address); added <code>aria-required="true"</code> to required fields; changed date field to <code>type="date"</code></td><td><span class="wcag">1.3.5</span> <span class="wcag">4.1.2</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══════════════════════════════════════════════ FORMS + JURY ═══ -->
+<div class="section break">
+
+  <div class="file-header">
+    <h3>forms.php</h3>
+    <span class="fix-count">8 fixes</span>
+  </div>
+  <table class="file-table">
+    <thead><tr><th>#</th><th>Issue</th><th>Fix</th><th>WCAG</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><code>$page_meta</code> — wrong variable name</td><td>Changed to <code>$page_description</code></td><td><span class="wcag">2.4.2</span></td></tr>
+      <tr><td>2</td><td><code>$page_title</code> format inconsistent</td><td>Standardised to <code>'Forms | Sandusky County Court'</code></td><td><span class="wcag">2.4.2</span></td></tr>
+      <tr><td>3</td><td><code>&lt;main&gt;</code> missing <code>id="main-content"</code></td><td>Added <code>id="main-content"</code></td><td><span class="wcag">2.4.1</span></td></tr>
+      <tr><td>4</td><td>Form grid section has no heading — unlabelled landmark region</td><td>Added <code>&lt;h2 class="visually-hidden"&gt;Available Forms&lt;/h2&gt;</code></td><td><span class="wcag">2.4.6</span></td></tr>
+      <tr><td>5</td><td>PHP echo uses <code>&lt;h5&gt;</code> for card titles under implicit section — skips levels</td><td>Changed PHP echo to output <code>&lt;h3 class="card-title"&gt;</code></td><td><span class="wcag">1.3.1</span></td></tr>
+      <tr><td>6</td><td>Card images have <code>alt='{$form['title']}'</code> — duplicates adjacent heading text inside same link</td><td>Changed to <code>alt=''</code></td><td><span class="wcag">1.1.1</span></td></tr>
+      <tr><td>7</td><td>Card links open in new tab with no warning</td><td>Added <code>aria-label='{$safe_title} PDF (opens in new tab)'</code></td><td><span class="wcag">2.4.4</span></td></tr>
+      <tr><td>8</td><td>PHP echo values not escaped (<code>$form['title']</code>, <code>$form['file']</code>, <code>$form['img']</code>)</td><td>Added <code>htmlspecialchars()</code> via <code>$safe_*</code> variables</td><td><span class="wcag">4.1.1</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="file-header">
+    <h3>jury-duty.php</h3>
+    <span class="fix-count">7 fixes</span>
+  </div>
+  <table class="file-table">
+    <thead><tr><th>#</th><th>Issue</th><th>Fix</th><th>WCAG</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><code>$page_meta</code> — wrong variable name</td><td>Changed to <code>$page_description</code></td><td><span class="wcag">2.4.2</span></td></tr>
+      <tr><td>2</td><td><code>$page_title</code> format inconsistent</td><td>Changed to <code>'Jury Duty | Sandusky County Court'</code></td><td><span class="wcag">2.4.2</span></td></tr>
+      <tr><td>3</td><td><code>&lt;main&gt;</code> missing <code>id="main-content"</code></td><td>Added <code>id="main-content"</code></td><td><span class="wcag">2.4.1</span></td></tr>
+      <tr><td>4</td><td>Stock image <code>alt="Jury Duty"</code> — decorative photo</td><td>Changed to <code>alt=""</code></td><td><span class="wcag">1.1.1</span></td></tr>
+      <tr><td>5</td><td>Phone link has no accessible label — extension ambiguous</td><td>Added <code>aria-label="Phone: 419-547-3262 extension 3"</code></td><td><span class="wcag">2.4.6</span></td></tr>
+      <tr><td>6</td><td>PHP accordion echo uses <code>&lt;h2 class='accordion-header'&gt;</code> under section <code>&lt;h2&gt;</code></td><td>Changed to <code>&lt;h3 class='accordion-header'&gt;</code></td><td><span class="wcag">1.3.1</span></td></tr>
+      <tr><td>7</td><td>PHP accordion echo outputs <code>{$question}</code> raw</td><td>Added <code>htmlspecialchars($question)</code> via <code>$safe_question</code></td><td><span class="wcag">4.1.1</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══════════════════════════════════════════ PROBATION ═══ -->
+<div class="section break">
+
+  <div class="file-header">
+    <h3>probation.php</h3>
+    <span class="fix-count">17 fixes</span>
+  </div>
+  <table class="file-table">
+    <thead><tr><th>#</th><th>Issue</th><th>Fix</th><th>WCAG</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><code>$page_meta</code> — wrong variable name</td><td>Changed to <code>$page_description</code></td><td><span class="wcag">2.4.2</span></td></tr>
+      <tr><td>2</td><td><code>$page_title</code> format inconsistent</td><td>Changed to <code>'Probation | Sandusky County Court'</code></td><td><span class="wcag">2.4.2</span></td></tr>
+      <tr><td>3</td><td><code>&lt;main&gt;</code> missing <code>id="main-content"</code></td><td>Added <code>id="main-content"</code></td><td><span class="wcag">2.4.1</span></td></tr>
+      <tr><td>4</td><td>988 ticker duplicate <code>&lt;span&gt;</code> for visual loop — all 6 links announced twice by screen readers</td><td>Added <code>aria-hidden="true"</code> and <code>tabindex="-1"</code> on all links in the duplicate span</td><td><span class="wcag">1.3.1</span></td></tr>
+      <tr><td>5</td><td>988 ticker and figcaption chat links open in new tab with no warning</td><td>Added <code>aria-label="Chat online (opens in new tab)"</code></td><td><span class="wcag">2.4.4</span></td></tr>
+      <tr><td>6</td><td>Stock image <code>alt="Probation Services"</code> — decorative photo</td><td>Changed to <code>alt=""</code></td><td><span class="wcag">1.1.1</span></td></tr>
+      <tr><td>7</td><td>Officer name headings use <code>&lt;h5&gt;</code> under <code>&lt;h2&gt;</code> — skips levels</td><td>Changed to <code>&lt;h3&gt;</code></td><td><span class="wcag">1.3.1</span></td></tr>
+      <tr><td>8</td><td>Officer phone button links have no accessible label</td><td>Added <code>aria-label="Phone: 419-547-3262 extension 1"</code> etc.</td><td><span class="wcag">2.4.6</span></td></tr>
+      <tr><td>9</td><td>Probation type card titles use <code>&lt;h5&gt;</code> under <code>&lt;h2&gt;</code></td><td>Changed to <code>&lt;h3&gt;</code></td><td><span class="wcag">1.3.1</span></td></tr>
+      <tr><td>10</td><td>Two sections both titled "Probation Services" — duplicate headings confuse heading navigation</td><td>Renamed types section to "Types of Probation"</td><td><span class="wcag">2.4.6</span></td></tr>
+      <tr><td>11</td><td>988 Lifeline card heading uses <code>&lt;h5&gt;</code> under <code>&lt;h2&gt;</code></td><td>Changed to <code>&lt;h3&gt;</code></td><td><span class="wcag">1.3.1</span></td></tr>
+      <tr><td>12</td><td>Resources document card titles use <code>&lt;h5&gt;</code> under <code>&lt;h2&gt;</code></td><td>Changed to <code>&lt;h3&gt;</code></td><td><span class="wcag">1.3.1</span></td></tr>
+      <tr><td>13</td><td>Generic "View" / "Download" buttons have no document context</td><td>Added <code>aria-label="View {title} PDF (opens in new tab)"</code> and <code>"Download {title} PDF"</code></td><td><span class="wcag">2.4.6</span></td></tr>
+      <tr><td>14</td><td><code>$item['href']</code> echoed raw in href attribute</td><td>Added <code>htmlspecialchars($item['href'])</code></td><td><span class="wcag">4.1.1</span></td></tr>
+      <tr><td>15</td><td>3 FAQ accordion headers use <code>&lt;h2 class="accordion-header"&gt;</code> under section <code>&lt;h2&gt;</code></td><td>Changed to <code>&lt;h3&gt;</code></td><td><span class="wcag">1.3.1</span></td></tr>
+      <tr><td>16</td><td>3 FAQ accordion buttons missing <code>aria-expanded</code> and <code>aria-controls</code></td><td>Added both attributes to all 3 buttons</td><td><span class="wcag">4.1.2</span></td></tr>
+      <tr><td>17</td><td>3 FAQ accordion panels missing <code>aria-labelledby</code></td><td>Added to all 3 panels</td><td><span class="wcag">4.1.2</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══════════════════════════════════════════════ JUDGE + HOPE ═══ -->
+<div class="section break">
+
+  <div class="file-header">
+    <h3>judge.php</h3>
+    <span class="fix-count">4 fixes</span>
+  </div>
+  <table class="file-table">
+    <thead><tr><th>#</th><th>Issue</th><th>Fix</th><th>WCAG</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><code>$page_meta</code> — wrong variable name</td><td>Changed to <code>$page_description</code></td><td><span class="wcag">2.4.2</span></td></tr>
+      <tr><td>2</td><td><code>$page_title</code> format inconsistent</td><td>Changed to <code>'Judge | Sandusky County Court'</code></td><td><span class="wcag">2.4.2</span></td></tr>
+      <tr><td>3</td><td><code>&lt;main&gt;</code> missing <code>id="main-content"</code></td><td>Added <code>id="main-content"</code></td><td><span class="wcag">2.4.1</span></td></tr>
+      <tr><td>4</td><td>Bio text reads "Sandusky County County Court" — double word, confusing screen reader announcement</td><td>Corrected to "Sandusky County Court"</td><td>Best practice</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:12px;color:#555;margin-top:-16px;margin-bottom:28px;">
+    Note: The judge's portrait <code>alt="Judge Cynthia A. Welty"</code> is intentionally preserved — identifying portraits of real people require descriptive alt text.
+  </p>
+
+  <div class="file-header">
+    <h3>hope-court.php</h3>
+    <span class="fix-count">4 fixes</span>
+  </div>
+  <table class="file-table">
+    <thead><tr><th>#</th><th>Issue</th><th>Fix</th><th>WCAG</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><code>$page_meta</code> — wrong variable name</td><td>Changed to <code>$page_description</code></td><td><span class="wcag">2.4.2</span></td></tr>
+      <tr><td>2</td><td><code>$page_title</code> format inconsistent</td><td>Changed to <code>'HOPE Court | Sandusky County Court'</code></td><td><span class="wcag">2.4.2</span></td></tr>
+      <tr><td>3</td><td><code>&lt;main&gt;</code> missing <code>id="main-content"</code></td><td>Added <code>id="main-content"</code></td><td><span class="wcag">2.4.1</span></td></tr>
+      <tr><td>4</td><td>"Our Purpose" subheading uses <code>&lt;h5&gt;</code> under <code>&lt;h2&gt;</code> — skips 2 levels</td><td>Changed to <code>&lt;h3&gt;</code></td><td><span class="wcag">1.3.1</span></td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:12px;color:#555;margin-top:-16px;margin-bottom:28px;">
+    Note: HOPE Court logo <code>alt="HOPE Court Logo"</code> is intentionally preserved — a program logo is a meaningful, non-decorative image.
+  </p>
+</div>
+
+<!-- ═══════════════════════════════════════════ STAFF + CONTACT ═══ -->
+<div class="section break">
+
+  <div class="file-header">
+    <h3>staff.php</h3>
+    <span class="fix-count">10 fixes</span>
+  </div>
+  <table class="file-table">
+    <thead><tr><th>#</th><th>Issue</th><th>Fix</th><th>WCAG</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><code>$page_meta</code> — wrong variable name</td><td>Changed to <code>$page_description</code></td><td><span class="wcag">2.4.2</span></td></tr>
+      <tr><td>2</td><td><code>$page_title</code> format inconsistent</td><td>Changed to <code>'Staff | Sandusky County Court'</code></td><td><span class="wcag">2.4.2</span></td></tr>
+      <tr><td>3</td><td><code>&lt;main&gt;</code> missing <code>id="main-content"</code></td><td>Added <code>id="main-content"</code></td><td><span class="wcag">2.4.1</span></td></tr>
+      <tr><td>4</td><td>Staff grid section has no heading — card <code>&lt;h5&gt;</code> jumps from H1 to H5</td><td>Added <code>&lt;h2 class="visually-hidden"&gt;Court Staff&lt;/h2&gt;</code> before grid</td><td><span class="wcag">1.3.1</span></td></tr>
+      <tr><td>5</td><td>Card title <code>&lt;h5&gt;</code> under unlabelled section</td><td>Changed to <code>&lt;h3&gt;</code></td><td><span class="wcag">1.3.1</span></td></tr>
+      <tr><td>6</td><td>Phone links have no <code>aria-label</code> — extension announced separately from link text</td><td>Added <code>aria-label="Phone: [number] extension [n]"</code></td><td><span class="wcag">2.4.6</span></td></tr>
+      <tr><td>7</td><td>Generic "Email" buttons — indistinguishable across 6 cards for screen reader users</td><td>Added <code>aria-label="Email {name}"</code> to each</td><td><span class="wcag">2.4.6</span></td></tr>
+      <tr><td>8</td><td>Generic "Read Bio" buttons — indistinguishable across cards</td><td>Added <code>aria-label="Read bio for {name}"</code></td><td><span class="wcag">2.4.6</span></td></tr>
+      <tr><td>9</td><td>Modal title uses <code>&lt;h5&gt;</code> as primary heading inside <code>role="dialog"</code></td><td>Changed to <code>&lt;h2 class="modal-title h5"&gt;</code> (semantic H2, visual H5 size preserved)</td><td><span class="wcag">1.3.1</span></td></tr>
+      <tr><td>10</td><td>"Sandusky County County Court" typo in 3 staff bio strings</td><td>Corrected in Stacy Dickman, Todd Nofzinger, and Alisa Metcalf bios</td><td>Best practice</td></tr>
+    </tbody>
+  </table>
+
+  <div class="file-header">
+    <h3>contact.php</h3>
+    <span class="fix-count">8 fixes</span>
+  </div>
+  <table class="file-table">
+    <thead><tr><th>#</th><th>Issue</th><th>Fix</th><th>WCAG</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><code>$page_meta</code> — wrong variable name</td><td>Changed to <code>$page_description</code></td><td><span class="wcag">2.4.2</span></td></tr>
+      <tr><td>2</td><td><code>$page_title</code> format inconsistent</td><td>Changed to <code>'Contact | Sandusky County Court'</code></td><td><span class="wcag">2.4.2</span></td></tr>
+      <tr><td>3</td><td><code>&lt;main&gt;</code> missing <code>id="main-content"</code></td><td>Added <code>id="main-content"</code></td><td><span class="wcag">2.4.1</span></td></tr>
+      <tr><td>4</td><td>Card titles use <code>&lt;h5&gt;</code> under <code>&lt;h2&gt;</code> — skips heading levels</td><td>Changed to <code>&lt;h3&gt;</code></td><td><span class="wcag">1.3.1</span></td></tr>
+      <tr><td>5</td><td>Phone/Email/Hours sub-labels use <code>&lt;h6&gt;</code> under <code>&lt;h5&gt;</code> (soon H3) — skips to H6</td><td>Changed to <code>&lt;h4&gt;</code></td><td><span class="wcag">1.3.1</span></td></tr>
+      <tr><td>6</td><td>Phone link button has no accessible label — extension ambiguous</td><td>Added <code>aria-label="Phone: 419-547-3262 extension 3"</code></td><td><span class="wcag">2.4.6</span></td></tr>
+      <tr><td>7</td><td>Clyde location <code>&lt;iframe&gt;</code> missing <code>title</code> — screen readers cannot identify embedded map</td><td>Added <code>title="Google Maps – Clyde location"</code></td><td><span class="wcag">4.1.2</span></td></tr>
+      <tr><td>8</td><td>Woodville location <code>&lt;iframe&gt;</code> missing <code>title</code></td><td>Added <code>title="Google Maps – Woodville location"</code></td><td><span class="wcag">4.1.2</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══════════════════════════════════════════ SKIP LINK CSS ═══ -->
+<div class="section break">
+  <h2 class="section-title">4. Skip Link CSS (Required)</h2>
+  <p>
+    The skip link added to nav.php is present in the HTML but must be visually hidden by default and
+    revealed on keyboard focus. Add the following CSS to your site stylesheet or inside a
+    <code>&lt;style&gt;</code> block in foot.php:
+  </p>
+  <pre style="background:#f4f7ff;border-left:4px solid #0d2b6b;padding:16px 20px;border-radius:6px;font-size:12px;line-height:1.7;overflow-x:auto;margin:16px 0;">
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  z-index: 9999;
+  padding: 8px 16px;
+  background: #000;
+  color: #fff;
+  font-weight: bold;
+  text-decoration: none;
+  transition: top 0.2s;
+}
+
+.skip-link:focus {
+  top: 0;
+}</pre>
+  <p>
+    This keeps the link invisible to sighted mouse users. When a keyboard user presses <strong>Tab</strong>
+    as their first action on any page, the link slides into view at the top of the screen, allowing them
+    to jump directly to the main content area. This satisfies <strong>WCAG 2.4.1 – Bypass Blocks</strong>.
+  </p>
+</div>
+
+<!-- ═══════════════════════════════════════════ WCAG REFERENCE ═══ -->
+<div class="section break">
+  <h2 class="section-title">5. WCAG 2.1 Criteria Reference</h2>
+  <table>
+    <thead><tr><th>Criterion</th><th>Level</th><th>Name</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><strong>1.1.1</strong></td><td>A</td><td>Non-text Content</td><td>All non-text content has a text alternative. Decorative images use <code>alt=""</code>.</td></tr>
+      <tr><td><strong>1.3.1</strong></td><td>A</td><td>Info and Relationships</td><td>Structure, relationships, and headings are conveyed programmatically. Heading hierarchy must not skip levels.</td></tr>
+      <tr><td><strong>1.3.5</strong></td><td>AA</td><td>Identify Input Purpose</td><td>Form inputs that collect personal data expose <code>autocomplete</code> attributes matching the input's purpose.</td></tr>
+      <tr><td><strong>2.3.3</strong></td><td>AAA</td><td>Animation from Interactions</td><td>Motion animation triggered by interaction can be disabled. Sites should respect <code>prefers-reduced-motion</code>.</td></tr>
+      <tr><td><strong>2.4.1</strong></td><td>A</td><td>Bypass Blocks</td><td>A mechanism exists to skip repeated navigation blocks (e.g., skip link).</td></tr>
+      <tr><td><strong>2.4.2</strong></td><td>A</td><td>Page Titled</td><td>Each page has a title that describes its topic or purpose.</td></tr>
+      <tr><td><strong>2.4.4</strong></td><td>A</td><td>Link Purpose (In Context)</td><td>The purpose of each link can be determined from the link text or context. New-tab links must warn users.</td></tr>
+      <tr><td><strong>2.4.6</strong></td><td>AA</td><td>Headings and Labels</td><td>Headings and labels describe topic or purpose. Generic labels like "View" or "Email" need additional context.</td></tr>
+      <tr><td><strong>4.1.1</strong></td><td>A</td><td>Parsing</td><td>HTML is well-formed; elements are properly nested. PHP output must be encoded with <code>htmlspecialchars()</code>.</td></tr>
+      <tr><td><strong>4.1.2</strong></td><td>A</td><td>Name, Role, Value</td><td>All UI components have accessible names, roles, and state values exposed to assistive technology.</td></tr>
+      <tr><td><strong>4.1.3</strong></td><td>AA</td><td>Status Messages</td><td>Status messages are announced without requiring focus (e.g., <code>role="status"</code> on alert regions).</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══════════════════════════════════════════════ FOOTER ═══ -->
+<div class="report-footer">
+  <strong>Sandusky County Court — Accessibility Audit Report</strong><br>
+  sanduskycountycourt.gov &nbsp;·&nbsp; WCAG 2.1 Level AA / ADA Title II &nbsp;·&nbsp; 14 files &nbsp;·&nbsp; 116 fixes &nbsp;·&nbsp; May 2025
+</div>
+
+</body>
+</html>
