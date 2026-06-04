@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sandusky County CMS Website – Accessibility Audit Report</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; color: #222; background: #f5f5f5; }
+
+  /* ── HEADER ── */
+  .report-header {
+    background: #1a2744;
+    color: #fff;
+    padding: 36px 48px 28px;
+    border-bottom: 6px solid #c8a84b;
+  }
+  .report-header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; letter-spacing: .5px; }
+  .report-header .sub { font-size: 14px; color: #c8a84b; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; margin-bottom: 18px; }
+  .meta-grid { display: flex; flex-wrap: wrap; gap: 28px; margin-top: 18px; }
+  .meta-item label { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #c8a84b; margin-bottom: 3px; }
+  .meta-item span { font-size: 15px; font-weight: 600; }
+
+  /* ── CONTENT WRAPPER ── */
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
+
+  /* ── SECTION HEADINGS ── */
+  .section-title {
+    font-size: 17px; font-weight: 700; color: #1a2744;
+    border-left: 5px solid #c8a84b;
+    padding: 6px 12px; margin: 32px 0 14px;
+    background: #fff; border-radius: 2px;
+  }
+
+  /* ── SUMMARY CARDS ── */
+  .cards { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 28px; }
+  .card {
+    flex: 1 1 160px;
+    background: #1a2744; color: #fff;
+    border-radius: 6px; padding: 18px 22px;
+    text-align: center;
+    border-bottom: 4px solid #c8a84b;
+  }
+  .card .num { font-size: 36px; font-weight: 800; color: #c8a84b; display: block; }
+  .card .lbl { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; opacity: .85; margin-top: 4px; }
+
+  /* ── CATEGORY PILLS ── */
+  .cat-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+  .cat-pill {
+    background: #fff; border: 1.5px solid #1a2744;
+    border-radius: 20px; padding: 5px 14px;
+    font-size: 12px; font-weight: 600; color: #1a2744;
+    white-space: nowrap;
+  }
+  .cat-pill span { background: #c8a84b; color: #1a2744; border-radius: 10px; padding: 1px 7px; margin-left: 6px; font-weight: 700; }
+
+  /* ── MAIN TABLE ── */
+  .tbl-wrap { background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.08); overflow: hidden; margin-bottom: 32px; }
+  table { width: 100%; border-collapse: collapse; }
+  thead tr { background: #1a2744; color: #fff; }
+  thead th { padding: 11px 14px; text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: .7px; }
+  tbody tr:nth-child(even) { background: #f8f6f0; }
+  tbody tr:hover { background: #fff3d6; }
+  tbody td { padding: 10px 14px; vertical-align: top; border-bottom: 1px solid #e8e0cc; font-size: 13px; line-height: 1.5; }
+  .pg-name { font-weight: 700; color: #1a2744; white-space: nowrap; }
+  .count-badge {
+    display: inline-block; min-width: 32px; text-align: center;
+    background: #1a2744; color: #c8a84b;
+    border-radius: 12px; padding: 2px 10px;
+    font-weight: 800; font-size: 13px;
+  }
+  .issue-list { margin: 0; padding-left: 16px; }
+  .issue-list li { margin-bottom: 3px; }
+
+  /* ── ISSUE CATEGORY TABLE ── */
+  .cat-table th { background: #1a2744; color: #fff; padding: 9px 14px; text-align: left; font-size: 12px; text-transform: uppercase; }
+  .cat-table td { padding: 9px 14px; border-bottom: 1px solid #e0d8c8; font-size: 13px; }
+  .cat-table tr:nth-child(even) td { background: #f8f6f0; }
+  .sev-high   { color: #b91c1c; font-weight: 700; }
+  .sev-med    { color: #b45309; font-weight: 700; }
+  .sev-info   { color: #1a5276; font-weight: 700; }
+
+  /* ── NOTES BOX ── */
+  .notes-box {
+    background: #fff; border-left: 5px solid #c8a84b;
+    border-radius: 4px; padding: 16px 20px; margin-bottom: 28px;
+    font-size: 13px; line-height: 1.7;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+  }
+  .notes-box strong { color: #1a2744; }
+
+  /* ── FOOTER ── */
+  .report-footer {
+    background: #1a2744; color: #c8a84b;
+    text-align: center; padding: 18px;
+    font-size: 12px; letter-spacing: .5px;
+    margin-top: 40px;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="report-header">
+  <div class="sub">Accessibility Audit Report</div>
+  <h1>Sandusky County CMS Website</h1>
+  <div class="meta-grid">
+    <div class="meta-item"><label>Date</label><span>June 2026</span></div>
+    <div class="meta-item"><label>Standard</label><span>WCAG 2.1 Level AA / ADA Title II</span></div>
+    <div class="meta-item"><label>Pages Audited</label><span>30</span></div>
+    <div class="meta-item"><label>Total Fixes</label><span>300</span></div>
+    <div class="meta-item"><label>Platform</label><span>CMS-Based Website (Bootstrap 3)</span></div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- SUMMARY CARDS -->
+  <div class="section-title">Executive Summary</div>
+  <div class="cards">
+    <div class="card"><span class="num">30</span><div class="lbl">Pages Audited</div></div>
+    <div class="card"><span class="num">300</span><div class="lbl">Total Fixes</div></div>
+    <div class="card"><span class="num">10.0</span><div class="lbl">Avg Fixes / Page</div></div>
+    <div class="card"><span class="num">AA</span><div class="lbl">Target Standard</div></div>
+  </div>
+
+  <div class="notes-box">
+    <strong>Scope:</strong> This audit covers 30 pages of the Sandusky County CMS website.
+    All corrections were implemented as accessibility-only fixes — no visual design or layout
+    changes were made. Each page was reviewed against WCAG 2.1 Level AA success criteria and
+    ADA Title II requirements. Corrected HTML was provided for each page for manual implementation
+    in the CMS.
+  </div>
+
+  <!-- ISSUE CATEGORIES -->
+  <div class="section-title">Issue Categories Found</div>
+  <div class="tbl-wrap">
+    <table class="cat-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Issue Category</th>
+          <th>WCAG Criterion</th>
+          <th>Severity</th>
+          <th>Occurrences</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Phone numbers not wrapped in <code>tel:</code> links</td>
+          <td>2.1.1 Keyboard, 2.5.3 Label</td>
+          <td class="sev-high">High</td>
+          <td>~85</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Heading hierarchy skips levels (H1→H3, H1→H4, etc.)</td>
+          <td>1.3.1 Info &amp; Relationships</td>
+          <td class="sev-high">High</td>
+          <td>~55</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>External links missing "(opens in new tab)" warning</td>
+          <td>3.2.2 On Input, G201</td>
+          <td class="sev-high">High</td>
+          <td>~52</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>PDF links missing "(PDF, opens in new tab)" warning</td>
+          <td>2.4.4 Link Purpose, G201</td>
+          <td class="sev-high">High</td>
+          <td>~48</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Contact info not in <code>&lt;address&gt;</code> element</td>
+          <td>1.3.1 Info &amp; Relationships</td>
+          <td class="sev-med">Medium</td>
+          <td>24</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>Email links with <code>target="_blank"</code> (mailto should not open new tab)</td>
+          <td>3.2.2 On Input</td>
+          <td class="sev-med">Medium</td>
+          <td>~14</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td>Empty or non-descriptive image alt text</td>
+          <td>1.1.1 Non-text Content</td>
+          <td class="sev-high">High</td>
+          <td>~12</td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td>Empty links with no accessible name (<code>&lt;a&gt;&nbsp;&lt;/a&gt;</code>, <code>&lt;a&gt;&lt;br&gt;&lt;/a&gt;</code>)</td>
+          <td>2.4.4 Link Purpose, 4.1.2 Name, Role, Value</td>
+          <td class="sev-high">High</td>
+          <td>~10</td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td>Unencoded spaces in file/URL paths</td>
+          <td>Broken links / functional</td>
+          <td class="sev-med">Medium</td>
+          <td>~30</td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td>Email href / display text mismatch</td>
+          <td>2.4.4 Link Purpose</td>
+          <td class="sev-high">High</td>
+          <td>~8</td>
+        </tr>
+        <tr>
+          <td>11</td>
+          <td>Markdown artifacts in link display text</td>
+          <td>2.4.4 Link Purpose</td>
+          <td class="sev-med">Medium</td>
+          <td>~7</td>
+        </tr>
+        <tr>
+          <td>12</td>
+          <td><code>&lt;strong&gt;</code> inside headings (redundant, inflates semantics)</td>
+          <td>1.3.1 Info &amp; Relationships</td>
+          <td class="sev-info">Low</td>
+          <td>~14</td>
+        </tr>
+        <tr>
+          <td>13</td>
+          <td>Lists using plain text + <code>&lt;br&gt;</code> instead of <code>&lt;ul&gt;</code></td>
+          <td>1.3.1 Info &amp; Relationships</td>
+          <td class="sev-med">Medium</td>
+          <td>~18</td>
+        </tr>
+        <tr>
+          <td>14</td>
+          <td>Deprecated attributes (<code>align</code>, <code>&lt;center&gt;</code>, <code>title</code> on links)</td>
+          <td>4.1.1 Parsing</td>
+          <td class="sev-info">Low</td>
+          <td>~12</td>
+        </tr>
+        <tr>
+          <td>15</td>
+          <td>Empty paragraph spacers (<code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code>)</td>
+          <td>1.3.1 Info &amp; Relationships</td>
+          <td class="sev-info">Low</td>
+          <td>~30</td>
+        </tr>
+        <tr>
+          <td>16</td>
+          <td>Table using <code>&lt;td&gt;</code> in <code>&lt;thead&gt;</code> instead of <code>&lt;th scope="col"&gt;</code></td>
+          <td>1.3.1 Info &amp; Relationships</td>
+          <td class="sev-high">High</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>17</td>
+          <td>Tabular data using <code>&lt;div&gt;</code> grid — screen readers cannot associate rows/columns</td>
+          <td>1.3.1 Info &amp; Relationships</td>
+          <td class="sev-high">High</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>18</td>
+          <td>Video missing captions track (WCAG 1.2.2)</td>
+          <td>1.2.2 Captions (Prerecorded)</td>
+          <td class="sev-high">High</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>19</td>
+          <td>Multiple <code>&lt;h1&gt;</code> elements on one page</td>
+          <td>1.3.1 Info &amp; Relationships, 2.4.6 Headings</td>
+          <td class="sev-high">High</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>20</td>
+          <td>Internal CMS links with <code>target="_blank"</code></td>
+          <td>3.2.2 On Input</td>
+          <td class="sev-info">Low</td>
+          <td>~4</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- PAGE-BY-PAGE TABLE -->
+  <div class="section-title">Page-by-Page Audit Results</div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:5%">#</th>
+          <th style="width:20%">Page</th>
+          <th style="width:8%">Fixes</th>
+          <th>Key Issues Fixed</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr>
+          <td>1</td>
+          <td class="pg-name">Homepage</td>
+          <td><span class="count-badge">15</span></td>
+          <td>
+            <ul class="issue-list">
+              <li>Carousel: added <code>role="region"</code>, <code>aria-roledescription="carousel"</code>, pause/play button, <code>aria-hidden</code> on decorative icons</li>
+              <li>Carousel navigation controls: added descriptive <code>aria-label</code></li>
+              <li><code>alt="geese"</code> → descriptive alt text on banner image</li>
+              <li>"How Do I?" panel: <code>&lt;h1&gt;</code> → <code>&lt;h2&gt;</code></li>
+              <li>All external links: added "(opens in new tab)" <code>aria-label</code></li>
+              <li>Removed deprecated <code>&lt;center&gt;</code> tags</li>
+              <li>Split multi-link paragraphs into separate <code>&lt;p&gt;</code> elements</li>
+              <li><code>htmlspecialchars()</code> on PHP-echoed database values</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <td>2</td>
+          <td class="pg-name">Employee Information</td>
+          <td><span class="count-badge">8</span></td>
+          <td>
+            <ul class="issue-list">
+              <li><code>&lt;h4&gt;&lt;strong&gt;Wellness&lt;/strong&gt;&lt;/h4&gt;</code> → <code>&lt;h3&gt;</code></li>
+              <li>Removed redundant <code>&lt;strong&gt;</code> inside headings</li>
+              <li>All PDF links: added "(PDF, opens in new tab)" <code>aria-label</code></li>
+              <li>5 PDF links missing <code>target="_blank"</code> — added</li>
+              <li>URL spaces encoded as <code>%20</code></li>
+              <li>Multi-link paragraphs with <code>&lt;br&gt;</code> → separate <code>&lt;p&gt;</code> elements</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <td>3</td>
+          <td class="pg-name">Auditor</td>
+          <td><span class="count-badge">8</span></td>
+          <td>
+            <ul class="issue-list">
+              <li>H3 "Duties" and H3 "Information" → <code>&lt;h2&gt;</code>; removed empty H3</li>
+              <li>Phone → <code>tel:</code> link</li>
+              <li>Removed trailing <code>.</code> from external link <code>href</code></li>
+              <li>Removed <code>target="_blank"</code> from <code>mailto:</code> link</li>
+              <li>Wrapped contact info in <code>&lt;address&gt;</code></li>
+              <li>3 external links: added "(opens in new tab)" <code>aria-label</code></li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <td>4</td>
+          <td class="pg-name">Commissioner's</td>
+          <td><span class="count-badge">12</span></td>
+          <td>
+            <ul class="issue-list">
+              <li>5 phone numbers → <code>tel:</code> links</li>
+              <li>H5 policy notices → <code>&lt;p&gt;</code> elements</li>
+              <li>Styled <code>&lt;span&gt;</code> headings → proper <code>&lt;h3&gt;</code> elements</li>
+              <li>"here" / "click" link text → descriptive text</li>
+              <li>Empty duplicate link removed; email typo fixed</li>
+              <li>No-meeting dates → <code>&lt;ul&gt;</code> list</li>
+              <li>Removed <code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> spacers and deprecated <code>align</code> attributes</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <td>5</td>
+          <td class="pg-name">Clerk of Courts</td>
+          <td><span class="count-badge">8</span></td>
+          <td>
+            <ul class="issue-list">
+              <li>H3 → H2; H4 → H3</li>
+              <li>Phone → <code>tel:</code> link</li>
+              <li>Email <code>href</code> / display text mismatch fixed</li>
+              <li>Removed <code>target="_blank"</code> from <code>mailto:</code> link</li>
+              <li>Website link: added "(opens in new tab)" <code>aria-label</code></li>
+              <li>Wrapped contact info in <code>&lt;address&gt;</code></li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <td>6</td>
+          <td class="pg-name">Common Pleas Court</td>
+          <td><span class="count-badge">8</span></td>
+          <td>
+            <ul class="issue-list">
+              <li><code>alt=""</code> → <code>alt="Sandusky County Courthouse"</code></li>
+              <li>H3 → H2</li>
+              <li>2 judge phone numbers → <code>tel:</code> links</li>
+              <li>Added <code>&lt;div class="row"&gt;</code> wrapper for judge columns</li>
+              <li>Removed <code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> spacers and <code>title="Web page"</code> attribute</li>
+              <li>Wrapped judge contact info in <code>&lt;address&gt;</code> elements</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <td>7</td>
+          <td class="pg-name">County Courts</td>
+          <td><span class="count-badge">10</span></td>
+          <td>
+            <ul class="issue-list">
+              <li>Removed nested color <code>&lt;span&gt;</code> elements (blue <code>#0000ff</code> fails WCAG contrast 3.07:1)</li>
+              <li>4 phone numbers → <code>tel:</code> links</li>
+              <li>Removed <code>target="_blank"</code> from Judge Welty <code>mailto:</code></li>
+              <li>4 external links: added location-specific "(opens in new tab)" <code>aria-label</code></li>
+              <li>Wrapped each court's contact info in <code>&lt;address&gt;</code></li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <td>8</td>
+          <td class="pg-name">County Engineer</td>
+          <td><span class="count-badge">7</span></td>
+          <td>
+            <ul class="issue-list">
+              <li>H3 "Duties" → H2</li>
+              <li>Split elected official name across two <code>&lt;a&gt;</code> tags → merged into single link</li>
+              <li>Phone → <code>tel:</code> link</li>
+              <li>Removed <code>target="_blank"</code> from <code>mailto:</code></li>
+              <li>Cleaned markdown artifact in website display text</li>
+              <li>Website link: added "(opens in new tab)" <code>aria-label</code></li>
+              <li>Wrapped contact info in <code>&lt;address&gt;</code></li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <td>9</td>
+          <td class="pg-name">Treasurer</td>
+          <td><span class="count-badge">10</span></td>
+          <td>
+            <ul class="issue-list">
+              <li>Removed deprecated <code>align="center"</code> attribute</li>
+              <li><code>&lt;p&gt;&lt;strong&gt;&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;</code> empty spacer removed</li>
+              <li>Phone → <code>tel:</code> link</li>
+              <li>Multiple <code>&lt;br&gt;</code> spacing removed from <code>&lt;p&gt;</code></li>
+              <li>Restructured elected official bold/link; removed redundant <code>&lt;strong&gt;</code></li>
+              <li>Wrapped contact info in <code>&lt;address&gt;</code></li>
+              <li>H3 "Duties" → H2; calendar image out of heading; alt text typo fixed</li>
+              <li>Empty alt on "Save the Dream" image → descriptive alt</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <td>10</td>
+          <td class="pg-name">Sheriff</td>
+          <td><span class="count-badge">18</span></td>
+          <td>
+            <ul class="issue-list">
+              <li>Removed <code>&lt;br&gt;</code> inside <code>&lt;h1&gt;</code></li>
+              <li>Empty alt on jail building image → descriptive alt</li>
+              <li>2 phone numbers → <code>tel:</code> links (main + CCW office)</li>
+              <li>Removed <code>target="_blank"</code> and <code>title</code> from email link</li>
+              <li>Wrapped contact info in <code>&lt;address&gt;</code></li>
+              <li>PDF hiring link: added "(PDF, opens in new tab)" <code>aria-label</code></li>
+              <li>Links in <code>&lt;p&gt;</code> with <code>&lt;br&gt;</code> → <code>&lt;ul&gt;</code> list</li>
+              <li>eSORN, Sheriff Sales, CCW FAQ, Land Bank links: added "(opens in new tab)" / "(PDF)" <code>aria-label</code></li>
+              <li>Removed <code>title</code> attribute on Sheriff Sales URL link</li>
+              <li>Removed multiple <code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> spacers</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <td>11</td>
+          <td class="pg-name">Recorder</td>
+          <td><span class="count-badge">12</span></td>
+          <td>
+            <ul class="issue-list">
+              <li>Removed deprecated <code>align="center"</code></li>
+              <li>Removed <code>&lt;p&gt;&lt;strong&gt;&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;</code> empty spacer</li>
+              <li>Phone → <code>tel:</code> link</li>
+              <li>Multiple <code>&lt;br&gt;</code> spacing removed from elected official paragraph</li>
+              <li>Restructured elected official bold/link</li>
+              <li>Wrapped contact info in <code>&lt;address&gt;</code></li>
+              <li>H3 "Information" → H2</li>
+              <li>PDF link: encoded space in URL, added "(PDF, opens in new tab)" <code>aria-label</code></li>
+              <li>Public Search &amp; Land Bank links: added "(opens in new tab)" <code>aria-label</code></li>
+              <li>Multi-link paragraph: split into separate <code>&lt;p&gt;</code> elements</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <td>12</td>
+          <td class="pg-name">Prosecutor</td>
+          <td><span class="count-badge">6</span></td>
+          <td>
+            <ul class="issue-list">
+              <li>Phone → <code>tel:</code> link</li>
+              <li>Restructured <code>&lt;strong&gt;</code> wrapping email link</li>
+              <li>Removed empty link <code>&lt;a href="mailto:..."&gt;&lt;br /&gt;&lt;/a&gt;</code></li>
+              <li>Wrapped contact info in <code>&lt;address&gt;</code></li>
+              <li>H3 "Duties" → H2</li>
+              <li>External prosecutors website link: added "(opens in new tab)" <code>aria-label</code></li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <td>13</td>
+          <td class="pg-name">Juvenile / Probate Court</td>
+          <td><span class="count-badge">11</span></td>
+          <td>
+            <ul class="issue-list">
+              <li>2 court phone numbers → <code>tel:</code> links</li>
+              <li>Removed triple-nested <code>&lt;strong&gt;</code> on elected official link</li>
+              <li>Wrapped each court's address in <code>&lt;address&gt;</code></li>
+              <li>Removed <code>&lt;p&gt; &lt;/p&gt;</code> empty spacer</li>
+              <li>Fixed wrong alt text: Probate Court logo said "Juvenile Court"</li>
+              <li>Duplicate image+text links: added <code>aria-hidden="true"</code> + <code>tabindex="-1"</code> on image links</li>
+              <li>All 4 court website links: added <code>rel="noopener"</code> and "(opens in new tab)" <code>aria-label</code></li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <td>14</td>
+          <td class="pg-name">Coroner</td>
+          <td><span class="count-badge">10</span></td>
+          <td>
+            <ul class="issue-list">
+              <li>Alt text "commissioners" → descriptive building name</li>
+              <li>H4 "General Inquiries" → H2</li>
+              <li>Phone → <code>tel:</code> link</li>
+              <li>2 email links: removed <code>target="_blank"</code></li>
+              <li>Wrapped contact info in <code>&lt;address&gt;</code></li>
+              <li>Sheriff phone in NOTE paragraph → <code>tel:</code> link</li>
+              <li>3 PDF links: encoded URLs, trimmed leading whitespace, added "(PDF, opens in new tab)" <code>aria-label</code></li>
+              <li>Bare <code>&lt;a&gt;</code> link wrapped in <code>&lt;p&gt;</code></li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <td>15</td>
+          <td class="pg-name">Dr. Mark Smith (Coroner Bio)</td>
+          <td><span class="count-badge">6</span></td>
+          <td>
+            <ul class="issue-list">
+              <li>Filename alt text → <code>alt="Dr. Mark Smith, Sandusky County Coroner"</code></li>
+              <li>2 instances of <code>&lt;ul&gt;</code> nested inside <code>&lt;p&gt;</code> — invalid HTML, moved outside</li>
+              <li>Removed <code>&lt;br /&gt;</code> inside <code>&lt;strong&gt;</code> before email</li>
+              <li>Removed multiple empty <code>&lt;p&gt;</code> spacers</li>
+              <li>Removed <code>target="_blank"</code> from <code>mailto:</code> link</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <td>16</td>
+          <td class="pg-name">Board of Elections</td>
+          <td><span class="count-badge">27</span></td>
+          <td>
+            <ul class="issue-list">
+              <li>H1 contained instructions and a link — restructured: H1 title only, instructions moved to H2 + ordered list</li>
+              <li>H1→H4 skip on election results — restructured as H2 "Election Results" + <code>&lt;ul&gt;</code></li>
+              <li>Empty alt on building image</li>
+              <li>3 phone numbers (office + 2 staff) → <code>tel:</code> links</li>
+              <li>Website link: cleaned markdown artifact</li>
+              <li>Board Members plain text → <code>&lt;ul&gt;</code></li>
+              <li>9 Elected Officials PDF links: encoded URLs, added "(PDF, opens in new tab)"</li>
+              <li>Removed empty link <code>&lt;a&gt;&lt;br/&gt;&lt;/a&gt;</code>; removed <code>target="_blank"</code> from internal CMS selflink</li>
+              <li>Republican Party URL: removed trailing <code>%20</code></li>
+              <li>7 election result PDF links: encoded URLs, added "(PDF, opens in new tab)"</li>
+              <li>CHECK REGISTRATION link: added "(opens in new tab)"</li>
+              <li>Voter registration image link: fixed URL, removed <code>title</code>, removed <code>&lt;br&gt;</code> inside <code>&lt;a&gt;</code></li>
+              <li>voteohio.gov link: cleaned markdown artifact</li>
+              <li>Campaign Finance + Local Disclosure links: added <code>target="_blank"</code> and "(opens in new tab)"</li>
+              <li>10 bottom PDF links: encoded URLs, added "(PDF, opens in new tab)", consolidated from empty <code>&lt;div&gt;</code> spacers into <code>&lt;ul&gt;</code></li>
+              <li>Precinct Election Workers: removed <code>target="_blank"</code> from internal link</li>
+              <li>4 image button links: added proper "(opens in new tab)" / "(PDF)" <code>aria-label</code></li>
+              <li>Voter qualification section: <code>&lt;span style="text-decoration:underline"&gt;</code> → <code>&lt;h2&gt;</code></li>
+              <li>Forms &amp; Petitions: added <code>target="_blank"</code> and "(opens in new tab)"</li>
+              <li>Removed multiple <code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> and empty <code>&lt;div&gt;&amp;nbsp;&lt;/div&gt;</code> spacers</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <td>17</td>
+          <td class="pg-name">Community Corrections</td>
+          <td><span class="count-badge">5</span></td>
+          <td>
+            <ul class="issue-list">
+              <li>Phone → <code>tel:</code> link</li>
+              <li>Email <code>href</code> / display text mismatch flagged for client</li>
+              <li>Restructured <code>&lt;strong&gt;</code> wrapping email link</li>
+              <li>Wrapped contact info in <code>&lt;address&gt;</code></li>
+              <li>H3 "Duties" → H2</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <td>18</td>
+          <td class="pg-name">Dept. of Job &amp; Family Services</td>
+          <td><span class="count-badge">7</span></td>
+          <td>
+            <ul class="issue-list">
+              <li>Website link: added <code>rel="noopener"</code> and "(opens in new tab)" <code>aria-label</code></li>
+              <li>4 <code>&lt;h3&gt;&lt;strong&gt;</code> section headings → <code>&lt;h2&gt;</code> (H1→H3 skip, redundant <code>&lt;strong&gt;</code>)</li>
+              <li>7 phone numbers → <code>tel:</code> links (Main, Bellevue, Clyde, Children Services, Child Support ×2, Workforce)</li>
+              <li>4 plain-text email addresses → <code>&lt;a href="mailto:"&gt;</code> links</li>
+              <li>Each department's contact wrapped in <code>&lt;address&gt;</code></li>
+              <li>Video: added <code>aria-label</code> and <code>&lt;track kind="captions"&gt;</code> (captions file required from client)</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <td>19</td>
+          <td class="pg-name">Dog Kennel</td>
+          <td><span class="count-badge">17</span></td>
+          <td>
+            <ul class="issue-list">
+              <li>Empty alt on building image → descriptive alt</li>
+              <li>5 phone number instances → <code>tel:</code> links (main contact, Auditor office, Dog Warden registration, Stray section ×2)</li>
+              <li>2 Sheriff phone references → <code>tel:</code> links</li>
+              <li>Website + Docupet links: added "(opens in new tab)" <code>aria-label</code></li>
+              <li>Wrapped contact info in <code>&lt;address&gt;</code></li>
+              <li>11 <code>&lt;span&gt;&lt;strong&gt;</code> pseudo-headings → proper <code>&lt;h2&gt;</code></li>
+              <li>Removed empty <code>&lt;span&gt;&amp;nbsp;&lt;/span&gt;</code> at page end</li>
+              <li>Table: <code>&lt;td&gt;</code> in <code>&lt;thead&gt;</code> → <code>&lt;th scope="col"&gt;</code>; added <code>&lt;caption&gt;</code></li>
+              <li>Registration location addresses wrapped in <code>&lt;address&gt;</code></li>
+              <li>Meeting dates: plain text with <code>&lt;br&gt;</code> → <code>&lt;ul&gt;</code></li>
+              <li>Removed multiple <code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> spacers</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <td>20</td>
+          <td class="pg-name">Emergency Management</td>
+          <td><span class="count-badge">6</span></td>
+          <td>
+            <ul class="issue-list">
+              <li>Phone → <code>tel:</code> link</li>
+              <li>Email <code>href</code> / display text mismatch flagged for client</li>
+              <li>Wrapped contact info in <code>&lt;address&gt;</code></li>
+              <li>"Duties &amp; Responsibilities" plain <code>&lt;p&gt;</code> → <code>&lt;h2&gt;</code> (moved outside pull-right div to preserve layout)</li>
+              <li>H3 "LINKS" → H2</li>
+              <li>4 external agency links: added "(opens in new tab)" <code>aria-label</code></li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <td>21</td>
+          <td class="pg-name">Emergency Medical Services</td>
+          <td><span class="count-badge">11</span></td>
+          <td>
+            <ul class="issue-list">
+              <li>Phone → <code>tel:</code> link</li>
+              <li>Email <code>href</code> / display text mismatch flagged for client</li>
+              <li>Website URL: removed trailing <code>%20</code></li>
+              <li>Website link: added "(opens in new tab)" <code>aria-label</code></li>
+              <li>Wrapped contact info in <code>&lt;address&gt;</code></li>
+              <li>H3 "Duties" → H2</li>
+              <li>H3 Annual Report link → H2 + "(PDF, opens in new tab)" <code>aria-label</code></li>
+              <li>H3 "EMS Privacy Practices" → H2</li>
+              <li>Privacy Practices PDF: added "(PDF, opens in new tab)" <code>aria-label</code></li>
+              <li>"Click here for..." → descriptive link text</li>
+              <li>Point &amp; Pay PDF: added "(PDF, opens in new tab)" <code>aria-label</code></li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <td>22</td>
+          <td class="pg-name">Facility Management</td>
+          <td><span class="count-badge">5</span></td>
+          <td>
+            <ul class="issue-list">
+              <li>2 phone numbers → <code>tel:</code> links</li>
+              <li>Email <code>href</code> / display text mismatch flagged for client</li>
+              <li>Wrapped contact info in <code>&lt;address&gt;</code></li>
+              <li>H3 "Duties" → H2</li>
+              <li>Removed trailing <code>&amp;nbsp;</code> in email display text</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <td>23</td>
+          <td class="pg-name">Human Resources</td>
+          <td><span class="count-badge">5</span></td>
+          <td>
+            <ul class="issue-list">
+              <li>Phone → <code>tel:</code> link</li>
+              <li>Email <code>href</code> / display text mismatch flagged for client</li>
+              <li>Wrapped contact info in <code>&lt;address&gt;</code></li>
+              <li>H3 "Duties" → H2</li>
+              <li>H4 Employment link with redundant <code>&lt;strong&gt;</code> → H2</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <td>24</td>
+          <td class="pg-name">Law Library</td>
+          <td><span class="count-badge">10</span></td>
+          <td>
+            <ul class="issue-list">
+              <li>Phone → <code>tel:</code> link (contact block + body text)</li>
+              <li>Wrapped contact info in <code>&lt;address&gt;</code></li>
+              <li>Excessive <code>&lt;br&gt;</code> tags in Board Members label removed</li>
+              <li>Removed multiple <code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> spacers</li>
+              <li>Board Members plain text → <code>&lt;ul&gt;</code></li>
+              <li>PDF link: trimmed leading <code>&amp;nbsp;</code>, added "(PDF, opens in new tab)" <code>aria-label</code></li>
+              <li>Meeting dates plain text → <code>&lt;ul&gt;</code></li>
+              <li>Facebook link flagged for client (URL missing)</li>
+              <li>Empty link <code>&lt;a&gt;&amp;nbsp;&lt;/a&gt;</code> removed</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <td>25</td>
+          <td class="pg-name">Sanitary Engineer</td>
+          <td><span class="count-badge">10</span></td>
+          <td>
+            <ul class="issue-list">
+              <li>Phone → <code>tel:</code> link</li>
+              <li>Email <code>href</code> / display text mismatch flagged for client</li>
+              <li>Wrapped contact info in <code>&lt;address&gt;</code></li>
+              <li>Website link: added "(opens in new tab)" <code>aria-label</code></li>
+              <li>Pay Bill Online: fixed garbled display URL, added "(opens in new tab)" <code>aria-label</code></li>
+              <li>Empty <code>&lt;h3&gt;&amp;nbsp;&lt;/h3&gt;</code> removed</li>
+              <li>H3 "Duties" → H2</li>
+              <li>2 Microsoft Word XML namespace comment artifacts removed</li>
+              <li>Removed <code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> spacer and trailing <code>&lt;br&gt;&lt;br&gt;</code></li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <td>26</td>
+          <td class="pg-name">Solid Waste / Recycling</td>
+          <td><span class="count-badge">5</span></td>
+          <td>
+            <ul class="issue-list">
+              <li>Phone → <code>tel:</code> link</li>
+              <li>Wrapped contact info in <code>&lt;address&gt;</code></li>
+              <li>Website link: added "(opens in new tab)" <code>aria-label</code></li>
+              <li>H2 heading: replaced <code>&amp;nbsp;</code> with regular space</li>
+              <li>OSS web page link: added "(opens in new tab)" <code>aria-label</code></li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <td>27</td>
+          <td class="pg-name">Phone Directory</td>
+          <td><span class="count-badge">5</span></td>
+          <td>
+            <ul class="issue-list">
+              <li>Tabular data using <code>&lt;div&gt;</code> grid → semantic <code>&lt;table&gt;</code> with <code>&lt;thead&gt;</code>, <code>&lt;tbody&gt;</code></li>
+              <li>H3 column headers → <code>&lt;th scope="col"&gt;</code></li>
+              <li>Added <code>&lt;caption&gt;</code> to table</li>
+              <li>~55 office phone numbers → <code>&lt;a href="tel:"&gt;</code> links with <code>aria-label</code></li>
+              <li>Removed empty spacer row; fixed Juvenile Youth Works dual-phone cell</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <td>28</td>
+          <td class="pg-name">Veterans Office</td>
+          <td><span class="count-badge">11</span></td>
+          <td>
+            <ul class="issue-list">
+              <li>Phone → <code>tel:</code> link</li>
+              <li>Wrapped contact info in <code>&lt;address&gt;</code></li>
+              <li>H3 "Are you a veteran?" → H2</li>
+              <li>Empty link <code>&lt;a href="mailto:..."&gt;&lt;br/&gt;&lt;/a&gt;</code> removed</li>
+              <li>Email typo: <code>sanduskycountoh.gov</code> → <code>sanduskycountyoh.gov</code></li>
+              <li>Ohio Vet website: cleaned markdown artifact, added "(opens in new tab)" <code>aria-label</code></li>
+              <li>Toll-free 1-877-644-6838 → <code>tel:</code> link</li>
+              <li>Commission Members plain text → <code>&lt;ul&gt;</code></li>
+              <li>Veterans Crisis Line image: added descriptive alt text; wrapped in link to crisis line website</li>
+              <li>Website link: cleaned markdown artifact, added <code>target="_blank"</code> and "(opens in new tab)" <code>aria-label</code></li>
+              <li>Stray semicolon "Web Page ;" → "Web Page:"</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <td>29</td>
+          <td class="pg-name">Soil &amp; Water</td>
+          <td><span class="count-badge">9</span></td>
+          <td>
+            <ul class="issue-list">
+              <li>All 5 <code>&lt;h3&gt;</code> section headings → <code>&lt;h2&gt;</code> (H1→H3 skip)</li>
+              <li>H3 "USDA-Natural Resources Conservation<strong>Phone: 419-334-6330</strong>": fixed heading text, moved phone to body as <code>tel:</code> link</li>
+              <li>Soil &amp; Water phone → <code>tel:</code> link</li>
+              <li>Wrapped contact info in <code>&lt;address&gt;</code></li>
+              <li>Removed deprecated <code>align="center"</code></li>
+              <li>Board of Supervisors plain text → <code>&lt;ul&gt;</code></li>
+              <li>Removed <code>&lt;br /&gt;</code> inside Meeting Minutes link text</li>
+              <li>Removed <code>&amp;nbsp;</code> before website link text</li>
+              <li>Website link: added "(opens in new tab)" <code>aria-label</code></li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <td>30</td>
+          <td class="pg-name">Building Code Department</td>
+          <td><span class="count-badge">18</span></td>
+          <td>
+            <ul class="issue-list">
+              <li>2 <code>&lt;h1&gt;</code> elements merged into single <code>&lt;h1&gt;</code></li>
+              <li>Flyer image link: encoded URL spaces, added <code>target="_blank"</code>, "(PDF, opens in new tab)" <code>aria-label</code>, descriptive alt text</li>
+              <li>2 H4 sidebar headings with <code>&lt;strong&gt;</code> → <code>&lt;h2&gt;</code></li>
+              <li>Phone → <code>tel:</code> link</li>
+              <li>Restructured <code>&lt;strong&gt;</code> wrapping email link</li>
+              <li>Wrapped contact info in <code>&lt;address&gt;</code></li>
+              <li>Typo "Inspection requsts" → "Inspection requests"</li>
+              <li>SafeBuilt Contract + Amendment PDFs: encoded URL spaces, added "(PDF, opens in new tab)"</li>
+              <li>H4 "Advisory Committee Meetings" → H2; H4 "No Applications after 4PM" → H2; H4 "Permit Applications" → H2</li>
+              <li>Removed <code>target="_blank"</code> from internal Meeting Minutes CMS selflink</li>
+              <li>Contractor Registration + Registered Contractors PDFs: encoded URLs, added "(PDF, opens in new tab)"</li>
+              <li>6 permit application <code>.docx</code> links: converted from <code>&lt;p&gt;</code>+<code>&lt;br&gt;</code> to <code>&lt;ul&gt;</code>, encoded URLs, added "(Word document, opens in new tab)"</li>
+              <li>Removed <code>&lt;br /&gt;</code> inside link text</li>
+            </ul>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CLIENT ACTION ITEMS -->
+  <div class="section-title">Items Requiring Client Action</div>
+  <div class="notes-box">
+    <p>The following items were flagged during the audit and require client verification or additional assets:</p>
+    <br/>
+    <ul style="padding-left:20px; line-height:2.0;">
+      <li><strong>Email mismatches (×6 pages):</strong> Community Corrections, Emergency Management, Emergency Medical Services, Facility Management, Human Resources, Sanitary Engineer — email <code>href</code> uses old domain (<code>co.sandusky.oh.us</code>) while display text shows new domain (<code>sanduskycountyoh.gov</code>). Client to verify correct address for each.</li>
+      <li><strong>Video captions (Job &amp; Family Services):</strong> SC Foster Care video requires a <code>.vtt</code> captions file to comply with WCAG 1.2.2. Client to provide captions file.</li>
+      <li><strong>Facebook link (Law Library):</strong> Facebook page mentioned with no URL. Client to provide Facebook page URL for linking.</li>
+      <li><strong>Veterans Crisis Line image:</strong> Badge image was not linked. Connected to <code>https://www.veteranscrisisline.net/</code> — client to verify this is the correct destination.</li>
+    </ul>
+  </div>
+
+  <!-- WCAG SUMMARY -->
+  <div class="section-title">WCAG 2.1 Success Criteria Addressed</div>
+  <div class="tbl-wrap">
+    <table class="cat-table">
+      <thead>
+        <tr><th>Criterion</th><th>Title</th><th>Level</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1.1.1</td><td>Non-text Content (alt text on images)</td><td>A</td></tr>
+        <tr><td>1.2.2</td><td>Captions – Prerecorded video</td><td>A</td></tr>
+        <tr><td>1.3.1</td><td>Info and Relationships (headings, lists, tables, address)</td><td>A</td></tr>
+        <tr><td>1.4.3</td><td>Contrast Minimum (removed blue <code>#0000ff</code> inline color)</td><td>AA</td></tr>
+        <tr><td>2.1.1</td><td>Keyboard (tel: links enable keyboard/AT dialing)</td><td>A</td></tr>
+        <tr><td>2.4.4</td><td>Link Purpose in Context (descriptive link text, file type warnings)</td><td>A</td></tr>
+        <tr><td>2.4.6</td><td>Headings and Labels (correct heading hierarchy)</td><td>AA</td></tr>
+        <tr><td>3.2.2</td><td>On Input (new tab warnings; mailto not forcing new tab)</td><td>A</td></tr>
+        <tr><td>4.1.1</td><td>Parsing (removed deprecated attributes, duplicate IDs, invalid nesting)</td><td>A</td></tr>
+        <tr><td>4.1.2</td><td>Name, Role, Value (empty links removed; aria-label on controls)</td><td>A</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div><!-- /wrap -->
+
+<div class="report-footer">
+  Sandusky County CMS Website &mdash; Accessibility Audit Report &mdash; June 2026 &mdash; WCAG 2.1 Level AA / ADA Title II
+</div>
+
+</body>
+</html>
