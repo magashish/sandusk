@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sandusky County CMS Website — Accessibility Audit Report</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;}
+body{font-family:Arial,Helvetica,sans-serif;color:#222;margin:0;padding:0;font-size:15px;line-height:1.6;}
+a{color:#1a2744;}
+.report-header{background:#1a2744;color:#fff;padding:2.5rem 3rem;}
+.report-header h1{color:#c8a84b;margin:0 0 .4rem;font-size:2rem;}
+.report-header .subtitle{font-size:1.1rem;opacity:.85;margin:0;}
+.report-header .meta{margin-top:.8rem;font-size:.88rem;opacity:.7;}
+.summary-bar{display:flex;gap:2.5rem;padding:1.5rem 3rem;background:#f0f2f5;border-bottom:4px solid #c8a84b;flex-wrap:wrap;}
+.summary-stat .num{font-size:2.4rem;font-weight:bold;color:#1a2744;line-height:1;}
+.summary-stat .label{font-size:.75rem;color:#555;text-transform:uppercase;letter-spacing:.06em;}
+.toc{padding:1.5rem 3rem;}
+.toc h2{color:#1a2744;border-bottom:2px solid #c8a84b;padding-bottom:.4rem;margin-bottom:1rem;}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:.25rem 2rem;}
+.toc-item{display:flex;justify-content:space-between;align-items:center;padding:.2rem 0;border-bottom:1px dotted #ccc;font-size:.88rem;}
+.toc-item a{text-decoration:none;color:#1a2744;}
+.toc-item a:hover{text-decoration:underline;}
+.toc-badge{background:#c8a84b;color:#1a2744;font-weight:bold;font-size:.72rem;padding:1px 7px;border-radius:10px;white-space:nowrap;}
+.page-section{padding:1.5rem 3rem;border-top:3px solid #1a2744;}
+.page-section:nth-child(even){background:#fafafa;}
+.section-header{display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;margin-bottom:.8rem;}
+.section-header h2{color:#1a2744;margin:0;font-size:1.25rem;}
+.fix-badge{background:#1a2744;color:#c8a84b;font-weight:bold;padding:3px 11px;border-radius:12px;font-size:.83rem;white-space:nowrap;}
+table{width:100%;border-collapse:collapse;font-size:.86rem;margin:.5rem 0;}
+thead th{background:#1a2744;color:#fff;padding:8px 10px;text-align:left;}
+thead th:first-child{width:3%;text-align:center;}
+tbody td{padding:6px 10px;border-bottom:1px solid #e0e0e0;vertical-align:top;}
+tbody tr:nth-child(even){background:#f4f6f9;}
+tbody tr:hover{background:#edf0f7;}
+code{background:#e8eaf0;padding:1px 5px;border-radius:3px;font-size:.82em;font-family:Consolas,monospace;}
+.note{background:#fff8e1;border-left:4px solid #c8a84b;padding:.5rem 1rem;margin:.6rem 0;font-size:.86rem;}
+.flag{background:#ffeaea;border-left:4px solid #c0392b;padding:.4rem .8rem;margin:.4rem 0;font-size:.85rem;}
+footer{background:#1a2744;color:#aaa;padding:1.5rem 3rem;font-size:.85rem;margin-top:2rem;}
+footer strong{color:#c8a84b;}
+</style>
+</head>
+<body>
+
+<header class="report-header">
+  <h1>Sandusky County CMS Website</h1>
+  <p class="subtitle">ADA / WCAG 2.1 Level AA — Accessibility Audit Report</p>
+  <p class="meta">Prepared June 2026 &nbsp;|&nbsp; Standard: WCAG 2.1 Level AA &nbsp;|&nbsp; ADA Title II Compliance &nbsp;|&nbsp; Platform: CMS (Bootstrap 3)</p>
+</header>
+
+<div class="summary-bar">
+  <div class="summary-stat"><div class="num">40</div><div class="label">Pages Audited</div></div>
+  <div class="summary-stat"><div class="num">380</div><div class="label">Total Fixes</div></div>
+  <div class="summary-stat"><div class="num">WCAG 2.1</div><div class="label">Standard</div></div>
+  <div class="summary-stat"><div class="num">AA</div><div class="label">Conformance Level</div></div>
+</div>
+
+<div class="toc">
+  <h2>Table of Contents</h2>
+  <div class="toc-grid">
+    <div class="toc-item"><a href="#p1">1. Homepage</a><span class="toc-badge">15 fixes</span></div>
+    <div class="toc-item"><a href="#p2">2. Employee Information</a><span class="toc-badge">8 fixes</span></div>
+    <div class="toc-item"><a href="#p3">3. Auditor</a><span class="toc-badge">8 fixes</span></div>
+    <div class="toc-item"><a href="#p4">4. Commissioner's</a><span class="toc-badge">12 fixes</span></div>
+    <div class="toc-item"><a href="#p5">5. Clerk of Courts</a><span class="toc-badge">8 fixes</span></div>
+    <div class="toc-item"><a href="#p6">6. Common Pleas Court</a><span class="toc-badge">8 fixes</span></div>
+    <div class="toc-item"><a href="#p7">7. County Courts</a><span class="toc-badge">10 fixes</span></div>
+    <div class="toc-item"><a href="#p8">8. County Engineer</a><span class="toc-badge">7 fixes</span></div>
+    <div class="toc-item"><a href="#p9">9. Treasurer</a><span class="toc-badge">10 fixes</span></div>
+    <div class="toc-item"><a href="#p10">10. Sheriff</a><span class="toc-badge">18 fixes</span></div>
+    <div class="toc-item"><a href="#p11">11. Recorder</a><span class="toc-badge">12 fixes</span></div>
+    <div class="toc-item"><a href="#p12">12. Prosecutor</a><span class="toc-badge">6 fixes</span></div>
+    <div class="toc-item"><a href="#p13">13. Juvenile / Probate Court</a><span class="toc-badge">11 fixes</span></div>
+    <div class="toc-item"><a href="#p14">14. Coroner</a><span class="toc-badge">10 fixes</span></div>
+    <div class="toc-item"><a href="#p15">15. Dr. Mark Smith Bio</a><span class="toc-badge">6 fixes</span></div>
+    <div class="toc-item"><a href="#p16">16. Board of Elections</a><span class="toc-badge">27 fixes</span></div>
+    <div class="toc-item"><a href="#p17">17. Community Corrections</a><span class="toc-badge">5 fixes</span></div>
+    <div class="toc-item"><a href="#p18">18. Job &amp; Family Services</a><span class="toc-badge">7 fixes</span></div>
+    <div class="toc-item"><a href="#p19">19. Dog Kennel</a><span class="toc-badge">17 fixes</span></div>
+    <div class="toc-item"><a href="#p20">20. Emergency Management</a><span class="toc-badge">6 fixes</span></div>
+    <div class="toc-item"><a href="#p21">21. Emergency Medical Services</a><span class="toc-badge">11 fixes</span></div>
+    <div class="toc-item"><a href="#p22">22. Facility Management</a><span class="toc-badge">5 fixes</span></div>
+    <div class="toc-item"><a href="#p23">23. Human Resources</a><span class="toc-badge">5 fixes</span></div>
+    <div class="toc-item"><a href="#p24">24. Law Library</a><span class="toc-badge">10 fixes</span></div>
+    <div class="toc-item"><a href="#p25">25. Sanitary Engineer</a><span class="toc-badge">10 fixes</span></div>
+    <div class="toc-item"><a href="#p26">26. Solid Waste / Recycling</a><span class="toc-badge">5 fixes</span></div>
+    <div class="toc-item"><a href="#p27">27. Phone Directory</a><span class="toc-badge">5 fixes</span></div>
+    <div class="toc-item"><a href="#p28">28. Veterans Office</a><span class="toc-badge">11 fixes</span></div>
+    <div class="toc-item"><a href="#p29">29. Soil &amp; Water</a><span class="toc-badge">9 fixes</span></div>
+    <div class="toc-item"><a href="#p30">30. Building Code Department</a><span class="toc-badge">18 fixes</span></div>
+    <div class="toc-item"><a href="#p31">31. County Maps</a><span class="toc-badge">3 fixes</span></div>
+    <div class="toc-item"><a href="#p32">32. Other Local Entities</a><span class="toc-badge">4 fixes</span></div>
+    <div class="toc-item"><a href="#p33">33. Additional Community Links</a><span class="toc-badge">4 fixes</span></div>
+    <div class="toc-item"><a href="#p34">34. Public Notices</a><span class="toc-badge">7 fixes</span></div>
+    <div class="toc-item"><a href="#p35">35. Employment</a><span class="toc-badge">38 fixes</span></div>
+    <div class="toc-item"><a href="#p36">36. Gov Deals</a><span class="toc-badge">10 fixes</span></div>
+    <div class="toc-item"><a href="#p37">37. Project Bids</a><span class="toc-badge">4 fixes</span></div>
+    <div class="toc-item"><a href="#p38">38. Public Record Policy</a><span class="toc-badge">3 fixes</span></div>
+    <div class="toc-item"><a href="#p39">39. Sheriff's Snow Emergency</a><span class="toc-badge">1 fix</span></div>
+    <div class="toc-item"><a href="#p40">40. Fraud Reporting System</a><span class="toc-badge">6 fixes</span></div>
+  </div>
+</div>
+
+<!-- PAGE 1 -->
+<section class="page-section" id="p1">
+  <div class="section-header"><h2>1. Homepage</h2><span class="fix-badge">15 fixes</span></div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td>Banner/hero image</td><td>Missing <code>alt</code> attribute — image content not conveyed to screen reader users</td><td>1.1.1</td><td>Added descriptive <code>alt="Sandusky County Government"</code></td></tr>
+    <tr><td>2</td><td>Staff photo</td><td>Missing <code>alt</code> attribute on staff/building image</td><td>1.1.1</td><td>Added descriptive alt text</td></tr>
+    <tr><td>3</td><td>Phone (main office)</td><td>Plain text phone number — not a callable link</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label="Phone: ..."</code></td></tr>
+    <tr><td>4</td><td>Phone (second number)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>5</td><td>Phone (third number)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>6</td><td><code>&lt;h3&gt;</code> subheading</td><td>Heading level skips from <code>&lt;h1&gt;</code> to <code>&lt;h3&gt;</code> — <code>&lt;h2&gt;</code> omitted</td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+    <tr><td>7</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #1</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>8</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #2</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>9</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #3</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>10</td><td>External link #1</td><td>Has <code>target="_blank"</code> but no <code>aria-label</code> with "(opens in new tab)"</td><td>2.4.6</td><td>Added <code>rel="noopener"</code> and <code>aria-label="...(opens in new tab)"</code></td></tr>
+    <tr><td>11</td><td>External link #2</td><td>Has <code>target="_blank"</code> but no <code>aria-label</code> with "(opens in new tab)"</td><td>2.4.6</td><td>Added <code>rel="noopener"</code> and <code>aria-label="...(opens in new tab)"</code></td></tr>
+    <tr><td>12</td><td>Contact info block</td><td>Address/contact details not wrapped in <code>&lt;address&gt;</code> element</td><td>1.3.1</td><td>Wrapped in <code>&lt;address style="font-style:normal;"&gt;</code></td></tr>
+    <tr><td>13</td><td><code>title</code> attribute on link</td><td><code>title</code> is not accessible on touch devices — unreliable for AT</td><td>4.1.2</td><td>Removed <code>title</code> attribute</td></tr>
+    <tr><td>14</td><td>PDF link</td><td>Missing <code>rel="noopener"</code> and <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>rel="noopener" aria-label="...(PDF, opens in new tab)"</code></td></tr>
+    <tr><td>15</td><td><code>&lt;strong&gt;</code> inside <code>&lt;h2&gt;</code></td><td><code>&lt;strong&gt;</code> inside a heading is redundant — headings already carry emphasis semantics</td><td>1.3.1</td><td>Removed <code>&lt;strong&gt;</code> wrapper; heading text retained</td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 2 -->
+<section class="page-section" id="p2">
+  <div class="section-header"><h2>2. Employee Information</h2><span class="fix-badge">8 fixes</span></div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td>Phone (HR office)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>2</td><td>Phone (second)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>3</td><td><code>&lt;h3&gt;</code> subheading</td><td>Heading skips from <code>&lt;h1&gt;</code> to <code>&lt;h3&gt;</code></td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+    <tr><td>4</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code></td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>5</td><td>Contact info block</td><td>Address/contact details not wrapped in <code>&lt;address&gt;</code></td><td>1.3.1</td><td>Wrapped in <code>&lt;address style="font-style:normal;"&gt;</code></td></tr>
+    <tr><td>6</td><td>Email address</td><td>Plain text email — not a clickable <code>mailto:</code> link</td><td>2.4.4</td><td>Converted to <code>&lt;a href="mailto:..."&gt;</code></td></tr>
+    <tr><td>7</td><td>PDF link</td><td>Missing <code>rel="noopener"</code> and <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>rel="noopener"</code> and <code>aria-label</code></td></tr>
+    <tr><td>8</td><td><code>title</code> attribute on link</td><td><code>title</code> not accessible on touch devices</td><td>4.1.2</td><td>Removed <code>title</code> attribute</td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 3 -->
+<section class="page-section" id="p3">
+  <div class="section-header"><h2>3. Auditor</h2><span class="fix-badge">8 fixes</span></div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td>Phone (main)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>2</td><td><code>&lt;h3&gt;</code> subheading</td><td>Heading skips from <code>&lt;h1&gt;</code> to <code>&lt;h3&gt;</code></td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+    <tr><td>3</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code></td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>4</td><td>Contact info block</td><td>Not wrapped in <code>&lt;address&gt;</code></td><td>1.3.1</td><td>Wrapped in <code>&lt;address style="font-style:normal;"&gt;</code></td></tr>
+    <tr><td>5</td><td>PDF link #1</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>target="_blank" rel="noopener" aria-label</code></td></tr>
+    <tr><td>6</td><td>PDF link #2</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>target="_blank" rel="noopener" aria-label</code></td></tr>
+    <tr><td>7</td><td>External link</td><td>Missing <code>aria-label</code> with "(opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label="...(opens in new tab)"</code></td></tr>
+    <tr><td>8</td><td><code>title</code> attribute</td><td><code>title</code> not accessible on touch devices</td><td>4.1.2</td><td>Removed</td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 4 -->
+<section class="page-section" id="p4">
+  <div class="section-header"><h2>4. Commissioner's</h2><span class="fix-badge">12 fixes</span></div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td>Phone (main)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>2</td><td>Phone (second)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>3</td><td>Phone (third)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>4</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #1</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>5</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #2</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>6</td><td><code>&lt;h3&gt;</code> subheading</td><td>Heading skips from <code>&lt;h1&gt;</code> to <code>&lt;h3&gt;</code></td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+    <tr><td>7</td><td><code>&lt;strong&gt;</code> inside <code>&lt;h2&gt;</code></td><td>Redundant emphasis inside heading</td><td>1.3.1</td><td>Removed <code>&lt;strong&gt;</code> wrapper</td></tr>
+    <tr><td>8</td><td>Contact info block</td><td>Not wrapped in <code>&lt;address&gt;</code></td><td>1.3.1</td><td>Wrapped in <code>&lt;address style="font-style:normal;"&gt;</code></td></tr>
+    <tr><td>9</td><td>PDF link #1</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>target="_blank" rel="noopener" aria-label</code></td></tr>
+    <tr><td>10</td><td>PDF link #2</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label</code></td></tr>
+    <tr><td>11</td><td>External link</td><td>Missing <code>aria-label</code> with "(opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label="...(opens in new tab)"</code></td></tr>
+    <tr><td>12</td><td><code>title</code> attribute</td><td>Not accessible on touch devices</td><td>4.1.2</td><td>Removed</td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 5 -->
+<section class="page-section" id="p5">
+  <div class="section-header"><h2>5. Clerk of Courts</h2><span class="fix-badge">8 fixes</span></div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td>Phone (main)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>2</td><td>Phone (second)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>3</td><td><code>&lt;h3&gt;</code> subheading</td><td>Heading skips from <code>&lt;h1&gt;</code> to <code>&lt;h3&gt;</code></td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+    <tr><td>4</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code></td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>5</td><td>Contact info block</td><td>Not wrapped in <code>&lt;address&gt;</code></td><td>1.3.1</td><td>Wrapped in <code>&lt;address style="font-style:normal;"&gt;</code></td></tr>
+    <tr><td>6</td><td>PDF link</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>target="_blank" rel="noopener" aria-label</code></td></tr>
+    <tr><td>7</td><td>External link</td><td>Missing <code>aria-label</code> with "(opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label="...(opens in new tab)"</code></td></tr>
+    <tr><td>8</td><td><code>title</code> attribute</td><td>Not accessible on touch devices</td><td>4.1.2</td><td>Removed</td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 6 -->
+<section class="page-section" id="p6">
+  <div class="section-header"><h2>6. Common Pleas Court</h2><span class="fix-badge">8 fixes</span></div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td>Phone (main)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>2</td><td><code>&lt;h3&gt;</code> subheading</td><td>Heading skips from <code>&lt;h1&gt;</code> to <code>&lt;h3&gt;</code></td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+    <tr><td>3</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #1</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>4</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #2</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>5</td><td>Contact info block</td><td>Not wrapped in <code>&lt;address&gt;</code></td><td>1.3.1</td><td>Wrapped in <code>&lt;address style="font-style:normal;"&gt;</code></td></tr>
+    <tr><td>6</td><td>PDF link #1</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>target="_blank" rel="noopener" aria-label</code></td></tr>
+    <tr><td>7</td><td>PDF link #2</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label</code></td></tr>
+    <tr><td>8</td><td><code>title</code> attribute</td><td>Not accessible on touch devices</td><td>4.1.2</td><td>Removed</td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 7 -->
+<section class="page-section" id="p7">
+  <div class="section-header"><h2>7. County Courts</h2><span class="fix-badge">10 fixes</span></div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td>Phone (court 1)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>2</td><td>Phone (court 2)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>3</td><td><code>&lt;h3&gt;</code> subheading</td><td>Heading skips from <code>&lt;h1&gt;</code> to <code>&lt;h3&gt;</code></td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+    <tr><td>4</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #1</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>5</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #2</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>6</td><td>Contact info block</td><td>Not wrapped in <code>&lt;address&gt;</code></td><td>1.3.1</td><td>Wrapped in <code>&lt;address style="font-style:normal;"&gt;</code></td></tr>
+    <tr><td>7</td><td>PDF link #1</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>target="_blank" rel="noopener" aria-label</code></td></tr>
+    <tr><td>8</td><td>PDF link #2</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label</code></td></tr>
+    <tr><td>9</td><td>External link</td><td>Missing <code>aria-label</code> with "(opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label="...(opens in new tab)"</code></td></tr>
+    <tr><td>10</td><td><code>title</code> attribute</td><td>Not accessible on touch devices</td><td>4.1.2</td><td>Removed</td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 8 -->
+<section class="page-section" id="p8">
+  <div class="section-header"><h2>8. County Engineer</h2><span class="fix-badge">7 fixes</span></div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td>Phone (main)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>2</td><td><code>&lt;h3&gt;</code> subheading</td><td>Heading skips from <code>&lt;h1&gt;</code> to <code>&lt;h3&gt;</code></td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+    <tr><td>3</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code></td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>4</td><td>Contact info block</td><td>Not wrapped in <code>&lt;address&gt;</code></td><td>1.3.1</td><td>Wrapped in <code>&lt;address style="font-style:normal;"&gt;</code></td></tr>
+    <tr><td>5</td><td>PDF link</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>target="_blank" rel="noopener" aria-label</code></td></tr>
+    <tr><td>6</td><td>External link</td><td>Missing <code>aria-label</code> with "(opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label="...(opens in new tab)"</code></td></tr>
+    <tr><td>7</td><td><code>title</code> attribute</td><td>Not accessible on touch devices</td><td>4.1.2</td><td>Removed</td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 9 -->
+<section class="page-section" id="p9">
+  <div class="section-header"><h2>9. Treasurer</h2><span class="fix-badge">10 fixes</span></div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td>Phone (main)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>2</td><td>Phone (second)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>3</td><td><code>&lt;h3&gt;</code> subheading</td><td>Heading skips from <code>&lt;h1&gt;</code> to <code>&lt;h3&gt;</code></td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+    <tr><td>4</td><td><code>&lt;strong&gt;</code> inside <code>&lt;h2&gt;</code></td><td>Redundant emphasis inside heading</td><td>1.3.1</td><td>Removed <code>&lt;strong&gt;</code> wrapper</td></tr>
+    <tr><td>5</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #1</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>6</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #2</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>7</td><td>Contact info block</td><td>Not wrapped in <code>&lt;address&gt;</code></td><td>1.3.1</td><td>Wrapped in <code>&lt;address style="font-style:normal;"&gt;</code></td></tr>
+    <tr><td>8</td><td>PDF link</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>target="_blank" rel="noopener" aria-label</code></td></tr>
+    <tr><td>9</td><td>External link</td><td>Missing <code>aria-label</code> with "(opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label="...(opens in new tab)"</code></td></tr>
+    <tr><td>10</td><td><code>title</code> attribute</td><td>Not accessible on touch devices</td><td>4.1.2</td><td>Removed</td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 10 -->
+<section class="page-section" id="p10">
+  <div class="section-header"><h2>10. Sheriff</h2><span class="fix-badge">18 fixes</span></div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td>Phone (main)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>2</td><td>Phone (tips line)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>3</td><td>Phone (jail/detention)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>4</td><td><code>&lt;h3&gt;</code> subheading #1</td><td>Heading skips from <code>&lt;h1&gt;</code> to <code>&lt;h3&gt;</code></td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+    <tr><td>5</td><td><code>&lt;h3&gt;</code> subheading #2</td><td>Additional heading skip</td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+    <tr><td>6</td><td><code>&lt;strong&gt;</code> inside heading</td><td>Redundant emphasis inside heading</td><td>1.3.1</td><td>Removed <code>&lt;strong&gt;</code> wrapper</td></tr>
+    <tr><td>7</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #1</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>8</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #2</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>9</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #3</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>10</td><td>Contact info block</td><td>Not wrapped in <code>&lt;address&gt;</code></td><td>1.3.1</td><td>Wrapped in <code>&lt;address style="font-style:normal;"&gt;</code></td></tr>
+    <tr><td>11</td><td>Department image</td><td>Missing <code>alt</code> attribute</td><td>1.1.1</td><td>Added descriptive alt text</td></tr>
+    <tr><td>12</td><td>PDF link #1</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>target="_blank" rel="noopener" aria-label</code></td></tr>
+    <tr><td>13</td><td>PDF link #2</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label</code></td></tr>
+    <tr><td>14</td><td>PDF link #3</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label</code></td></tr>
+    <tr><td>15</td><td>External link #1</td><td>Missing <code>aria-label</code> with "(opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label="...(opens in new tab)"</code></td></tr>
+    <tr><td>16</td><td>External link #2</td><td>Missing <code>aria-label</code> with "(opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label="...(opens in new tab)"</code></td></tr>
+    <tr><td>17</td><td><code>title</code> attribute #1</td><td>Not accessible on touch devices</td><td>4.1.2</td><td>Removed</td></tr>
+    <tr><td>18</td><td><code>title</code> attribute #2</td><td>Not accessible on touch devices</td><td>4.1.2</td><td>Removed</td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 11 -->
+<section class="page-section" id="p11">
+  <div class="section-header"><h2>11. Recorder</h2><span class="fix-badge">12 fixes</span></div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td>Phone (main)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>2</td><td>Phone (second)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>3</td><td><code>&lt;h3&gt;</code> subheading</td><td>Heading skips from <code>&lt;h1&gt;</code> to <code>&lt;h3&gt;</code></td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+    <tr><td>4</td><td><code>&lt;strong&gt;</code> inside heading</td><td>Redundant emphasis inside heading</td><td>1.3.1</td><td>Removed <code>&lt;strong&gt;</code> wrapper</td></tr>
+    <tr><td>5</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #1</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>6</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #2</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>7</td><td>Contact info block</td><td>Not wrapped in <code>&lt;address&gt;</code></td><td>1.3.1</td><td>Wrapped in <code>&lt;address style="font-style:normal;"&gt;</code></td></tr>
+    <tr><td>8</td><td>PDF link #1</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>target="_blank" rel="noopener" aria-label</code></td></tr>
+    <tr><td>9</td><td>PDF link #2</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label</code></td></tr>
+    <tr><td>10</td><td>PDF link #3</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label</code></td></tr>
+    <tr><td>11</td><td>External link</td><td>Missing <code>aria-label</code> with "(opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label="...(opens in new tab)"</code></td></tr>
+    <tr><td>12</td><td><code>title</code> attribute</td><td>Not accessible on touch devices</td><td>4.1.2</td><td>Removed</td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 12 -->
+<section class="page-section" id="p12">
+  <div class="section-header"><h2>12. Prosecutor</h2><span class="fix-badge">6 fixes</span></div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td>Phone (main)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>2</td><td><code>&lt;h3&gt;</code> subheading</td><td>Heading skips from <code>&lt;h1&gt;</code> to <code>&lt;h3&gt;</code></td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+    <tr><td>3</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code></td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>4</td><td>Contact info block</td><td>Not wrapped in <code>&lt;address&gt;</code></td><td>1.3.1</td><td>Wrapped in <code>&lt;address style="font-style:normal;"&gt;</code></td></tr>
+    <tr><td>5</td><td>PDF link</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>target="_blank" rel="noopener" aria-label</code></td></tr>
+    <tr><td>6</td><td><code>title</code> attribute</td><td>Not accessible on touch devices</td><td>4.1.2</td><td>Removed</td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 13 -->
+<section class="page-section" id="p13">
+  <div class="section-header"><h2>13. Juvenile / Probate Court</h2><span class="fix-badge">11 fixes</span></div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td>Phone (main)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>2</td><td>Phone (second)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>3</td><td><code>&lt;h3&gt;</code> subheading</td><td>Heading skips from <code>&lt;h1&gt;</code> to <code>&lt;h3&gt;</code></td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+    <tr><td>4</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #1</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>5</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #2</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>6</td><td>Contact info block</td><td>Not wrapped in <code>&lt;address&gt;</code></td><td>1.3.1</td><td>Wrapped in <code>&lt;address style="font-style:normal;"&gt;</code></td></tr>
+    <tr><td>7</td><td>Embedded video</td><td>Missing <code>&lt;track kind="captions"&gt;</code> and <code>aria-label</code> on video element</td><td>1.2.2</td><td>Added <code>&lt;track kind="captions" src="..."&gt;</code> and <code>aria-label</code></td></tr>
+    <tr><td>8</td><td>PDF link #1</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>target="_blank" rel="noopener" aria-label</code></td></tr>
+    <tr><td>9</td><td>PDF link #2</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label</code></td></tr>
+    <tr><td>10</td><td>External link</td><td>Missing <code>aria-label</code> with "(opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label="...(opens in new tab)"</code></td></tr>
+    <tr><td>11</td><td><code>title</code> attribute</td><td>Not accessible on touch devices</td><td>4.1.2</td><td>Removed</td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 14 -->
+<section class="page-section" id="p14">
+  <div class="section-header"><h2>14. Coroner</h2><span class="fix-badge">10 fixes</span></div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td>Phone (main)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>2</td><td>Phone (second)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>3</td><td><code>&lt;h3&gt;</code> subheading</td><td>Heading skips from <code>&lt;h1&gt;</code> to <code>&lt;h3&gt;</code></td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+    <tr><td>4</td><td><code>&lt;strong&gt;</code> inside heading</td><td>Redundant emphasis inside heading</td><td>1.3.1</td><td>Removed <code>&lt;strong&gt;</code> wrapper</td></tr>
+    <tr><td>5</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #1</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>6</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #2</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>7</td><td>Contact info block</td><td>Not wrapped in <code>&lt;address&gt;</code></td><td>1.3.1</td><td>Wrapped in <code>&lt;address style="font-style:normal;"&gt;</code></td></tr>
+    <tr><td>8</td><td>PDF link #1</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>target="_blank" rel="noopener" aria-label</code></td></tr>
+    <tr><td>9</td><td>PDF link #2</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label</code></td></tr>
+    <tr><td>10</td><td><code>title</code> attribute</td><td>Not accessible on touch devices</td><td>4.1.2</td><td>Removed</td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 15 -->
+<section class="page-section" id="p15">
+  <div class="section-header"><h2>15. Dr. Mark Smith Bio</h2><span class="fix-badge">6 fixes</span></div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td>Headshot / portrait image</td><td>Missing descriptive <code>alt</code> attribute</td><td>1.1.1</td><td>Added <code>alt="Dr. Mark Smith, Sandusky County Coroner"</code></td></tr>
+    <tr><td>2</td><td><code>&lt;h3&gt;</code> subheading</td><td>Heading skips from <code>&lt;h1&gt;</code> to <code>&lt;h3&gt;</code></td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+    <tr><td>3</td><td><code>&lt;strong&gt;</code> inside heading</td><td>Redundant emphasis inside heading</td><td>1.3.1</td><td>Removed <code>&lt;strong&gt;</code> wrapper</td></tr>
+    <tr><td>4</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code></td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>5</td><td>Credential / affiliation link</td><td>Missing <code>aria-label</code> with "(opens in new tab)"</td><td>2.4.6</td><td>Added <code>target="_blank" rel="noopener" aria-label="...(opens in new tab)"</code></td></tr>
+    <tr><td>6</td><td><code>title</code> attribute</td><td>Not accessible on touch devices</td><td>4.1.2</td><td>Removed</td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 16 -->
+<section class="page-section" id="p16">
+  <div class="section-header"><h2>16. Board of Elections</h2><span class="fix-badge">27 fixes</span></div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td>Phone (main)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>2</td><td>Phone (second)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>3</td><td>Phone (third)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>4</td><td><code>&lt;h3&gt;</code> subheading #1</td><td>Heading skips from <code>&lt;h1&gt;</code> to <code>&lt;h3&gt;</code></td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+    <tr><td>5</td><td><code>&lt;h3&gt;</code> subheading #2</td><td>Additional heading skip</td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+    <tr><td>6</td><td><code>&lt;strong&gt;</code> inside heading #1</td><td>Redundant emphasis inside heading</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>7</td><td><code>&lt;strong&gt;</code> inside heading #2</td><td>Redundant emphasis inside heading</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>8</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #1</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>9</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #2</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>10</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #3</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>11</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #4</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>12</td><td>Contact info block</td><td>Not wrapped in <code>&lt;address&gt;</code></td><td>1.3.1</td><td>Wrapped in <code>&lt;address style="font-style:normal;"&gt;</code></td></tr>
+    <tr><td>13</td><td>Voting location address</td><td>Secondary address block not wrapped in <code>&lt;address&gt;</code></td><td>1.3.1</td><td>Wrapped in <code>&lt;address style="font-style:normal;"&gt;</code></td></tr>
+    <tr><td>14</td><td>Table: <code>&lt;thead&gt;</code> cells</td><td><code>&lt;td&gt;</code> used in <code>&lt;thead&gt;</code> instead of <code>&lt;th scope="col"&gt;</code></td><td>1.3.1</td><td>Changed to <code>&lt;th scope="col"&gt;</code></td></tr>
+    <tr><td>15</td><td>Table: <code>&lt;caption&gt;</code></td><td>Data table missing <code>&lt;caption&gt;</code> — no programmatic label</td><td>1.3.1</td><td>Added <code>&lt;caption class="sr-only"&gt;</code></td></tr>
+    <tr><td>16</td><td>Department image</td><td>Missing <code>alt</code> attribute</td><td>1.1.1</td><td>Added descriptive alt text</td></tr>
+    <tr><td>17</td><td>PDF link #1</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>target="_blank" rel="noopener" aria-label</code></td></tr>
+    <tr><td>18</td><td>PDF link #2</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label</code></td></tr>
+    <tr><td>19</td><td>PDF link #3</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label</code></td></tr>
+    <tr><td>20</td><td>PDF link #4</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label</code></td></tr>
+    <tr><td>21</td><td>PDF link #5</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label</code></td></tr>
+    <tr><td>22</td><td>External link #1</td><td>Missing <code>aria-label</code> with "(opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label="...(opens in new tab)"</code></td></tr>
+    <tr><td>23</td><td>External link #2</td><td>Missing <code>aria-label</code> with "(opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label="...(opens in new tab)"</code></td></tr>
+    <tr><td>24</td><td>External link #3</td><td>Missing <code>aria-label</code> with "(opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label="...(opens in new tab)"</code></td></tr>
+    <tr><td>25</td><td><code>title</code> attribute #1</td><td>Not accessible on touch devices</td><td>4.1.2</td><td>Removed</td></tr>
+    <tr><td>26</td><td><code>title</code> attribute #2</td><td>Not accessible on touch devices</td><td>4.1.2</td><td>Removed</td></tr>
+    <tr><td>27</td><td><code>title</code> attribute #3</td><td>Not accessible on touch devices</td><td>4.1.2</td><td>Removed</td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 17 -->
+<section class="page-section" id="p17">
+  <div class="section-header"><h2>17. Community Corrections</h2><span class="fix-badge">5 fixes</span></div>
+  <div class="flag">⚠ <strong>Client Action Required:</strong> Email link href uses the old domain <code>co.sandusky.oh.us</code> while the display text shows the new domain <code>sanduskycountyoh.gov</code>. Client must verify the correct current address and update the <code>href</code> accordingly.</div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td>Phone (main)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>2</td><td><code>&lt;h3&gt;</code> subheading</td><td>Heading skips from <code>&lt;h1&gt;</code> to <code>&lt;h3&gt;</code></td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+    <tr><td>3</td><td>Contact info block</td><td>Not wrapped in <code>&lt;address&gt;</code></td><td>1.3.1</td><td>Wrapped in <code>&lt;address style="font-style:normal;"&gt;</code></td></tr>
+    <tr><td>4</td><td>Email link</td><td>Href domain (<code>co.sandusky.oh.us</code>) does not match display text (<code>sanduskycountyoh.gov</code>) — mismatch misleads users</td><td>2.4.4</td><td>Flagged for client — href must be updated to correct current email address</td></tr>
+    <tr><td>5</td><td><code>title</code> attribute</td><td>Not accessible on touch devices</td><td>4.1.2</td><td>Removed</td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 18 -->
+<section class="page-section" id="p18">
+  <div class="section-header"><h2>18. Job &amp; Family Services</h2><span class="fix-badge">7 fixes</span></div>
+  <div class="flag">⚠ <strong>Client Action Required:</strong> Email link href uses the old domain <code>co.sandusky.oh.us</code>. Client must verify and update to the correct <code>sanduskycountyoh.gov</code> address.</div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td>Phone (main)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>2</td><td>Phone (second)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>3</td><td><code>&lt;h3&gt;</code> subheading</td><td>Heading skips from <code>&lt;h1&gt;</code> to <code>&lt;h3&gt;</code></td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+    <tr><td>4</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code></td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>5</td><td>Contact info block</td><td>Not wrapped in <code>&lt;address&gt;</code></td><td>1.3.1</td><td>Wrapped in <code>&lt;address style="font-style:normal;"&gt;</code></td></tr>
+    <tr><td>6</td><td>Email link</td><td>Href domain mismatch — old <code>co.sandusky.oh.us</code> vs display <code>sanduskycountyoh.gov</code></td><td>2.4.4</td><td>Flagged for client — href must be updated</td></tr>
+    <tr><td>7</td><td>PDF link</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>target="_blank" rel="noopener" aria-label</code></td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 19 -->
+<section class="page-section" id="p19">
+  <div class="section-header"><h2>19. Dog Kennel</h2><span class="fix-badge">17 fixes</span></div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td>Phone (main)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>2</td><td>Phone (second)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>3</td><td><code>&lt;h3&gt;</code> subheading #1</td><td>Heading skips from <code>&lt;h1&gt;</code> to <code>&lt;h3&gt;</code></td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+    <tr><td>4</td><td><code>&lt;h3&gt;</code> subheading #2</td><td>Additional heading skip</td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+    <tr><td>5</td><td><code>&lt;strong&gt;</code> inside heading</td><td>Redundant emphasis inside heading</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>6</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #1</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>7</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #2</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>8</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #3</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>9</td><td>Contact info block</td><td>Not wrapped in <code>&lt;address&gt;</code></td><td>1.3.1</td><td>Wrapped in <code>&lt;address style="font-style:normal;"&gt;</code></td></tr>
+    <tr><td>10</td><td>Dog image #1</td><td>Missing <code>alt</code> attribute</td><td>1.1.1</td><td>Added descriptive alt text</td></tr>
+    <tr><td>11</td><td>Dog image #2</td><td>Missing <code>alt</code> attribute</td><td>1.1.1</td><td>Added descriptive alt text</td></tr>
+    <tr><td>12</td><td>Table: <code>&lt;thead&gt;</code> cells</td><td><code>&lt;td&gt;</code> used in <code>&lt;thead&gt;</code> instead of <code>&lt;th scope="col"&gt;</code></td><td>1.3.1</td><td>Changed to <code>&lt;th scope="col"&gt;</code></td></tr>
+    <tr><td>13</td><td>PDF link #1</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>target="_blank" rel="noopener" aria-label</code></td></tr>
+    <tr><td>14</td><td>PDF link #2</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label</code></td></tr>
+    <tr><td>15</td><td>External link</td><td>Missing <code>aria-label</code> with "(opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label="...(opens in new tab)"</code></td></tr>
+    <tr><td>16</td><td><code>title</code> attribute #1</td><td>Not accessible on touch devices</td><td>4.1.2</td><td>Removed</td></tr>
+    <tr><td>17</td><td><code>title</code> attribute #2</td><td>Not accessible on touch devices</td><td>4.1.2</td><td>Removed</td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 20 -->
+<section class="page-section" id="p20">
+  <div class="section-header"><h2>20. Emergency Management</h2><span class="fix-badge">6 fixes</span></div>
+  <div class="flag">⚠ <strong>Client Action Required:</strong> Email link href uses the old domain <code>co.sandusky.oh.us</code>. Client must verify and update to the correct <code>sanduskycountyoh.gov</code> address.</div>
+  <div class="note">⚠ <strong>Layout Note:</strong> The section heading <code>&lt;h2&gt;</code> was placed inside a Bootstrap <code>pull-right</code> float div, causing content misalignment. The heading was moved to outside/after the closing <code>&lt;/div&gt;</code> of the float container to restore correct document flow.</div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td>Phone (main)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>2</td><td><code>&lt;h2&gt;</code> inside <code>pull-right</code> float</td><td>Heading placed inside floated div causes layout shift and breaks reading order for AT users</td><td>1.3.2</td><td>Moved <code>&lt;h2&gt;</code> outside the float div to restore correct document sequence</td></tr>
+    <tr><td>3</td><td>Contact info block</td><td>Not wrapped in <code>&lt;address&gt;</code></td><td>1.3.1</td><td>Wrapped in <code>&lt;address style="font-style:normal;"&gt;</code></td></tr>
+    <tr><td>4</td><td>Email link</td><td>Href domain mismatch — old <code>co.sandusky.oh.us</code> vs display <code>sanduskycountyoh.gov</code></td><td>2.4.4</td><td>Flagged for client — href must be updated</td></tr>
+    <tr><td>5</td><td>PDF link</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>target="_blank" rel="noopener" aria-label</code></td></tr>
+    <tr><td>6</td><td>Decorative image</td><td>Decorative image missing <code>alt=""</code> — screen readers announce file name</td><td>1.1.1</td><td>Added <code>alt=""</code> to mark as decorative</td></tr>
+  </tbody></table>
+</section>
+
+
+<!-- PAGE 21 -->
+<section class="page-section" id="p21">
+  <div class="section-header"><h2>21. Emergency Medical Services</h2><span class="fix-badge">11 fixes</span></div>
+  <div class="flag">⚠ <strong>Client Action Required:</strong> Email link href uses the old domain <code>co.sandusky.oh.us</code>. Client must verify and update to the correct <code>sanduskycountyoh.gov</code> address.</div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td>Phone (main)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>2</td><td>Phone (second)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>3</td><td>Phone (third)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>4</td><td><code>&lt;h3&gt;</code> subheading</td><td>Heading skips from <code>&lt;h1&gt;</code> to <code>&lt;h3&gt;</code></td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+    <tr><td>5</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #1</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>6</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #2</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>7</td><td>Contact info block</td><td>Not wrapped in <code>&lt;address&gt;</code></td><td>1.3.1</td><td>Wrapped in <code>&lt;address style="font-style:normal;"&gt;</code></td></tr>
+    <tr><td>8</td><td>Email link</td><td>Href domain mismatch — old <code>co.sandusky.oh.us</code> vs display <code>sanduskycountyoh.gov</code></td><td>2.4.4</td><td>Flagged for client — href must be updated</td></tr>
+    <tr><td>9</td><td>PDF link #1</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>target="_blank" rel="noopener" aria-label</code></td></tr>
+    <tr><td>10</td><td>PDF link #2</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label</code></td></tr>
+    <tr><td>11</td><td>External link</td><td>Missing <code>aria-label</code> with "(opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label="...(opens in new tab)"</code></td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 22 -->
+<section class="page-section" id="p22">
+  <div class="section-header"><h2>22. Facility Management</h2><span class="fix-badge">5 fixes</span></div>
+  <div class="flag">⚠ <strong>Client Action Required:</strong> Email link href uses the old domain <code>co.sandusky.oh.us</code>. Client must verify and update to the correct <code>sanduskycountyoh.gov</code> address.</div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td>Phone (main)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>2</td><td><code>&lt;h3&gt;</code> subheading</td><td>Heading skips from <code>&lt;h1&gt;</code> to <code>&lt;h3&gt;</code></td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+    <tr><td>3</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code></td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>4</td><td>Contact info block</td><td>Not wrapped in <code>&lt;address&gt;</code></td><td>1.3.1</td><td>Wrapped in <code>&lt;address style="font-style:normal;"&gt;</code></td></tr>
+    <tr><td>5</td><td>Email link</td><td>Href domain mismatch — old <code>co.sandusky.oh.us</code> vs display <code>sanduskycountyoh.gov</code></td><td>2.4.4</td><td>Flagged for client — href must be updated</td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 23 -->
+<section class="page-section" id="p23">
+  <div class="section-header"><h2>23. Human Resources</h2><span class="fix-badge">5 fixes</span></div>
+  <div class="flag">⚠ <strong>Client Action Required:</strong> Email link href uses the old domain <code>co.sandusky.oh.us</code>. Client must verify and update to the correct <code>sanduskycountyoh.gov</code> address.</div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td>Phone (main)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>2</td><td><code>&lt;h3&gt;</code> subheading</td><td>Heading skips from <code>&lt;h1&gt;</code> to <code>&lt;h3&gt;</code></td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+    <tr><td>3</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code></td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>4</td><td>Contact info block</td><td>Not wrapped in <code>&lt;address&gt;</code></td><td>1.3.1</td><td>Wrapped in <code>&lt;address style="font-style:normal;"&gt;</code></td></tr>
+    <tr><td>5</td><td>Email link</td><td>Href domain mismatch — old <code>co.sandusky.oh.us</code> vs display <code>sanduskycountyoh.gov</code></td><td>2.4.4</td><td>Flagged for client — href must be updated</td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 24 -->
+<section class="page-section" id="p24">
+  <div class="section-header"><h2>24. Law Library</h2><span class="fix-badge">10 fixes</span></div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td>Phone (main)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>2</td><td>Phone (second)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>3</td><td><code>&lt;h3&gt;</code> subheading</td><td>Heading skips from <code>&lt;h1&gt;</code> to <code>&lt;h3&gt;</code></td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+    <tr><td>4</td><td><code>&lt;strong&gt;</code> inside heading</td><td>Redundant emphasis inside heading</td><td>1.3.1</td><td>Removed <code>&lt;strong&gt;</code> wrapper</td></tr>
+    <tr><td>5</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #1</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>6</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #2</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>7</td><td>Contact info block</td><td>Not wrapped in <code>&lt;address&gt;</code></td><td>1.3.1</td><td>Wrapped in <code>&lt;address style="font-style:normal;"&gt;</code></td></tr>
+    <tr><td>8</td><td>PDF link #1</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>target="_blank" rel="noopener" aria-label</code></td></tr>
+    <tr><td>9</td><td>PDF link #2</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label</code></td></tr>
+    <tr><td>10</td><td>External link</td><td>Missing <code>aria-label</code> with "(opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label="...(opens in new tab)"</code></td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 25 -->
+<section class="page-section" id="p25">
+  <div class="section-header"><h2>25. Sanitary Engineer</h2><span class="fix-badge">10 fixes</span></div>
+  <div class="flag">⚠ <strong>Client Action Required:</strong> Email link href uses the old domain <code>co.sandusky.oh.us</code>. Client must verify and update to the correct <code>sanduskycountyoh.gov</code> address.</div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td>Phone (main)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>2</td><td>Phone (second)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>3</td><td><code>&lt;h3&gt;</code> subheading</td><td>Heading skips from <code>&lt;h1&gt;</code> to <code>&lt;h3&gt;</code></td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+    <tr><td>4</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #1</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>5</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #2</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>6</td><td>Contact info block</td><td>Not wrapped in <code>&lt;address&gt;</code></td><td>1.3.1</td><td>Wrapped in <code>&lt;address style="font-style:normal;"&gt;</code></td></tr>
+    <tr><td>7</td><td>Email link</td><td>Href domain mismatch — old <code>co.sandusky.oh.us</code> vs display <code>sanduskycountyoh.gov</code></td><td>2.4.4</td><td>Flagged for client — href must be updated</td></tr>
+    <tr><td>8</td><td>PDF link #1</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>target="_blank" rel="noopener" aria-label</code></td></tr>
+    <tr><td>9</td><td>PDF link #2</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label</code></td></tr>
+    <tr><td>10</td><td><code>title</code> attribute</td><td>Not accessible on touch devices</td><td>4.1.2</td><td>Removed</td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 26 -->
+<section class="page-section" id="p26">
+  <div class="section-header"><h2>26. Solid Waste / Recycling</h2><span class="fix-badge">5 fixes</span></div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td>Phone (main)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>2</td><td><code>&lt;h3&gt;</code> subheading</td><td>Heading skips from <code>&lt;h1&gt;</code> to <code>&lt;h3&gt;</code></td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+    <tr><td>3</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code></td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>4</td><td>Contact info block</td><td>Not wrapped in <code>&lt;address&gt;</code></td><td>1.3.1</td><td>Wrapped in <code>&lt;address style="font-style:normal;"&gt;</code></td></tr>
+    <tr><td>5</td><td>External link</td><td>Missing <code>aria-label</code> with "(opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label="...(opens in new tab)"</code></td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 27 -->
+<section class="page-section" id="p27">
+  <div class="section-header"><h2>27. Phone Directory</h2><span class="fix-badge">5 fixes</span></div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td>Directory table: <code>&lt;thead&gt;</code> "Dept." cell</td><td><code>&lt;td&gt;</code> used in <code>&lt;thead&gt;</code> — must be <code>&lt;th scope="col"&gt;</code></td><td>1.3.1</td><td>Changed to <code>&lt;th scope="col"&gt;Dept.&lt;/th&gt;</code></td></tr>
+    <tr><td>2</td><td>Directory table: <code>&lt;thead&gt;</code> "Office" cell</td><td><code>&lt;td&gt;</code> used in <code>&lt;thead&gt;</code></td><td>1.3.1</td><td>Changed to <code>&lt;th scope="col"&gt;Office&lt;/th&gt;</code></td></tr>
+    <tr><td>3</td><td>Directory table: <code>&lt;thead&gt;</code> "Fax" cell</td><td><code>&lt;td&gt;</code> used in <code>&lt;thead&gt;</code></td><td>1.3.1</td><td>Changed to <code>&lt;th scope="col"&gt;Fax&lt;/th&gt;</code></td></tr>
+    <tr><td>4</td><td>Directory table: missing <code>&lt;caption&gt;</code></td><td>Data table has no programmatic label — AT users cannot identify table purpose</td><td>1.3.1</td><td>Added <code>&lt;caption class="sr-only"&gt;Sandusky County Department Phone Directory&lt;/caption&gt;</code></td></tr>
+    <tr><td>5</td><td><code>&lt;h3&gt;</code> heading</td><td>Heading skips from <code>&lt;h1&gt;</code> to <code>&lt;h3&gt;</code></td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 28 -->
+<section class="page-section" id="p28">
+  <div class="section-header"><h2>28. Veterans Office</h2><span class="fix-badge">11 fixes</span></div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td>Phone (main)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>2</td><td>Phone (second)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>3</td><td>Phone (third)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>4</td><td><code>&lt;h3&gt;</code> subheading</td><td>Heading skips from <code>&lt;h1&gt;</code> to <code>&lt;h3&gt;</code></td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+    <tr><td>5</td><td><code>&lt;strong&gt;</code> inside heading</td><td>Redundant emphasis inside heading</td><td>1.3.1</td><td>Removed <code>&lt;strong&gt;</code> wrapper</td></tr>
+    <tr><td>6</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #1</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>7</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #2</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>8</td><td>Contact info block</td><td>Not wrapped in <code>&lt;address&gt;</code></td><td>1.3.1</td><td>Wrapped in <code>&lt;address style="font-style:normal;"&gt;</code></td></tr>
+    <tr><td>9</td><td>PDF link #1</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>target="_blank" rel="noopener" aria-label</code></td></tr>
+    <tr><td>10</td><td>PDF link #2</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label</code></td></tr>
+    <tr><td>11</td><td>External link</td><td>Missing <code>aria-label</code> with "(opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label="...(opens in new tab)"</code></td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 29 -->
+<section class="page-section" id="p29">
+  <div class="section-header"><h2>29. Soil &amp; Water</h2><span class="fix-badge">9 fixes</span></div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td>Phone (main)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>2</td><td>Phone (second)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>3</td><td><code>&lt;h3&gt;</code> subheading</td><td>Heading skips from <code>&lt;h1&gt;</code> to <code>&lt;h3&gt;</code></td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+    <tr><td>4</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #1</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>5</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #2</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>6</td><td>Contact info block</td><td>Not wrapped in <code>&lt;address&gt;</code></td><td>1.3.1</td><td>Wrapped in <code>&lt;address style="font-style:normal;"&gt;</code></td></tr>
+    <tr><td>7</td><td>PDF link</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>target="_blank" rel="noopener" aria-label</code></td></tr>
+    <tr><td>8</td><td>External link #1</td><td>Missing <code>aria-label</code> with "(opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label="...(opens in new tab)"</code></td></tr>
+    <tr><td>9</td><td>External link #2</td><td>Missing <code>aria-label</code> with "(opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label="...(opens in new tab)"</code></td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 30 -->
+<section class="page-section" id="p30">
+  <div class="section-header"><h2>30. Building Code Department</h2><span class="fix-badge">18 fixes</span></div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td>Phone (main)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>2</td><td>Phone (second)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>3</td><td>Phone (third)</td><td>Plain text phone number</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:..."&gt;</code> with <code>aria-label</code></td></tr>
+    <tr><td>4</td><td><code>&lt;h3&gt;</code> subheading #1</td><td>Heading skips from <code>&lt;h1&gt;</code> to <code>&lt;h3&gt;</code></td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+    <tr><td>5</td><td><code>&lt;h3&gt;</code> subheading #2</td><td>Additional heading skip</td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+    <tr><td>6</td><td><code>&lt;strong&gt;</code> inside heading</td><td>Redundant emphasis inside heading</td><td>1.3.1</td><td>Removed <code>&lt;strong&gt;</code> wrapper</td></tr>
+    <tr><td>7</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #1</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>8</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #2</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>9</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #3</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>10</td><td>Contact info block</td><td>Not wrapped in <code>&lt;address&gt;</code></td><td>1.3.1</td><td>Wrapped in <code>&lt;address style="font-style:normal;"&gt;</code></td></tr>
+    <tr><td>11</td><td>PDF link #1</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>target="_blank" rel="noopener" aria-label</code></td></tr>
+    <tr><td>12</td><td>PDF link #2</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label</code></td></tr>
+    <tr><td>13</td><td>PDF link #3</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label</code></td></tr>
+    <tr><td>14</td><td>PDF link #4</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label</code></td></tr>
+    <tr><td>15</td><td>External link #1</td><td>Missing <code>aria-label</code> with "(opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label="...(opens in new tab)"</code></td></tr>
+    <tr><td>16</td><td>External link #2</td><td>Missing <code>aria-label</code> with "(opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label="...(opens in new tab)"</code></td></tr>
+    <tr><td>17</td><td><code>title</code> attribute #1</td><td>Not accessible on touch devices</td><td>4.1.2</td><td>Removed</td></tr>
+    <tr><td>18</td><td><code>title</code> attribute #2</td><td>Not accessible on touch devices</td><td>4.1.2</td><td>Removed</td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 31 -->
+<section class="page-section" id="p31">
+  <div class="section-header"><h2>31. County Maps</h2><span class="fix-badge">3 fixes</span></div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td>Map image</td><td>Missing <code>alt</code> attribute — decorative map image not marked as decorative</td><td>1.1.1</td><td>Added <code>alt=""</code> to mark as decorative</td></tr>
+    <tr><td>2</td><td>External mapping service link</td><td>Has <code>target="_blank"</code> but missing <code>aria-label</code> with "(opens in new tab)"</td><td>2.4.6</td><td>Added <code>rel="noopener" aria-label="...(opens in new tab)"</code></td></tr>
+    <tr><td>3</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code></td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 32 -->
+<section class="page-section" id="p32">
+  <div class="section-header"><h2>32. Other Local Entities</h2><span class="fix-badge">4 fixes</span></div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td>External link #1</td><td>Has <code>target="_blank"</code> but missing <code>aria-label</code> with "(opens in new tab)"</td><td>2.4.6</td><td>Added <code>rel="noopener" aria-label="...(opens in new tab)"</code></td></tr>
+    <tr><td>2</td><td>External link #2</td><td>Has <code>target="_blank"</code> but missing <code>aria-label</code> with "(opens in new tab)"</td><td>2.4.6</td><td>Added <code>rel="noopener" aria-label="...(opens in new tab)"</code></td></tr>
+    <tr><td>3</td><td>External link #3</td><td>Has <code>target="_blank"</code> but missing <code>aria-label</code> with "(opens in new tab)"</td><td>2.4.6</td><td>Added <code>rel="noopener" aria-label="...(opens in new tab)"</code></td></tr>
+    <tr><td>4</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code></td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 33 -->
+<section class="page-section" id="p33">
+  <div class="section-header"><h2>33. Additional Community Links</h2><span class="fix-badge">4 fixes</span></div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td>External link #1</td><td>Has <code>target="_blank"</code> but missing <code>aria-label</code> with "(opens in new tab)"</td><td>2.4.6</td><td>Added <code>rel="noopener" aria-label="...(opens in new tab)"</code></td></tr>
+    <tr><td>2</td><td>External link #2</td><td>Has <code>target="_blank"</code> but missing <code>aria-label</code> with "(opens in new tab)"</td><td>2.4.6</td><td>Added <code>rel="noopener" aria-label="...(opens in new tab)"</code></td></tr>
+    <tr><td>3</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code></td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>4</td><td><code>&lt;h3&gt;</code> section label</td><td>Heading skips from <code>&lt;h1&gt;</code> to <code>&lt;h3&gt;</code></td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 34 -->
+<section class="page-section" id="p34">
+  <div class="section-header"><h2>34. Public Notices</h2><span class="fix-badge">7 fixes</span></div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td><code>&lt;h3&gt;</code> subheading</td><td>Heading skips from <code>&lt;h1&gt;</code> to <code>&lt;h3&gt;</code></td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+    <tr><td>2</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code></td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>3</td><td>PDF link #1</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>target="_blank" rel="noopener" aria-label</code></td></tr>
+    <tr><td>4</td><td>PDF link #2</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label</code></td></tr>
+    <tr><td>5</td><td>PDF link #3</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label</code></td></tr>
+    <tr><td>6</td><td>PDF link #4</td><td>Missing <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label</code></td></tr>
+    <tr><td>7</td><td><code>title</code> attribute</td><td>Not accessible on touch devices</td><td>4.1.2</td><td>Removed</td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 35 -->
+<section class="page-section" id="p35">
+  <div class="section-header"><h2>35. Employment</h2><span class="fix-badge">38 fixes</span></div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td><code>&lt;span&gt;</code> "How to Apply for a County Job"</td><td>Styled span used as visual heading — not a real heading element</td><td>1.3.1</td><td>Replaced with <code>&lt;h2&gt;</code></td></tr>
+    <tr><td>2</td><td>Red text <code>#ff0000</code></td><td>Color contrast ratio 3.99:1 — fails WCAG AA minimum of 4.5:1</td><td>1.4.3</td><td>Removed red color styling; text inherits default color</td></tr>
+    <tr><td>3</td><td>Empty <code>&lt;div&gt;</code> with red <code>&lt;br&gt;</code></td><td>Empty div used as spacer; red color applied to line break</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>4</td><td><code>icantu@sanduskycountyoh.gov</code></td><td>Plain text email — not a clickable <code>mailto:</code> link</td><td>2.4.4</td><td>Converted to <code>&lt;a href="mailto:icantu@sanduskycountyoh.gov"&gt;</code></td></tr>
+    <tr><td>5</td><td>APPLICATION PDF link</td><td><code>&lt;br&gt;</code> inside <code>&lt;a&gt;</code>; inline spans; no <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6, 4.1.2</td><td>Cleaned markup; added <code>aria-label="Employment Application (PDF, opens in new tab)"</code></td></tr>
+    <tr><td>6</td><td>EEO PDF link</td><td>Missing <code>target="_blank" rel="noopener"</code>; no "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>target/rel/aria-label</code></td></tr>
+    <tr><td>7</td><td>Drug Free Workplace link (top)</td><td><code>title</code> attribute; unencoded space in URL; missing <code>target/rel</code>; no <code>aria-label</code></td><td>2.4.6, 4.1.2</td><td>Removed <code>title</code>; encoded URL; added <code>target/rel/aria-label</code></td></tr>
+    <tr><td>8</td><td><code>&lt;div&gt;&amp;nbsp;&lt;/div&gt;</code></td><td>Empty spacer div</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>9</td><td><code>&lt;span&gt;</code> "Current Job Openings as of June 2, 2026"</td><td>Styled span used as visual heading</td><td>1.3.1</td><td>Replaced with <code>&lt;h2&gt;</code></td></tr>
+    <tr><td>10</td><td><code>***Applications...***</code> and decorative underscores</td><td>Decorative characters read aloud by screen readers</td><td>1.3.1</td><td>Added <code>aria-hidden="true"</code> to decorative elements</td></tr>
+    <tr><td>11</td><td>Wraparound Facilitator link</td><td><code>title</code> attribute; unencoded URL spaces; no <code>aria-label</code></td><td>2.4.6, 4.1.2</td><td>Removed <code>title</code>; encoded URL; added <code>target="_blank" rel="noopener" aria-label="...(PDF, opens in new tab)"</code></td></tr>
+    <tr><td>12</td><td>Deputy Clerk (Juvenile/Probate) link</td><td><code>title</code> attribute; unencoded URL spaces</td><td>2.4.6, 4.1.2</td><td>Same fix as #11</td></tr>
+    <tr><td>13</td><td>Deputy Clerk (Floater) link</td><td>Empty link — contains only <code>&lt;br&gt;</code>, no accessible name</td><td>4.1.2</td><td>Removed</td></tr>
+    <tr><td>14</td><td>Deputy Dog Warden I link</td><td><code>title</code> attribute; unencoded URL spaces</td><td>2.4.6, 4.1.2</td><td>Same fix as #11</td></tr>
+    <tr><td>15</td><td>Maintenance (Parks) link</td><td><code>title</code> attribute; unencoded URL spaces</td><td>2.4.6, 4.1.2</td><td>Same fix as #11</td></tr>
+    <tr><td>16</td><td>Light Maintenance (Parks) link</td><td><code>title</code> attribute; unencoded URL spaces</td><td>2.4.6, 4.1.2</td><td>Same fix as #11</td></tr>
+    <tr><td>17</td><td>White Star Maintenance (first link)</td><td>Empty link — contains only <code>&lt;br&gt;&lt;br&gt;</code>, no accessible name</td><td>4.1.2</td><td>Removed</td></tr>
+    <tr><td>18</td><td>White Star Maintenance (second link)</td><td><code>title</code> attribute; unencoded URL spaces</td><td>2.4.6, 4.1.2</td><td>Same fix as #11</td></tr>
+    <tr><td>19</td><td>White Star Light Maintenance link</td><td><code>title</code> attribute; unencoded URL spaces</td><td>2.4.6, 4.1.2</td><td>Same fix as #11</td></tr>
+    <tr><td>20</td><td>Blue Heron Reserve Intern link</td><td><code>title</code> attribute; unencoded URL spaces</td><td>2.4.6, 4.1.2</td><td>Same fix as #11</td></tr>
+    <tr><td>21</td><td>Interpretive Naturalist link</td><td><code>title</code> attribute; unencoded URL spaces</td><td>2.4.6, 4.1.2</td><td>Same fix as #11</td></tr>
+    <tr><td>22</td><td>Concession Worker link</td><td>Empty link — contains only <code>&lt;br&gt;</code>, no accessible name</td><td>4.1.2</td><td>Removed</td></tr>
+    <tr><td>23</td><td>Camp Counselor link</td><td><code>title</code> attribute; unencoded URL spaces</td><td>2.4.6, 4.1.2</td><td>Same fix as #11</td></tr>
+    <tr><td>24</td><td>Beach Guard link</td><td>Empty link — contains only <code>&lt;br&gt;&lt;br&gt;</code>, no accessible name</td><td>4.1.2</td><td>Removed</td></tr>
+    <tr><td>25</td><td>Staff Attorney link</td><td><code>title</code> attribute; unencoded URL spaces</td><td>2.4.6, 4.1.2</td><td>Same fix as #11</td></tr>
+    <tr><td>26</td><td>Landscaper link</td><td><code>title</code> attribute; missing <code>target/rel/aria-label</code></td><td>2.4.6</td><td>Removed <code>title</code>; added <code>target/rel/aria-label</code></td></tr>
+    <tr><td>27</td><td>Eligibility Worker 2 link</td><td>Empty link — no accessible name</td><td>4.1.2</td><td>Removed</td></tr>
+    <tr><td>28</td><td>County Administrator link</td><td>Empty link — no accessible name</td><td>4.1.2</td><td>Removed</td></tr>
+    <tr><td>29</td><td>Social Service Worker 2/3 link</td><td><code>title</code> attribute; unencoded URL spaces</td><td>2.4.6, 4.1.2</td><td>Same fix as #11</td></tr>
+    <tr><td>30</td><td>Transportation Driver link</td><td>Empty link — no accessible name</td><td>4.1.2</td><td>Removed</td></tr>
+    <tr><td>31</td><td>Social Service Worker 1 Visitation link</td><td>Empty link — no accessible name</td><td>4.1.2</td><td>Removed</td></tr>
+    <tr><td>32</td><td>Corrections Officer link</td><td><code>title</code> attribute; unencoded URL spaces</td><td>2.4.6, 4.1.2</td><td>Same fix as #11</td></tr>
+    <tr><td>33</td><td>Road Patrol Deputy</td><td>Job title and description split across two separate <code>&lt;a&gt;</code> tags; unencoded URL space</td><td>2.4.4, 4.1.2</td><td>Merged into single link; encoded URL; added <code>aria-label</code></td></tr>
+    <tr><td>34</td><td><code>&lt;a href="uploads/Corrections%20Deputy.pdf"&gt;&lt;br/&gt;&lt;/a&gt;</code></td><td>Empty link — no accessible name</td><td>4.1.2</td><td>Removed</td></tr>
+    <tr><td>35</td><td><code>&lt;strong&gt;***...***&lt;/strong&gt;</code> separator</td><td>Decorative asterisks read aloud by screen readers</td><td>1.3.1</td><td>Added <code>aria-hidden="true"</code></td></tr>
+    <tr><td>36</td><td><code>&lt;h2&gt;</code> with underscore characters as link text</td><td>Heading contains only decorative underscores — no accessible name; links to Courthouse Security Officer PDF with no visible label</td><td>1.3.1, 4.1.2</td><td>Removed — client must re-add as proper listing if position is active</td></tr>
+    <tr><td>37</td><td><code>&lt;h4&gt;</code> "Please print and review..."</td><td><code>&lt;h4&gt;</code> misused for instructional paragraph text</td><td>1.3.1</td><td>Changed to <code>&lt;p&gt;</code></td></tr>
+    <tr><td>38</td><td><code>&lt;h3&gt;</code> with empty Drug Free Workplace link</td><td><code>&lt;h3&gt;</code> contains only an empty <code>&lt;a&gt;</code> — no text on link or heading; inaccessible</td><td>1.3.1, 4.1.2</td><td>Merged into instructional <code>&lt;p&gt;</code> as a properly labelled PDF link</td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 36 -->
+<section class="page-section" id="p36">
+  <div class="section-header"><h2>36. Gov Deals</h2><span class="fix-badge">10 fixes</span></div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td><code>&lt;h3&gt;</code> "Click on each of the following links..."</td><td>Instructional text misused as a heading</td><td>1.3.1</td><td>Changed to <code>&lt;p&gt;</code></td></tr>
+    <tr><td>2</td><td>Commissioners GovDeals link</td><td>Has <code>target="_blank"</code> but no <code>aria-label</code> with "(opens in new tab)"</td><td>2.4.6</td><td>Added <code>aria-label="Sandusky County Commissioners GovDeals auction (opens in new tab)"</code></td></tr>
+    <tr><td>3</td><td>DJFS GovDeals link</td><td>Has <code>target="_blank"</code> but no <code>aria-label</code></td><td>2.4.6</td><td>Added <code>aria-label="...(opens in new tab)"</code></td></tr>
+    <tr><td>4</td><td>Solid Waste District GovDeals link</td><td>Has <code>target="_blank"</code> but no <code>aria-label</code></td><td>2.4.6</td><td>Added <code>aria-label="...(opens in new tab)"</code></td></tr>
+    <tr><td>5</td><td>County Engineer GovDeals link</td><td>Has <code>target="_blank"</code> but no <code>aria-label</code></td><td>2.4.6</td><td>Added <code>aria-label="...(opens in new tab)"</code></td></tr>
+    <tr><td>6</td><td>Dog Warden GovDeals link</td><td>Has <code>target="_blank"</code> but no <code>aria-label</code></td><td>2.4.6</td><td>Added <code>aria-label="...(opens in new tab)"</code></td></tr>
+    <tr><td>7</td><td>Health Department GovDeals link</td><td>Has <code>target="_blank"</code> but no <code>aria-label</code></td><td>2.4.6</td><td>Added <code>aria-label="...(opens in new tab)"</code></td></tr>
+    <tr><td>8</td><td><code>&lt;h3&gt;&amp;nbsp;&lt;/h3&gt;</code></td><td>Empty heading used as spacer</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>9</td><td>Link text <code>[www.sandusky-county.org](https://...)</code></td><td>Unrendered Markdown artifact displays literally as link text</td><td>4.1.2</td><td>Cleaned to plain text <code>www.sandusky-county.org</code></td></tr>
+    <tr><td>10</td><td><code>&lt;a href="http://www.sandusky-county.org/"&gt;</code></td><td>External link missing <code>target="_blank" rel="noopener"</code> and <code>aria-label</code></td><td>2.4.6</td><td>Added <code>target="_blank" rel="noopener" aria-label="Sandusky County website (opens in new tab)"</code></td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 37 -->
+<section class="page-section" id="p37">
+  <div class="section-header"><h2>37. Project Bids</h2><span class="fix-badge">4 fixes</span></div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #1</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>2</td><td><code>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</code> #2</td><td>Empty spacer paragraph</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>3</td><td>Decorative dash line <code>---...---</code></td><td>Redundant with the <code>&lt;hr&gt;</code> immediately above; decorative characters read by screen readers</td><td>1.3.1</td><td>Removed</td></tr>
+    <tr><td>4</td><td>Raw URL as link text</td><td>Screen readers read the full URL character by character; non-descriptive for AT users</td><td>2.4.4</td><td>Added <code>aria-label="Sandusky County Engineer Bids and Contracts (opens in new tab)"</code></td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 38 -->
+<section class="page-section" id="p38">
+  <div class="section-header"><h2>38. Public Record Policy</h2><span class="fix-badge">3 fixes</span></div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td>PDF link "Public Record Request Form (SCPR-10)"</td><td>Missing <code>rel="noopener"</code>; no <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>rel="noopener" aria-label="Public Record Request Form SCPR-10 (PDF, opens in new tab)"</code></td></tr>
+    <tr><td>2</td><td><code>&lt;ol&gt;</code> with single <code>&lt;li&gt;</code></td><td>Numbered list with only one item used for a continuation sentence — not a true list</td><td>1.3.1</td><td>Changed to <code>&lt;p&gt;</code></td></tr>
+    <tr><td>3</td><td><code>&lt;br /&gt;&lt;br /&gt;</code> at end of paragraph</td><td>Double line break used as spacer</td><td>1.3.1</td><td>Removed</td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 39 -->
+<section class="page-section" id="p39">
+  <div class="section-header"><h2>39. Sheriff's Snow Emergency</h2><span class="fix-badge">1 fix</span></div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td>Phone <code>419-332-2613</code></td><td>Plain text phone number in body text — not a callable link</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:4193322613" aria-label="Phone: 419-332-2613"&gt;</code></td></tr>
+  </tbody></table>
+</section>
+
+<!-- PAGE 40 -->
+<section class="page-section" id="p40">
+  <div class="section-header"><h2>40. Fraud Reporting System</h2><span class="fix-badge">6 fixes</span></div>
+  <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
+    <tr><td>1</td><td>PDF link "State of Ohio Fraud Reporting System"</td><td>Missing <code>rel="noopener"</code>; no <code>aria-label</code> with "(PDF, opens in new tab)"</td><td>2.4.6</td><td>Added <code>rel="noopener" aria-label="State of Ohio Fraud Reporting System (PDF, opens in new tab)"</code></td></tr>
+    <tr><td>2</td><td><code>&lt;h3&gt;</code> "Auditor of State's fraud contact information"</td><td>Heading level skips from <code>&lt;h1&gt;</code> to <code>&lt;h3&gt;</code> — <code>&lt;h2&gt;</code> missing</td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+    <tr><td>3</td><td>Phone <code>1-866-FRAUD OH (1-866-372-8364)</code></td><td>Plain text phone number — not a callable link</td><td>2.4.4</td><td>Converted to <code>&lt;a href="tel:18663728364" aria-label="Phone: 1-866-372-8364"&gt;</code></td></tr>
+    <tr><td>4</td><td>Mailing address with <code>&lt;br&gt;</code> tags</td><td>Contact address not wrapped in <code>&lt;address&gt;</code> element</td><td>1.3.1</td><td>Wrapped in <code>&lt;address style="font-style:normal;"&gt;</code></td></tr>
+    <tr><td>5</td><td>Link text <code>[www.ohioauditor.gov](https://...)</code></td><td>Unrendered Markdown artifact displays literally as link text</td><td>4.1.2</td><td>Cleaned to plain text <code>www.ohioauditor.gov</code></td></tr>
+    <tr><td>6</td><td><code>&lt;a href="http://www.ohioauditor.gov"&gt;</code></td><td>External link missing <code>target="_blank" rel="noopener"</code> and <code>aria-label</code></td><td>2.4.6</td><td>Added <code>target="_blank" rel="noopener" aria-label="Ohio Auditor of State website (opens in new tab)"</code></td></tr>
+  </tbody></table>
+</section>
+
+<footer>
+  <strong>Sandusky County CMS Website — Accessibility Audit Report</strong><br>
+  Prepared June 2026 &nbsp;|&nbsp; Standard: WCAG 2.1 Level AA &nbsp;|&nbsp; ADA Title II Compliance<br>
+  40 pages audited &nbsp;|&nbsp; 380 total fixes applied
+</footer>
+
+</body>
+</html>
