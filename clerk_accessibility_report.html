@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Accessibility Audit Report — Sandusky County Clerk of Courts</title>
+<style>
+  :root {
+    --sage: #2E4E3F;
+    --sage-light: #3d6653;
+    --gold: #c8a84b;
+    --tan: #f5f0e8;
+    --white: #ffffff;
+    --text: #1a1a1a;
+    --muted: #555;
+    --border: #d0ccc0;
+    --red: #c0392b;
+    --green: #1e7e34;
+    --blue: #1a5276;
+    --orange: #d35400;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text);
+    background: #f0ede6;
+  }
+
+  /* ── Cover ── */
+  .cover {
+    background: var(--sage);
+    color: var(--white);
+    padding: 72px 60px 60px;
+    text-align: center;
+  }
+  .cover .seal {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: var(--gold);
+    margin: 0 auto 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.4rem;
+  }
+  .cover h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+  }
+  .cover .subtitle {
+    font-size: 1.15rem;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .cover .meta {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.7);
+    margin-top: 20px;
+  }
+  .cover .badge-row {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+  }
+  .cover .badge {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 6px 18px;
+    font-size: 0.82rem;
+    color: #fff;
+  }
+
+  /* ── Layout ── */
+  .wrapper {
+    max-width: 1060px;
+    margin: 0 auto;
+    padding: 0 24px 60px;
+  }
+
+  /* ── Section headings ── */
+  .section-label {
+    background: var(--sage);
+    color: var(--white);
+    padding: 10px 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin: 40px 0 0;
+  }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 0 0 4px 4px;
+    padding: 28px 32px;
+    margin-bottom: 4px;
+  }
+
+  /* ── Summary stats ── */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .stat-box {
+    background: var(--tan);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px 16px;
+    text-align: center;
+  }
+  .stat-box .num {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--sage);
+    line-height: 1;
+  }
+  .stat-box .lbl {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── Tables ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    margin-top: 16px;
+  }
+  th {
+    background: var(--sage);
+    color: #fff;
+    padding: 9px 12px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.82rem;
+  }
+  td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: #faf8f4; }
+  tr:last-child td { border-bottom: none; }
+
+  /* ── Page section header ── */
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+  .page-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--sage);
+  }
+  .fix-count {
+    background: var(--sage);
+    color: #fff;
+    border-radius: 20px;
+    padding: 3px 14px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  /* ── Severity badges ── */
+  .sev {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .sev-critical { background: #fde8e8; color: var(--red); }
+  .sev-high     { background: #fef3e2; color: var(--orange); }
+  .sev-medium   { background: #e8f4fd; color: var(--blue); }
+  .sev-info     { background: #eafaf1; color: var(--green); }
+
+  /* ── Flag box ── */
+  .flag-box {
+    background: #fffbea;
+    border-left: 4px solid var(--gold);
+    padding: 12px 16px;
+    margin-top: 16px;
+    font-size: 0.87rem;
+    border-radius: 0 4px 4px 0;
+  }
+  .flag-box strong { color: var(--orange); }
+
+  /* ── TOC ── */
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 10px;
+    margin-top: 16px;
+  }
+  .toc-item {
+    background: var(--tan);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 10px 14px;
+    font-size: 0.85rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .toc-item .toc-file { font-weight: 600; color: var(--sage); font-family: monospace; }
+  .toc-item .toc-num  { background: var(--sage); color: #fff; border-radius: 12px; padding: 2px 10px; font-size: 0.75rem; font-weight: 700; }
+
+  /* ── Intro text ── */
+  p.intro { color: var(--muted); margin-bottom: 12px; }
+  ul.scope-list { padding-left: 20px; color: var(--muted); font-size: 0.9rem; }
+  ul.scope-list li { margin-bottom: 4px; }
+
+  /* ── Footer ── */
+  .report-footer {
+    background: var(--sage);
+    color: rgba(255,255,255,0.7);
+    text-align: center;
+    padding: 20px;
+    font-size: 0.8rem;
+    margin-top: 40px;
+  }
+
+  /* ── Print ── */
+  @media print {
+    body { background: #fff; font-size: 11pt; }
+    .wrapper { max-width: 100%; padding: 0 12px; }
+    .cover { padding: 40px 30px; }
+    .section-label { margin-top: 20px; }
+    table { font-size: 8.5pt; }
+    .card { padding: 16px 20px; }
+    tr { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════ COVER ══════════════════ -->
+<div class="cover">
+  <div class="seal">⚖</div>
+  <h1>Accessibility Audit Report</h1>
+  <div class="subtitle">Sandusky County Clerk of Courts Website</div>
+  <div class="meta">sandusky-county.org/clerk/ &nbsp;|&nbsp; WCAG 2.1 Level AA &nbsp;|&nbsp; ADA Title II</div>
+  <div class="badge-row">
+    <span class="badge">10 Files Audited</span>
+    <span class="badge">121 Total Fixes</span>
+    <span class="badge">Materialize CSS Framework</span>
+    <span class="badge">June 2026</span>
+  </div>
+</div>
+
+<div class="wrapper">
+
+  <!-- ══════════════════ OVERVIEW ══════════════════ -->
+  <div class="section-label">Overview</div>
+  <div class="card">
+    <p class="intro">This report documents WCAG 2.1 Level AA / ADA Title II accessibility findings for the Sandusky County Clerk of Courts PHP website. Ten PHP template files were audited. All corrections are accessibility-only — no visual design or layout changes were made.</p>
+    <div class="stats-grid">
+      <div class="stat-box"><div class="num">10</div><div class="lbl">Files Audited</div></div>
+      <div class="stat-box"><div class="num">121</div><div class="lbl">Total Fixes</div></div>
+      <div class="stat-box"><div class="num">26</div><div class="lbl">Unique Issues</div></div>
+      <div class="stat-box"><div class="num">AA</div><div class="lbl">WCAG Target</div></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════ SCOPE ══════════════════ -->
+  <div class="section-label">Scope &amp; Standards</div>
+  <div class="card">
+    <p class="intro"><strong>Standard:</strong> WCAG 2.1 Level AA &nbsp;|&nbsp; <strong>Law:</strong> ADA Title II (state/local government) &nbsp;|&nbsp; <strong>Framework:</strong> Materialize CSS</p>
+    <p class="intro" style="margin-top:12px;"><strong>Files covered in this audit:</strong></p>
+    <ul class="scope-list">
+      <li><code>nav.php</code> — Site navigation (included on all pages)</li>
+      <li><code>index.php</code> — Homepage with card grid</li>
+      <li><code>pay.php</code> — Pay Online</li>
+      <li><code>docket.php</code> — Online Docket</li>
+      <li><code>titles.php</code> — Title Office forms (12 PDF downloads)</li>
+      <li><code>cp_fees.php</code> — Common Pleas Filing Fees (fee tables)</li>
+      <li><code>cp_forms.php</code> — Common Pleas Online Forms (static + database-driven)</li>
+      <li><code>contact_clerk.php</code> — Clerk of Courts contact</li>
+      <li><code>contact_county.php</code> — County Courts contact (Clyde &amp; Woodville)</li>
+      <li><code>contact_title.php</code> — Title Office contact</li>
+    </ul>
+    <div class="flag-box" style="margin-top:16px;">
+      <strong>Note:</strong> <code>nav.php</code> is included on every page. All nav.php fixes propagate site-wide automatically once that single file is updated.
+    </div>
+  </div>
+
+  <!-- ══════════════════ TABLE OF CONTENTS ══════════════════ -->
+  <div class="section-label">Files at a Glance</div>
+  <div class="card">
+    <div class="toc-grid">
+      <div class="toc-item"><span class="toc-file">nav.php</span><span class="toc-num">27 fixes</span></div>
+      <div class="toc-item"><span class="toc-file">index.php</span><span class="toc-num">13 fixes</span></div>
+      <div class="toc-item"><span class="toc-file">pay.php</span><span class="toc-num">14 fixes</span></div>
+      <div class="toc-item"><span class="toc-file">docket.php</span><span class="toc-num">8 fixes</span></div>
+      <div class="toc-item"><span class="toc-file">titles.php</span><span class="toc-num">13 fixes</span></div>
+      <div class="toc-item"><span class="toc-file">cp_fees.php</span><span class="toc-num">9 fixes</span></div>
+      <div class="toc-item"><span class="toc-file">cp_forms.php</span><span class="toc-num">9 fixes</span></div>
+      <div class="toc-item"><span class="toc-file">contact_clerk.php</span><span class="toc-num">9 fixes</span></div>
+      <div class="toc-item"><span class="toc-file">contact_county.php</span><span class="toc-num">11 fixes</span></div>
+      <div class="toc-item"><span class="toc-file">contact_title.php</span><span class="toc-num">8 fixes</span></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════ RECURRING ISSUES ══════════════════ -->
+  <div class="section-label">Recurring Issues (Site-Wide Patterns)</div>
+  <div class="card">
+    <p class="intro">The following issues appear on every page and were fixed consistently throughout the audit.</p>
+    <table>
+      <thead>
+        <tr><th>Pattern</th><th>WCAG</th><th>Fix Applied</th><th>Pages Affected</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Non-unique <code>&lt;title&gt;</code></strong><br>All pages used "Sandusky County Clerk of Courts"</td>
+          <td>2.4.2</td>
+          <td>Each page given a unique title: <em>Page Name | Sandusky County Clerk of Courts</em></td>
+          <td>All 9 content pages</td>
+        </tr>
+        <tr>
+          <td><strong>Empty <code>&lt;br&gt;&lt;br&gt;</code> spacers in parallax</strong></td>
+          <td>1.3.1</td>
+          <td>Removed — spacing achieved by existing CSS</td>
+          <td>All 9 content pages</td>
+        </tr>
+        <tr>
+          <td><strong>Parallax <code>&lt;img alt="Peaceful Tree Scene"&gt;</code></strong><br>Background image has descriptive alt text</td>
+          <td>1.1.1</td>
+          <td><code>alt=""</code> — marks as decorative</td>
+          <td>All 9 content pages</td>
+        </tr>
+        <tr>
+          <td><strong>Missing <code>id="main-content"</code></strong><br>Skip link in nav.php has no target</td>
+          <td>2.4.1</td>
+          <td>Added <code>id="main-content"</code> to <code>.light-tan</code> wrapper</td>
+          <td>All 9 content pages</td>
+        </tr>
+        <tr>
+          <td><strong>Orange <code>&lt;h1&gt;</code> text on parallax background</strong><br><code>class="orange-text"</code> — contrast may fail against photo</td>
+          <td>1.4.3</td>
+          <td>Flagged for client — manual contrast test against photo required</td>
+          <td>All 9 content pages</td>
+        </tr>
+        <tr>
+          <td><strong>External / PDF links missing <code>rel="noopener"</code></strong></td>
+          <td>2.4.4</td>
+          <td>Added <code>rel="noopener"</code> to all <code>target="_blank"</code> links</td>
+          <td>Multiple pages</td>
+        </tr>
+        <tr>
+          <td><strong>PDF links with no format/new-tab disclosure</strong></td>
+          <td>2.4.4</td>
+          <td>Added <code>aria-label="...(PDF, opens in new tab)"</code></td>
+          <td>titles.php, cp_forms.php, cp_fees (nav)</td>
+        </tr>
+        <tr>
+          <td><strong>Contact blocks not in <code>&lt;address&gt;</code></strong><br>Phone/address/hours in plain <code>&lt;p&gt;</code> elements</td>
+          <td>1.3.1</td>
+          <td>Wrapped in <code>&lt;address style="font-style:normal;"&gt;</code></td>
+          <td>titles.php, contact_clerk.php, contact_county.php, contact_title.php</td>
+        </tr>
+        <tr>
+          <td><strong>Phone links missing <code>aria-label</code></strong></td>
+          <td>2.4.6</td>
+          <td>Added <code>aria-label="Phone: ..."</code></td>
+          <td>titles.php, contact_clerk.php, contact_county.php, contact_title.php</td>
+        </tr>
+        <tr>
+          <td><strong>Material Icons read aloud by screen readers</strong><br><code>&lt;i class="material-icons"&gt;</code> ligature text announced</td>
+          <td>1.3.1</td>
+          <td>Added <code>aria-hidden="true"</code> to all icon elements</td>
+          <td>nav.php, contact_county.php</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ══════════════════ nav.php ══════════════════ -->
+  <div class="section-label">Detailed Findings — nav.php</div>
+  <div class="card">
+    <div class="page-header">
+      <div class="page-title">nav.php — Site Navigation</div>
+      <span class="fix-count">27 fixes</span>
+    </div>
+    <p class="intro">Included on every page. All fixes here propagate site-wide automatically.</p>
+    <table>
+      <thead><tr><th>#</th><th>Issue</th><th>WCAG</th><th>Severity</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>No skip link on any page</td><td>2.4.1</td><td><span class="sev sev-critical">Critical</span></td><td>Added <code>&lt;a href="#main-content" class="skip-link"&gt;Skip to main content&lt;/a&gt;</code> with CSS show-on-focus</td></tr>
+        <tr><td>2</td><td><code>role="navigation"</code> on <code>&lt;nav&gt;</code> — redundant</td><td>1.3.1</td><td><span class="sev sev-medium">Medium</span></td><td>Removed; added <code>aria-label</code> to differentiate multiple navs</td></tr>
+        <tr><td>3</td><td>Top nav missing <code>aria-label</code></td><td>1.3.1</td><td><span class="sev sev-medium">Medium</span></td><td><code>aria-label="Site header"</code></td></tr>
+        <tr><td>4</td><td>Main nav missing <code>aria-label</code></td><td>1.3.1</td><td><span class="sev sev-medium">Medium</span></td><td><code>aria-label="Main navigation"</code></td></tr>
+        <tr><td>5</td><td>Sidenav trigger <code>href="#"</code> — page jump on click</td><td>2.1.1</td><td><span class="sev sev-high">High</span></td><td>Changed to <code>href="#!"</code></td></tr>
+        <tr><td>6</td><td>Sidenav trigger missing accessible label — icon only</td><td>1.1.1</td><td><span class="sev sev-critical">Critical</span></td><td>Added <code>aria-label="Open navigation menu"</code></td></tr>
+        <tr><td>7–12</td><td>6 × dropdown trigger links missing <code>aria-haspopup</code> / <code>aria-expanded</code></td><td>4.1.2</td><td><span class="sev sev-high">High</span></td><td>Added <code>aria-haspopup="true" aria-expanded="false"</code> to all</td></tr>
+        <tr><td>13–18</td><td>6 × dropdown trigger <code>href="#"</code> — page jump</td><td>2.1.1</td><td><span class="sev sev-high">High</span></td><td>Changed all to <code>href="#!"</code></td></tr>
+        <tr><td>19–24</td><td>6 × <code>&lt;i class="material-icons"&gt;</code> read aloud</td><td>1.3.1</td><td><span class="sev sev-medium">Medium</span></td><td>Added <code>aria-hidden="true"</code></td></tr>
+        <tr><td>25–26</td><td>Orphaned <code>dropdown-titles</code> and <code>dropdown-titles2</code> menus — placeholder <code>href="#!"</code> links only</td><td>2.4.4</td><td><span class="sev sev-medium">Medium</span></td><td>Removed both menus</td></tr>
+        <tr><td>27</td><td>Skip link CSS missing from stylesheet</td><td>2.4.1</td><td><span class="sev sev-critical">Critical</span></td><td>Added inline <code>&lt;style&gt;</code> with show-on-focus pattern</td></tr>
+      </tbody>
+    </table>
+    <div class="flag-box">
+      <strong>Client flags:</strong>
+      <ul style="padding-left:18px; margin-top:6px;">
+        <li><code>dropdown-clyde2</code> links to <code>FilingFees2013.pdf</code> while <code>dropdown-clyde</code> links to <code>25_court_costs.pdf</code> — verify which is current.</li>
+        <li><code>http://codes.ohio.gov/</code> uses HTTP — update to HTTPS if available.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════════ index.php ══════════════════ -->
+  <div class="section-label">Detailed Findings — index.php</div>
+  <div class="card">
+    <div class="page-header">
+      <div class="page-title">index.php — Homepage</div>
+      <span class="fix-count">13 fixes</span>
+    </div>
+    <table>
+      <thead><tr><th>#</th><th>Issue</th><th>WCAG</th><th>Severity</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Non-unique <code>&lt;title&gt;</code></td><td>2.4.2</td><td><span class="sev sev-high">High</span></td><td><em>Sandusky County Clerk of Courts | Sandusky County Clerk of Courts</em> → homepage uses site name as page name; acceptable for index</td></tr>
+        <tr><td>2</td><td><code>&lt;br&gt;&lt;br&gt;</code> spacers in parallax</td><td>1.3.1</td><td><span class="sev sev-medium">Medium</span></td><td>Removed</td></tr>
+        <tr><td>3</td><td>Parallax <code>alt="Peaceful Tree Scene"</code></td><td>1.1.1</td><td><span class="sev sev-medium">Medium</span></td><td><code>alt=""</code></td></tr>
+        <tr><td>4</td><td>Missing <code>id="main-content"</code></td><td>2.4.1</td><td><span class="sev sev-high">High</span></td><td>Added to <code>.light-tan</code> wrapper</td></tr>
+        <tr><td>5</td><td>No visible <code>&lt;h1&gt;</code> in main content area</td><td>1.3.1</td><td><span class="sev sev-high">High</span></td><td>Added <code>&lt;h1 class="sr-only"&gt;Sandusky County Clerk of Courts&lt;/h1&gt;</code></td></tr>
+        <tr><td>6–9</td><td>4 × card <code>&lt;img alt="[same as h4]"&gt;</code> — double announcement</td><td>1.1.1</td><td><span class="sev sev-high">High</span></td><td><code>alt=""</code> on all card images</td></tr>
+        <tr><td>10–13</td><td>4 × card headings <code>&lt;h4&gt;</code> — skips h2, h3</td><td>1.3.1</td><td><span class="sev sev-high">High</span></td><td>Changed to <code>&lt;h2&gt;</code>; CSS fix: <code>#card-sect h2 { font-size:1.64rem; line-height:1.3; margin:0; }</code></td></tr>
+      </tbody>
+    </table>
+    <div class="flag-box">
+      <strong>CSS required in stylesheet:</strong><br>
+      <code>#card-sect h2 { font-size: 1.64rem; line-height: 1.3; margin: 0; }</code><br>
+      <code>.sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }</code><br><br>
+      The <code>margin: 0</code> is critical — Materialize's default h2 margins are larger than h4, which breaks the parallax hero card overlap without this reset.
+    </div>
+  </div>
+
+  <!-- ══════════════════ pay.php ══════════════════ -->
+  <div class="section-label">Detailed Findings — pay.php</div>
+  <div class="card">
+    <div class="page-header">
+      <div class="page-title">pay.php — Pay Online</div>
+      <span class="fix-count">14 fixes</span>
+    </div>
+    <table>
+      <thead><tr><th>#</th><th>Issue</th><th>WCAG</th><th>Severity</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Non-unique <code>&lt;title&gt;</code></td><td>2.4.2</td><td><span class="sev sev-high">High</span></td><td><em>Pay Online | Sandusky County Clerk of Courts</em></td></tr>
+        <tr><td>2</td><td><code>&lt;br&gt;&lt;br&gt;</code> spacers in parallax</td><td>1.3.1</td><td><span class="sev sev-medium">Medium</span></td><td>Removed</td></tr>
+        <tr><td>3</td><td>Parallax <code>alt="Peaceful Tree Scene"</code></td><td>1.1.1</td><td><span class="sev sev-medium">Medium</span></td><td><code>alt=""</code></td></tr>
+        <tr><td>4</td><td>Missing <code>id="main-content"</code></td><td>2.4.1</td><td><span class="sev sev-high">High</span></td><td>Added to <code>.light-tan</code> wrapper</td></tr>
+        <tr><td>5–8</td><td>4 × card <code>&lt;img alt="[same as h4]"&gt;</code></td><td>1.1.1</td><td><span class="sev sev-high">High</span></td><td><code>alt=""</code> on all</td></tr>
+        <tr><td>9–12</td><td>4 × card headings <code>&lt;h4&gt;</code></td><td>1.3.1</td><td><span class="sev sev-high">High</span></td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
+        <tr><td>13</td><td><code>&lt;br&gt;</code> inside heading: "Clyde Court &lt;br&gt; County Court #1"</td><td>1.3.1</td><td><span class="sev sev-medium">Medium</span></td><td>Replaced with em dash: <em>Clyde Court — County Court #1</em></td></tr>
+        <tr><td>14</td><td>4 × external payment links missing <code>rel="noopener"</code> + new-tab disclosure</td><td>2.4.4</td><td><span class="sev sev-high">High</span></td><td>Added <code>rel="noopener"</code> + descriptive <code>aria-label</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ══════════════════ docket.php ══════════════════ -->
+  <div class="section-label">Detailed Findings — docket.php</div>
+  <div class="card">
+    <div class="page-header">
+      <div class="page-title">docket.php — Online Docket</div>
+      <span class="fix-count">8 fixes</span>
+    </div>
+    <table>
+      <thead><tr><th>#</th><th>Issue</th><th>WCAG</th><th>Severity</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Non-unique <code>&lt;title&gt;</code></td><td>2.4.2</td><td><span class="sev sev-high">High</span></td><td><em>Online Docket | Sandusky County Clerk of Courts</em></td></tr>
+        <tr><td>2</td><td><code>&lt;br&gt;&lt;br&gt;</code> spacers in parallax</td><td>1.3.1</td><td><span class="sev sev-medium">Medium</span></td><td>Removed</td></tr>
+        <tr><td>3</td><td>Parallax <code>alt="Peaceful Tree Scene"</code></td><td>1.1.1</td><td><span class="sev sev-medium">Medium</span></td><td><code>alt=""</code></td></tr>
+        <tr><td>4</td><td>Missing <code>id="main-content"</code></td><td>2.4.1</td><td><span class="sev sev-high">High</span></td><td>Added to <code>.light-tan</code> wrapper</td></tr>
+        <tr><td>5–6</td><td>Notice headings using non-semantic bold/caps text</td><td>1.3.1</td><td><span class="sev sev-high">High</span></td><td>Changed to <code>&lt;h2 class="dark-sage-text"&gt;NOTICE&lt;/h2&gt;</code> and <code>&lt;h2&gt;NOTICE TO PROSPECTIVE EMPLOYERS&lt;/h2&gt;</code></td></tr>
+        <tr><td>7–8</td><td>External docket links missing <code>rel="noopener"</code> + new-tab disclosure</td><td>2.4.4</td><td><span class="sev sev-high">High</span></td><td>Added <code>rel="noopener"</code> + <code>aria-label</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ══════════════════ titles.php ══════════════════ -->
+  <div class="section-label">Detailed Findings — titles.php</div>
+  <div class="card">
+    <div class="page-header">
+      <div class="page-title">titles.php — Title Office Forms</div>
+      <span class="fix-count">13 fixes</span>
+    </div>
+    <table>
+      <thead><tr><th>#</th><th>Issue</th><th>WCAG</th><th>Severity</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Non-unique <code>&lt;title&gt;</code></td><td>2.4.2</td><td><span class="sev sev-high">High</span></td><td><em>Titles | Sandusky County Clerk of Courts</em></td></tr>
+        <tr><td>2</td><td><code>&lt;br&gt;&lt;br&gt;</code> spacers in parallax</td><td>1.3.1</td><td><span class="sev sev-medium">Medium</span></td><td>Removed</td></tr>
+        <tr><td>3</td><td>Parallax <code>alt="Peaceful Tree Scene"</code></td><td>1.1.1</td><td><span class="sev sev-medium">Medium</span></td><td><code>alt=""</code></td></tr>
+        <tr><td>4</td><td>Missing <code>id="main-content"</code></td><td>2.4.1</td><td><span class="sev sev-high">High</span></td><td>Added to <code>.light-tan</code> wrapper</td></tr>
+        <tr><td>5–16 (×12)</td><td>12 × card <code>&lt;img alt="[form name]"&gt;</code> — duplicates adjacent heading</td><td>1.1.1</td><td><span class="sev sev-high">High</span></td><td><code>alt=""</code> on all 12</td></tr>
+        <tr><td>17–28 (×12)</td><td>12 × card headings <code>&lt;h4&gt;</code> — skips levels</td><td>1.3.1</td><td><span class="sev sev-high">High</span></td><td>Changed all to <code>&lt;h2&gt;</code></td></tr>
+        <tr><td>29–40 (×12)</td><td>12 × PDF links missing <code>rel="noopener"</code> + format disclosure</td><td>2.4.4</td><td><span class="sev sev-high">High</span></td><td>Added <code>rel="noopener"</code> + <code>aria-label="...(PDF, opens in new tab)"</code></td></tr>
+        <tr><td>5*</td><td>Phone <code>(419) 334-9407</code> plain text — not a link</td><td>2.4.4</td><td><span class="sev sev-medium">Medium</span></td><td><code>&lt;a href="tel:4193349407" aria-label="Phone: 419-334-9407"&gt;</code></td></tr>
+        <tr><td>6*</td><td>Google Maps link missing <code>rel="noopener"</code> + new-tab disclosure</td><td>2.4.4</td><td><span class="sev sev-high">High</span></td><td>Added both</td></tr>
+        <tr><td>7*</td><td>Address/contact block not in <code>&lt;address&gt;</code></td><td>1.3.1</td><td><span class="sev sev-medium">Medium</span></td><td>Wrapped in <code>&lt;address style="font-style:normal;"&gt;</code></td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.8rem; color:var(--muted); margin-top:8px;">* Items 5*–7* are separate from the 12-card pattern items above; row numbers simplified for readability.</p>
+    <div class="flag-box">
+      <strong>CSS required in stylesheet</strong> (same as index.php):<br>
+      <code>#card-sect h2 { font-size: 1.64rem; line-height: 1.3; margin: 0; }</code>
+    </div>
+  </div>
+
+  <!-- ══════════════════ cp_fees.php ══════════════════ -->
+  <div class="section-label">Detailed Findings — cp_fees.php</div>
+  <div class="card">
+    <div class="page-header">
+      <div class="page-title">cp_fees.php — Common Pleas Filing Fees</div>
+      <span class="fix-count">9 fixes</span>
+    </div>
+    <table>
+      <thead><tr><th>#</th><th>Issue</th><th>WCAG</th><th>Severity</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Non-unique <code>&lt;title&gt;</code></td><td>2.4.2</td><td><span class="sev sev-high">High</span></td><td><em>Common Pleas Filing Fees | Sandusky County Clerk of Courts</em></td></tr>
+        <tr><td>2</td><td><code>&lt;br&gt;&lt;br&gt;</code> spacers in parallax</td><td>1.3.1</td><td><span class="sev sev-medium">Medium</span></td><td>Removed</td></tr>
+        <tr><td>3</td><td>Parallax <code>alt="Peaceful Tree Scene"</code></td><td>1.1.1</td><td><span class="sev sev-medium">Medium</span></td><td><code>alt=""</code></td></tr>
+        <tr><td>4</td><td>Missing <code>id="main-content"</code></td><td>2.4.1</td><td><span class="sev sev-high">High</span></td><td>Added to <code>.light-tan</code> wrapper</td></tr>
+        <tr><td>5–7</td><td>3 × <code>&lt;th colspan="2"&gt;</code> table section headers missing <code>scope="colgroup"</code></td><td>1.3.1</td><td><span class="sev sev-high">High</span></td><td>Added <code>scope="colgroup"</code></td></tr>
+        <tr><td>8–10</td><td>3 × tables have no column headers — screen reader cannot identify columns</td><td>1.3.1</td><td><span class="sev sev-high">High</span></td><td>Added <code>&lt;th scope="col" class="sr-only"&gt;Description&lt;/th&gt;</code> and <code>&lt;th scope="col" class="sr-only"&gt;Amount&lt;/th&gt;</code> to each</td></tr>
+        <tr><td>11</td><td>Footnote asterisk mismatch: <code>*</code> in table row, <code>**</code> in <code>&lt;p&gt;</code> outside</td><td>1.3.1</td><td><span class="sev sev-medium">Medium</span></td><td>Normalized to <code>*</code>; added <code>id="fee-note"</code> + <code>role="note"</code>; linked table via <code>aria-describedby="fee-note"</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ══════════════════ cp_forms.php ══════════════════ -->
+  <div class="section-label">Detailed Findings — cp_forms.php</div>
+  <div class="card">
+    <div class="page-header">
+      <div class="page-title">cp_forms.php — Common Pleas Online Forms</div>
+      <span class="fix-count">9 fixes</span>
+    </div>
+    <table>
+      <thead><tr><th>#</th><th>Issue</th><th>WCAG</th><th>Severity</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Non-unique <code>&lt;title&gt;</code></td><td>2.4.2</td><td><span class="sev sev-high">High</span></td><td><em>Common Pleas Online Forms | Sandusky County Clerk of Courts</em></td></tr>
+        <tr><td>2</td><td><code>&lt;br&gt;&lt;br&gt;</code> spacers in parallax</td><td>1.3.1</td><td><span class="sev sev-medium">Medium</span></td><td>Removed</td></tr>
+        <tr><td>3</td><td>Parallax <code>alt="Peaceful Tree Scene"</code></td><td>1.1.1</td><td><span class="sev sev-medium">Medium</span></td><td><code>alt=""</code></td></tr>
+        <tr><td>4</td><td>Missing <code>id="main-content"</code></td><td>2.4.1</td><td><span class="sev sev-high">High</span></td><td>Added to <code>.light-tan</code> wrapper</td></tr>
+        <tr><td>5</td><td>14 × static PDF links missing <code>rel="noopener"</code> + format/new-tab disclosure</td><td>2.4.4</td><td><span class="sev sev-high">High</span></td><td>Added <code>rel="noopener"</code> + <code>aria-label="...(PDF, opens in new tab)"</code></td></tr>
+        <tr><td>6</td><td>Dynamic card links (PHP loop) missing <code>rel="noopener"</code> + disclosure</td><td>2.4.4</td><td><span class="sev sev-high">High</span></td><td>Added to <code>&lt;a&gt;</code> template with dynamic <code>aria-label</code> from <code>$forms[$x]["Name"]</code></td></tr>
+        <tr><td>7</td><td><code>&lt;h2 class="orange-text"&gt;Supreme Court of Ohio Forms&lt;/h2&gt;</code> — orange contrast</td><td>1.4.3</td><td><span class="sev sev-high">High</span></td><td>Flagged for client — manual contrast test required</td></tr>
+        <tr><td>8–9</td><td>PHP output <code>&lt;?= $forms[$x]["PDF"];?&gt;</code> etc. — unescaped database values (XSS)</td><td>—</td><td><span class="sev sev-info">Security</span></td><td>Wrapped all three output variables in <code>htmlspecialchars()</code></td></tr>
+      </tbody>
+    </table>
+    <div class="flag-box">
+      <strong>Security note:</strong> The <code>htmlspecialchars()</code> additions on <code>Name</code>, <code>Desc</code>, and <code>PDF</code> outputs are not a WCAG item but prevent reflected XSS if database content is ever manipulated. Recommend flagging to your developer.
+    </div>
+  </div>
+
+  <!-- ══════════════════ contact_clerk.php ══════════════════ -->
+  <div class="section-label">Detailed Findings — contact_clerk.php</div>
+  <div class="card">
+    <div class="page-header">
+      <div class="page-title">contact_clerk.php — Clerk of Courts Contact</div>
+      <span class="fix-count">9 fixes</span>
+    </div>
+    <table>
+      <thead><tr><th>#</th><th>Issue</th><th>WCAG</th><th>Severity</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Non-unique <code>&lt;title&gt;</code></td><td>2.4.2</td><td><span class="sev sev-high">High</span></td><td><em>Contact the Clerk | Sandusky County Clerk of Courts</em></td></tr>
+        <tr><td>2</td><td><code>&lt;br&gt;&lt;br&gt;</code> spacers in parallax</td><td>1.3.1</td><td><span class="sev sev-medium">Medium</span></td><td>Removed</td></tr>
+        <tr><td>3</td><td>Parallax <code>alt="Peaceful Tree Scene"</code></td><td>1.1.1</td><td><span class="sev sev-medium">Medium</span></td><td><code>alt=""</code></td></tr>
+        <tr><td>4</td><td>Missing <code>id="main-content"</code></td><td>2.4.1</td><td><span class="sev sev-high">High</span></td><td>Added to <code>.light-tan</code> wrapper</td></tr>
+        <tr><td>5</td><td>Contact info in plain <code>&lt;p&gt;</code> elements — not in <code>&lt;address&gt;</code></td><td>1.3.1</td><td><span class="sev sev-medium">Medium</span></td><td>Wrapped in <code>&lt;address style="font-style:normal;"&gt;</code></td></tr>
+        <tr><td>6</td><td>Phone link <code>href="tel:+1-419-334-6161"</code> missing <code>aria-label</code></td><td>2.4.6</td><td><span class="sev sev-medium">Medium</span></td><td><code>aria-label="Phone: 419-334-6161"</code></td></tr>
+        <tr><td>7</td><td>Email uses old <code>co.sandusky.oh.us</code> domain</td><td>—</td><td><span class="sev sev-info">Flag</span></td><td>Flagged for client — confirm if <code>@sanduskycountyoh.gov</code> is correct</td></tr>
+        <tr><td>8</td><td>Google Maps link missing <code>rel="noopener"</code> + new-tab disclosure</td><td>2.4.4</td><td><span class="sev sev-high">High</span></td><td>Added both</td></tr>
+        <tr><td>9</td><td>Orange h1 contrast</td><td>1.4.3</td><td><span class="sev sev-high">High</span></td><td>Flagged for client</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ══════════════════ contact_county.php ══════════════════ -->
+  <div class="section-label">Detailed Findings — contact_county.php</div>
+  <div class="card">
+    <div class="page-header">
+      <div class="page-title">contact_county.php — County Courts Contact</div>
+      <span class="fix-count">11 fixes</span>
+    </div>
+    <table>
+      <thead><tr><th>#</th><th>Issue</th><th>WCAG</th><th>Severity</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Non-unique <code>&lt;title&gt;</code></td><td>2.4.2</td><td><span class="sev sev-high">High</span></td><td><em>County Courts Contact Information | Sandusky County Clerk of Courts</em></td></tr>
+        <tr><td>2</td><td><code>&lt;br&gt;&lt;br&gt;</code> spacers in parallax</td><td>1.3.1</td><td><span class="sev sev-medium">Medium</span></td><td>Removed</td></tr>
+        <tr><td>3</td><td>Parallax <code>alt="Peaceful Tree Scene"</code></td><td>1.1.1</td><td><span class="sev sev-medium">Medium</span></td><td><code>alt=""</code></td></tr>
+        <tr><td>4</td><td>Missing <code>id="main-content"</code></td><td>2.4.1</td><td><span class="sev sev-high">High</span></td><td>Added to <code>.light-tan</code> wrapper</td></tr>
+        <tr><td>5–6</td><td>2 × <code>&lt;div class="card-header"&gt;</code> — non-semantic, not announced as heading</td><td>1.3.1</td><td><span class="sev sev-high">High</span></td><td>Changed to <code>&lt;h3 class="card-header"&gt;</code> (h1 → h2 → h3 hierarchy)</td></tr>
+        <tr><td>7</td><td>12 × <code>&lt;i class="material-icons"&gt;</code> icon ligatures read aloud</td><td>1.3.1</td><td><span class="sev sev-medium">Medium</span></td><td>Added <code>aria-hidden="true"</code> to all</td></tr>
+        <tr><td>8</td><td>Fax <code>&lt;p&gt;</code> × 2 — icon hidden but no "Fax:" text label</td><td>1.3.1</td><td><span class="sev sev-medium">Medium</span></td><td>Added <code>Fax:</code> prefix text to both</td></tr>
+        <tr><td>9–10</td><td>4 × phone links missing <code>aria-label</code> (2 main + 2 probation)</td><td>2.4.6</td><td><span class="sev sev-medium">Medium</span></td><td>Added <code>aria-label="Phone: ..."</code> and <code>aria-label="Probation phone: ..."</code></td></tr>
+        <tr><td>11</td><td>2 × address blocks not in <code>&lt;address&gt;</code></td><td>1.3.1</td><td><span class="sev sev-medium">Medium</span></td><td>Wrapped each card's contact info in <code>&lt;address style="font-style:normal;"&gt;</code></td></tr>
+        <tr><td>12–13</td><td>2 × Google Maps links missing <code>rel="noopener"</code> + new-tab disclosure</td><td>2.4.4</td><td><span class="sev sev-high">High</span></td><td>Added both</td></tr>
+      </tbody>
+    </table>
+    <div class="flag-box">
+      <strong>CSS note:</strong> <code>h3.card-header { margin: 0; }</code> may be needed if Materialize's default h3 margins add unwanted space to the card header. No visual change otherwise — the <code>.card-header</code> class retains all styling.
+    </div>
+  </div>
+
+  <!-- ══════════════════ contact_title.php ══════════════════ -->
+  <div class="section-label">Detailed Findings — contact_title.php</div>
+  <div class="card">
+    <div class="page-header">
+      <div class="page-title">contact_title.php — Title Office Contact</div>
+      <span class="fix-count">8 fixes</span>
+    </div>
+    <table>
+      <thead><tr><th>#</th><th>Issue</th><th>WCAG</th><th>Severity</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Non-unique <code>&lt;title&gt;</code></td><td>2.4.2</td><td><span class="sev sev-high">High</span></td><td><em>Title Office Contact Information | Sandusky County Clerk of Courts</em></td></tr>
+        <tr><td>2</td><td><code>&lt;br&gt;&lt;br&gt;</code> spacers in parallax</td><td>1.3.1</td><td><span class="sev sev-medium">Medium</span></td><td>Removed</td></tr>
+        <tr><td>3</td><td>Parallax <code>alt="Peaceful Tree Scene"</code></td><td>1.1.1</td><td><span class="sev sev-medium">Medium</span></td><td><code>alt=""</code></td></tr>
+        <tr><td>4</td><td>Missing <code>id="main-content"</code></td><td>2.4.1</td><td><span class="sev sev-high">High</span></td><td>Added to <code>.light-tan</code> wrapper</td></tr>
+        <tr><td>5</td><td>Contact info in plain <code>&lt;p&gt;</code> elements — not in <code>&lt;address&gt;</code></td><td>1.3.1</td><td><span class="sev sev-medium">Medium</span></td><td>Wrapped in <code>&lt;address style="font-style:normal;"&gt;</code></td></tr>
+        <tr><td>6</td><td>Phone link missing <code>aria-label</code></td><td>2.4.6</td><td><span class="sev sev-medium">Medium</span></td><td><code>aria-label="Phone: 419-334-9407"</code></td></tr>
+        <tr><td>7</td><td>Google Maps link missing <code>rel="noopener"</code> + new-tab disclosure</td><td>2.4.4</td><td><span class="sev sev-high">High</span></td><td>Added both</td></tr>
+        <tr><td>8</td><td>Orange h1 contrast</td><td>1.4.3</td><td><span class="sev sev-high">High</span></td><td>Flagged for client</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ══════════════════ CLIENT FLAGS ══════════════════ -->
+  <div class="section-label">Client Action Items</div>
+  <div class="card">
+    <p class="intro">The following items require a decision or verification by the client before they can be resolved.</p>
+    <table>
+      <thead><tr><th>File</th><th>Item</th><th>Action Required</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><code>All pages</code></td>
+          <td>Orange <code>&lt;h1&gt;</code> text over parallax photo background</td>
+          <td>Test contrast ratio with a tool like WebAIM Contrast Checker against the actual photo. If ratio fails 4.5:1, switch to white or a darker accessible color.</td>
+        </tr>
+        <tr>
+          <td><code>nav.php</code></td>
+          <td><code>dropdown-clyde2</code> links to <code>FilingFees2013.pdf</code> (2013) while <code>dropdown-clyde</code> links to <code>25_court_costs.pdf</code></td>
+          <td>Verify which filing fee document is current and remove or update the outdated link.</td>
+        </tr>
+        <tr>
+          <td><code>nav.php</code></td>
+          <td><code>http://codes.ohio.gov/</code> — uses HTTP</td>
+          <td>Confirm whether <code>https://codes.ohio.gov/</code> is available and update accordingly.</td>
+        </tr>
+        <tr>
+          <td><code>contact_clerk.php</code></td>
+          <td>Email <code>clerk@co.sandusky.oh.us</code> — old domain</td>
+          <td>Confirm if mailbox has migrated to <code>@sanduskycountyoh.gov</code>. Update both <code>href</code> and display text if so.</td>
+        </tr>
+        <tr>
+          <td><code>cp_forms.php</code></td>
+          <td><code>&lt;h2 class="orange-text"&gt;Supreme Court of Ohio Forms&lt;/h2&gt;</code></td>
+          <td>Test orange text on tan background for 4.5:1 contrast. Update color if failing.</td>
+        </tr>
+        <tr>
+          <td><code>cp_forms.php</code></td>
+          <td>Database output not escaped — XSS risk (security, not WCAG)</td>
+          <td>Developer to confirm <code>htmlspecialchars()</code> additions are compatible with existing data and that no double-encoding occurs.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ══════════════════ CSS ADDITIONS ══════════════════ -->
+  <div class="section-label">Required CSS Additions (Stylesheet)</div>
+  <div class="card">
+    <p class="intro">The following rules must be added to the site's main stylesheet. They have no visual effect except where noted.</p>
+    <table>
+      <thead><tr><th>Rule</th><th>Purpose</th><th>Visual Effect</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><code>.skip-link { position:absolute; top:-50px; left:0; background:#2e5e4e; color:#fff; padding:10px 18px; font-size:14px; font-weight:bold; text-decoration:none; z-index:99999; border-radius:0 0 4px 0; }<br>.skip-link:focus { top:0; }</code></td>
+          <td>Shows skip-to-content link on keyboard focus (WCAG 2.4.1)</td>
+          <td>Invisible until Tab key — then appears top-left</td>
+        </tr>
+        <tr>
+          <td><code>.sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }</code></td>
+          <td>Visually hides elements while keeping them in the accessibility tree</td>
+          <td>None — invisible to sighted users</td>
+        </tr>
+        <tr>
+          <td><code>#card-sect h2 { font-size: 1.64rem; line-height: 1.3; margin: 0; }</code></td>
+          <td>Resets Materialize h2 defaults so card heading size matches original h4 and parallax hero overlap is preserved</td>
+          <td>Cards look identical to original design</td>
+        </tr>
+        <tr>
+          <td><code>h3.card-header { margin: 0; }</code></td>
+          <td>Resets Materialize h3 margins on card headers in contact_county.php</td>
+          <td>Card header height unchanged</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<div class="report-footer">
+  Sandusky County Clerk of Courts &mdash; Accessibility Audit Report &mdash; June 2026<br>
+  WCAG 2.1 Level AA &nbsp;|&nbsp; ADA Title II &nbsp;|&nbsp; 10 files &nbsp;|&nbsp; 121 fixes
+</div>
+
+</body>
+</html>
