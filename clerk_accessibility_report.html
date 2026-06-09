@@ -74,7 +74,6 @@ footer strong{color:#c8a84b;}
 <!-- PAGE 1 — nav.php -->
 <section class="page-section" id="p1">
   <div class="section-header"><h2>1. nav.php — Site Navigation (included on all pages)</h2><span class="fix-badge">27 fixes</span></div>
-  <div class="note">This file is included on every page. All fixes here propagate site-wide automatically once the file is updated.</div>
   <table><thead><tr><th>#</th><th>Element</th><th>Issue</th><th>WCAG</th><th>Fix Applied</th></tr></thead><tbody>
     <tr><td>1</td><td>Skip link</td><td>No skip navigation link — keyboard users must tab through entire nav on every page</td><td>2.4.1</td><td>Added <code>&lt;a href="#main-content" class="skip-link"&gt;Skip to main content&lt;/a&gt;</code> with show-on-focus CSS</td></tr>
     <tr><td>2</td><td>Skip link CSS</td><td>No skip link stylesheet rules present</td><td>2.4.1</td><td>Added inline <code>&lt;style&gt;</code> with <code>position:absolute; top:-50px</code> and <code>:focus { top:0 }</code> pattern</td></tr>
@@ -104,8 +103,7 @@ footer strong{color:#c8a84b;}
     <tr><td>26</td><td>Orphaned <code>dropdown-titles2</code> menu</td><td>Same — mobile duplicate of above</td><td>2.4.4</td><td>Removed menu entirely</td></tr>
     <tr><td>27</td><td><code>id="main-content"</code> target</td><td>Skip link has no corresponding target anywhere on the site</td><td>2.4.1</td><td>Added <code>id="main-content"</code> to <code>.light-tan</code> wrapper on every content page</td></tr>
   </tbody></table>
-  <div class="flag"><strong>Client flag:</strong> <code>dropdown-clyde2</code> links to <code>FilingFees2013.pdf</code> (2013) while <code>dropdown-clyde</code> links to <code>25_court_costs.pdf</code> — verify which is current and remove the outdated file.</div>
-  <div class="flag"><strong>Client flag:</strong> <code>http://codes.ohio.gov/</code> uses HTTP — update to HTTPS if available.</div>
+
 </section>
 
 <!-- PAGE 2 — index.php -->
@@ -126,7 +124,7 @@ footer strong{color:#c8a84b;}
     <tr><td>12</td><td>Card heading #3 <code>&lt;h4&gt;</code></td><td>Same as above</td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
     <tr><td>13</td><td>Card heading #4 <code>&lt;h4&gt;</code></td><td>Same as above</td><td>1.3.1</td><td>Changed to <code>&lt;h2&gt;</code></td></tr>
   </tbody></table>
-  <div class="note"><strong>CSS required in stylesheet:</strong> <code>#card-sect h2 { font-size: 1.64rem; line-height: 1.3; margin: 0; }</code> — the <code>margin: 0</code> is critical; Materialize h2 default margins are larger than h4 and will break the parallax hero card overlap without this reset. Also add: <code>.sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }</code></div>
+
 </section>
 
 <!-- PAGE 3 — pay.php -->
@@ -215,7 +213,7 @@ footer strong{color:#c8a84b;}
     <tr><td>8</td><td><code>&lt;?= $forms[$x]["PDF"];?&gt;</code></td><td>Unescaped database output — XSS vulnerability (security, not WCAG)</td><td>—</td><td>Wrapped in <code>htmlspecialchars()</code></td></tr>
     <tr><td>9</td><td><code>&lt;?= $forms[$x]["Name"];?&gt;</code> and <code>["Desc"]</code></td><td>Same — unescaped database output</td><td>—</td><td>Wrapped both in <code>htmlspecialchars()</code></td></tr>
   </tbody></table>
-  <div class="note"><strong>Security note:</strong> Items 8–9 are not WCAG items. The <code>htmlspecialchars()</code> additions prevent reflected XSS if database content is ever compromised. Recommend flagging separately to your developer.</div>
+
 </section>
 
 <!-- PAGE 8 — contact_clerk.php -->
@@ -232,7 +230,7 @@ footer strong{color:#c8a84b;}
     <tr><td>8</td><td>Google Maps link</td><td><code>target="_blank"</code> with no <code>rel="noopener"</code> and no new-tab disclosure</td><td>2.4.4</td><td>Added <code>rel="noopener"</code> + <code>aria-label="Get directions to 100 N Park Ave, Fremont, Ohio (opens in new tab)"</code></td></tr>
     <tr><td>9</td><td>Orange <code>&lt;h1&gt;</code></td><td><code>class="orange-text"</code> over parallax photo — contrast may fail 4.5:1</td><td>1.4.3</td><td>Flagged for client — manual contrast test required</td></tr>
   </tbody></table>
-  <div class="flag"><strong>Client flag:</strong> Email <code>clerk@co.sandusky.oh.us</code> uses the old <code>co.sandusky.oh.us</code> domain. Confirm whether mailbox has migrated to <code>@sanduskycountyoh.gov</code> and update both the <code>href</code> and display text.</div>
+
 </section>
 
 <!-- PAGE 9 — contact_county.php -->
@@ -251,7 +249,7 @@ footer strong{color:#c8a84b;}
     <tr><td>10</td><td>4 × phone links</td><td>Phone links missing <code>aria-label</code> (2 main + 2 probation)</td><td>2.4.6</td><td>Added <code>aria-label="Phone: ..."</code> and <code>aria-label="Probation phone: ..."</code> respectively</td></tr>
     <tr><td>11</td><td>2 × address blocks + 2 × map links</td><td>Contact info not in <code>&lt;address&gt;</code>; map links missing <code>rel="noopener"</code> + new-tab disclosure</td><td>1.3.1 / 2.4.4</td><td>Wrapped each card's contact info in <code>&lt;address style="font-style:normal;"&gt;</code>; added <code>rel="noopener"</code> + <code>aria-label</code> to both map links</td></tr>
   </tbody></table>
-  <div class="note"><strong>CSS note:</strong> <code>h3.card-header { margin: 0; }</code> may be needed if Materialize's default h3 margins add unwanted spacing to the card header band. The <code>.card-header</code> class styling is unchanged — visual appearance is identical.</div>
+
 </section>
 
 <!-- PAGE 10 — contact_title.php -->
